@@ -36,6 +36,9 @@ public class UserAccount
     @OneToMany
     private Set<Assignment> assignments = new HashSet<>();
 
+    @OneToMany
+    private Set<MathTeam> mathTeams = new HashSet<>();
+
     public UserAccount(String name, String email, String workplace, String uniLogin, String password)
     {
         this.name = name;
