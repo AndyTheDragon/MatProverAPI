@@ -44,6 +44,7 @@ public class Question
     @ManyToMany
     private Set<MathTeam> mathTeams;
 
+
     public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText)
     {
         this.termDate = termDate;

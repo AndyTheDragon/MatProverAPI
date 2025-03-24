@@ -28,6 +28,7 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
+
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
     {
         this.introText = introText;

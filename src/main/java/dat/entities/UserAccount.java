@@ -41,6 +41,7 @@ public class UserAccount
     @OneToMany
     private Set<MathTeam> mathTeams = new HashSet<>();
 
+
     public UserAccount(String name, String email, String workplace, String uniLogin, String password)
     {
         this.name = name;
@@ -89,7 +90,6 @@ public class UserAccount
         return BCrypt.checkpw(pw, this.password);
     }
 
-
     public void addRole(Roles role)
     {
         if (role != null)
@@ -108,6 +108,4 @@ public class UserAccount
         //roles.remove(Roles.valueOf(roleName.toUpperCase()));
         roles.removeIf(r -> r.toString().equals(roleName));
     }
-
-
 }

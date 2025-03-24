@@ -28,8 +28,6 @@ public class MathTeam
     @ManyToMany
     private Set<Question> questions;
 
-    //TODO: Add constructor(s)
-
 
     public MathTeam(String description)
     {

@@ -3,4 +3,7 @@
   <component name="JpaBuddyIdeaProjectConfig">
     <option name="newEntityIdStrategy" value="Identity" />
   </component>
+  <component name="JpaPluginProjectSettings">
+    <option name="lastSelectedLanguage" value="Java" />
+  </component>
 </project>
