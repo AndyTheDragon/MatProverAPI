@@ -23,6 +23,7 @@ public class Question
     private int year;
     private String author;
     private int points; //Har kaldt denne her points da point lød mærkeligt.
+    @Column(nullable = false, unique = true)
     private int questionNumber;
     private String questionText;
     private String pictureURL;
@@ -40,5 +41,26 @@ public class Question
 
     @ManyToMany
     private Set<MathTeam> mathTeams;
+
+    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText)
+    {
+        this.termDate = termDate;
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionNumber = questionNumber;
+        this.questionText = questionText;
+    }
+
+    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText, String pictureURL)
+    {
+        this.termDate = termDate;
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionNumber = questionNumber;
+        this.questionText = questionText;
+        this.pictureURL = pictureURL;
+    }
 
 }
