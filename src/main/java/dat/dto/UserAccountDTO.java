@@ -1,23 +1,33 @@
 package dat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import dat.entities.Assignment;
+import dat.entities.MathTeam;
+import dat.entities.UserAccount;
 
+import java.util.Set;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class UserAccountDTO
 {
-    @JsonIgnore
-    private Long id;
+    private Integer id;
     private String name;
     private String email;
-    private String skole;
+    private String workplace;
     private String uniLogin;
-    //private Role role;
+    private String password;
+    private Set<Role> roles;
+    private Set<Assignment> assignments;
+    private MathTeam mathTeams;
+
+    public UserAccountDTO(UserAccount userAccount)
+    {
+       this.id = userAccount.getId();
+       this.name = userAccount.getName();
+       this.email = userAccount.getEmail();
+       this.workplace = userAccount.getWorkplace();
+       this.uniLogin = userAccount.getUniLogin();
+       this.password = userAccount.getPassword();
+       this.roles = userAccount.getRoles();
+       this.assignments = userAccount.getAssignments();
+       this.mathTeams = userAccount.getMathTeams();
+    }
 }
