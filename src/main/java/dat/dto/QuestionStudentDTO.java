@@ -18,7 +18,7 @@ public class QuestionStudentDTO
     private String pictureURL;
 
     public QuestionStudentDTO(Question question)
-    {)
+    {
         this.id = question.getId();
         this.questionText = question.getQuestionText();
         this.points = question.getPoints();
