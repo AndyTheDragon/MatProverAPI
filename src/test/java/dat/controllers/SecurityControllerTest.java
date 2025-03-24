@@ -32,9 +32,11 @@ class SecurityControllerTest {
 
     @BeforeAll
     static void setUpAll() {
-        HotelController hotelController = new HotelController(emf);
+        QuestionController questionController = new QuestionController(emf);
+        AssignmentController assignmentController = new AssignmentController(emf);
+        MathTeamController mathTeamController = new MathTeamController(emf);
         SecurityController securityController = new SecurityController(emf);
-        Routes routes = new Routes(hotelController, securityController);
+        Routes routes = new Routes(questionController, assignmentController, mathTeamController, securityController);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
