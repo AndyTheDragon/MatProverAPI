@@ -3,6 +3,7 @@ package dat.dto;
 import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.UserAccount;
+import dat.enums.Roles;
 
 import java.util.Set;
 
@@ -14,7 +15,7 @@ public class UserAccountDTO
     private String workplace;
     private String uniLogin;
     private String password;
-    private Set<Role> roles;
+    private Set<Roles> roles;
     private Set<Assignment> assignments;
     private MathTeam mathTeams;
 
