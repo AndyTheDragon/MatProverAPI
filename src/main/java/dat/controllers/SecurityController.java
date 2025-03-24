@@ -233,5 +233,15 @@ public class SecurityController implements ISecurityController
             throw new ApiException(HttpStatus.UNAUTHORIZED.getCode(), "Unauthorized. Could not verify token");
         }
     }
+    public void getAll(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
+    public void getById(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
 
 }
