@@ -30,8 +30,10 @@ public class Question
 
     @ElementCollection
     private List<String> level = new ArrayList<>(Arrays.asList("A", "B", "C", null));
+
     @ElementCollection
     private List<Integer> testForm = new ArrayList<>(Arrays.asList(1, 2, null)); //Har kaldt denne for testForm istedet for delprøve. Den kan vi lige vende sammen.
+
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles = new HashSet<>();
@@ -63,4 +65,30 @@ public class Question
         this.pictureURL = pictureURL;
     }
 
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, List<String> level, List<Integer> testForm)
+    {
+        this.termDate = termDate;
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionText = questionText;
+        this.pictureURL = pictureURL;
+        this.level = level;
+        this.testForm = testForm;
+    }
+
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, List<String> level, List<Integer> testForm, Set<Roles> roles, Set<Assignment> assignments, Set<MathTeam> mathTeams)
+    {
+        this.termDate = termDate;
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionText = questionText;
+        this.pictureURL = pictureURL;
+        this.level = level;
+        this.testForm = testForm;
+        this.roles = roles;
+        this.assignments = assignments;
+        this.mathTeams = mathTeams;
+    }
 }
