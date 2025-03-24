@@ -1,11 +1,14 @@
 package dat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import dat.entities.Assignment;
+import dat.entities.MathTeam;
+import dat.entities.Question;
 import dat.entities.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -13,10 +16,20 @@ import lombok.ToString;
 @ToString
 public class AssignmentDTO
 {
-    @JsonIgnore
-    private Long id;
-    private UserAccount owner;
+    private Integer id;
     private String introText;
-    private Long quantityOfExercises;
-    private Long sumOfPoints;
+    private MathTeam mathTeam;
+    private UserAccount owner;
+    private Set<Question> questions;
+    //private Integer quantityOfExercises;
+    //private Integer totalPoints;
+
+    public AssignmentDTO(Assignment assignment)
+    {
+        this.id = assignment.getId();
+        this.owner = assignment.getOwner();
+        this.introText = assignment.getIntroText();
+        //this.quantityOfExercises = assignment.getQuantityOfExercises();
+        //this.totalPoints = assignment.getTotalPoints();
+    }
 }
