@@ -21,15 +21,15 @@ public class AssignmentDTO
     private MathTeam mathTeam;
     private UserAccount owner;
     private Set<Question> questions;
-    //private Integer quantityOfExercises;
-    //private Integer totalPoints;
+    private Integer quantityOfExercises;
+    private Integer totalPoints;
 
     public AssignmentDTO(Assignment assignment)
     {
         this.id = assignment.getId();
         this.owner = assignment.getOwner();
         this.introText = assignment.getIntroText();
-        //this.quantityOfExercises = assignment.getQuantityOfExercises();
-        //this.totalPoints = assignment.getTotalPoints();
+        this.quantityOfExercises = assignment.numberOfQuestionsInAssignment();
+        this.totalPoints = assignment.totalPointsInAssignment();
     }
 }
