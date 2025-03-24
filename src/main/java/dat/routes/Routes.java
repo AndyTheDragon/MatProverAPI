@@ -66,7 +66,7 @@ public class Routes
     public EndpointGroup userRoutes()
     {
         return () -> {
-            get(securityController::user, Roles.ANYONE);
+            get(securityController::getAll, Roles.ANYONE);
             get("/{id}", securityController::getById, Roles.ANYONE);
         };
     }
