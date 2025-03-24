@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.eclipse.jetty.server.Authentication;
 
 import java.util.Set;
 
@@ -12,7 +11,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Entity
-
 public class Assignment
 {
     @Id
