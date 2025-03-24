@@ -23,23 +23,54 @@ public class Routes
     public  EndpointGroup getRoutes()
     {
         return () -> {
-            path("hotel", hotelRoutes());
+            path("opgave", questionRoutes());
+            path("opgaveset", assignmentRoutes());
+            path("hold", mathTeamRoutes());
+            path("user", userRoutes());
             path("auth", authRoutes());
-            path("protected", protectedRoutes());
         };
     }
 
-    private  EndpointGroup hotelRoutes()
+    public EndpointGroup questionRoutes()
     {
         return () -> {
-            get(hotelController::getAll);
-            post(hotelController::create);
-            get("/{id}", hotelController::getById);
-            put("/{id}", hotelController::update);
-            delete("/{id}", hotelController::delete);
-            get("/{id}/rooms", hotelController::getRooms);
+            get(questionController::getAll, Roles.ANYONE);
+            get("/{id}", questionController::getById, Roles.ANYONE);
+            get("/{category}", questionController::getCategory, Roles.ANYONE);
+            post(questionController::create, Roles.ANYONE);
+            patch(questionController::update, Roles.ANYONE);
+            delete("/{id}", questionController::delete, Roles.ANYONE);
         };
     }
+
+    public EndpointGroup assignmentRoutes()
+    {
+        return () -> {
+            get(assignmentController::assignment, Roles.ANYONE);
+            get("/{id}", assignmentController::getById, Roles.ANYONE);
+            post(assignmentController::createAssignment, Roles.ANYONE);
+            post("/{id}/add", assignmentController::addQuestionToAssignment, Roles.ANYONE);
+            delete("/{id}/remove", assignmentController::removeQuestionFromAssignment, Roles.ANYONE);
+        };
+    }
+
+    public EndpointGroup mathTeamRoutes()
+    {
+        return () -> {
+            get(mathTeamController::mathTeam, Roles.ANYONE);
+            get("/{id}", mathTeamController::getById, Roles.ANYONE);
+            post(mathTeamController::createMathTeam, Roles.ANYONE);
+        };
+    }
+
+    public EndpointGroup userRoutes()
+    {
+        return () -> {
+            get(securityController::user, Roles.ANYONE);
+            get("/{id}", securityController::getById, Roles.ANYONE);
+        };
+    }
+
 
     private  EndpointGroup authRoutes()
     {
@@ -50,14 +81,6 @@ public class Routes
             post("/register", securityController::register, Roles.ANYONE);
             get("/verify", securityController::verify , Roles.ANYONE);
             get("/tokenlifespan", securityController::timeToLive , Roles.ANYONE);
-        };
-    }
-
-    private  EndpointGroup protectedRoutes()
-    {
-        return () -> {
-            get("/user_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from USER Protected")), Roles.USER);
-            get("/admin_demo",(ctx)->ctx.json(jsonMapper.createObjectNode().put("msg",  "Hello from ADMIN Protected")), Roles.ADMIN);
         };
     }
 
