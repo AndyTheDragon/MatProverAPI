@@ -1,7 +1,7 @@
 GET localhost:7070/api/routes
 
 ###
-GET localhost:7070/api/hotel
+GET localhost:7070/api/opgave
 
 ###
 GET localhost:7070/api/hotel/3
