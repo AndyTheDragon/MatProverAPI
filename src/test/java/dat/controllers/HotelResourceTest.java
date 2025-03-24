@@ -32,9 +32,10 @@ class HotelResourceTest
     @BeforeAll
     static void setUpAll()
     {
-        HotelController hotelController = new HotelController(emf);
+        QuestionController questionController = new QuestionController(emf);
         SecurityController securityController = new SecurityController(emf);
-        Routes routes = new Routes(hotelController, securityController);
+
+        Routes routes = new Routes(questionController, securityController,);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
