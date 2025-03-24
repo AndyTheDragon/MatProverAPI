@@ -1,22 +1,27 @@
 package dat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import dat.entities.UserAccount;
+import dat.entities.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Getter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class QuestionStudentDTO
 {
-    @JsonIgnore
-    private Long id;
-    private String exerciseText;
-    private Long point;
-    private String billedeUrl;
+    private Integer id;
+    private String questionText;
+    private Integer points;
+    private String pictureURL;
 
+    public QuestionStudentDTO(Question question
+    {)
+        this.id = question.getId();
+        this.questionText = question.getQuestionText();
+        this.points = question.getPoints();
+        this.pictureURL = question.getPictureURL();
+    }
 }
