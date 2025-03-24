@@ -24,8 +24,10 @@ public class UserAccount
     @Column(name = "user_id")
     private Integer id;
     private String name;
+    @Column(unique = true)
     private String email;
     private String workplace;
+    @Column(unique = true)
     private String uniLogin;
     private String password;
 
