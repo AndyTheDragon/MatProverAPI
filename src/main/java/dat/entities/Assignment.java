@@ -28,7 +28,26 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
+    public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
+    {
+        this.introText = introText;
+        this.mathTeam = mathTeam;
+        this.owner = owner;
+        this.questions = questions;
+    }
 
-    //TODO: Add the follwing methods; numberOfQuestionsInAssignment, totalPointsInAssignment.
-    //TODO: Add constructor(s)
+    public int numberOfQuestionsInAssignment()
+    {
+        return questions.size();
+    }
+
+    public int totalPointsInAssignment()
+    {
+        int totalPoints = 0;
+        for (Question question : questions)
+        {
+            totalPoints += question.getPoints();
+        }
+        return totalPoints;
+    }
 }
