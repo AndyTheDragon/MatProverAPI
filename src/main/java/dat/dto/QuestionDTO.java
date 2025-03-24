@@ -1,29 +1,29 @@
 package dat.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import dat.entities.Question;
 
 import java.time.LocalDate;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 public class QuestionDTO
 {
-    @JsonIgnore
-    private Long id;
-    private String niveau;
-    private LocalDate termin;
-    private Long year;
-    private String[] category;
-    private String licens;
+    private Integer id;
+    private LocalDate termDate;
+    private int year;
     private String author;
-    private Long point;
-    private Long opgaveNummer;
-    private String opgaveTekst;
-    private String billedeUrl;
+    private int points;
+    private int questionNumber;
+    private String questionText;
+    private String pictureURL;
+
+    public QuestionDTO(Question question)
+    {
+        this.id = question.getId();
+        this.termDate = question.getTermDate();
+        this.year = question.getYear();
+        this.author = question.getAuthor();
+        this.points = question.getPoints();
+        this.questionNumber = question.getQuestionNumber();
+        this.questionText = question.getQuestionText();
+        this.pictureURL = question.getPictureURL();
+    }
 }
