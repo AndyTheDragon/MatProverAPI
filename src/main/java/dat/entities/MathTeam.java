@@ -30,4 +30,24 @@ public class MathTeam
 
     //TODO: Add constructor(s)
 
+
+    public MathTeam(String description)
+    {
+        this.description = description;
+    }
+
+    public MathTeam(String description, Set<Assignment> assignments, UserAccount owner)
+    {
+        this.description = description;
+        this.assignments = assignments;
+        this.owner = owner;
+    }
+
+    public MathTeam(String description, Set<Assignment> assignments, UserAccount owner, Set<Question> questions)
+    {
+        this.description = description;
+        this.assignments = assignments;
+        this.owner = owner;
+        this.questions = questions;
+    }
 }
