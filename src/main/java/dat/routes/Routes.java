@@ -1,7 +1,9 @@
 package dat.routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dat.controllers.HotelController;
+import dat.controllers.AssignmentController;
+import dat.controllers.MathTeamController;
+import dat.controllers.QuestionController;
 import dat.controllers.SecurityController;
 import dat.enums.Roles;
 import io.javalin.apibuilder.EndpointGroup;
@@ -10,13 +12,17 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 
 public class Routes
 {
-    private final HotelController hotelController;
+    private final QuestionController questionController;
+    private final AssignmentController assignmentController;
+    private final MathTeamController mathTeamController;
     private final SecurityController securityController;
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
-    public Routes(HotelController hotelController, SecurityController securityController)
+    public Routes(QuestionController questionController, AssignmentController assignmentController, MathTeamController mathTeamController, SecurityController securityController)
     {
-        this.hotelController = hotelController;
+        this.questionController = questionController;
+        this.assignmentController = assignmentController;
+        this.mathTeamController = mathTeamController;
         this.securityController = securityController;
     }
 
@@ -46,9 +52,9 @@ public class Routes
     public EndpointGroup assignmentRoutes()
     {
         return () -> {
-            get(assignmentController::assignment, Roles.ANYONE);
+            get(assignmentController::getAll, Roles.ANYONE);
             get("/{id}", assignmentController::getById, Roles.ANYONE);
-            post(assignmentController::createAssignment, Roles.ANYONE);
+            post(assignmentController::create, Roles.ANYONE);
             post("/{id}/add", assignmentController::addQuestionToAssignment, Roles.ANYONE);
             delete("/{id}/remove", assignmentController::removeQuestionFromAssignment, Roles.ANYONE);
         };
@@ -57,9 +63,9 @@ public class Routes
     public EndpointGroup mathTeamRoutes()
     {
         return () -> {
-            get(mathTeamController::mathTeam, Roles.ANYONE);
+            get(mathTeamController::getAll, Roles.ANYONE);
             get("/{id}", mathTeamController::getById, Roles.ANYONE);
-            post(mathTeamController::createMathTeam, Roles.ANYONE);
+            post(mathTeamController::create, Roles.ANYONE);
         };
     }
 
