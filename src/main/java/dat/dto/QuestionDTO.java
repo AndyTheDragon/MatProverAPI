@@ -1,9 +1,17 @@
 package dat.dto;
 
 import dat.entities.Question;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
+@NoArgsConstructor
+@Getter
+@AllArgsConstructor
+@ToString
 public class QuestionDTO
 {
     private Integer id;

@@ -1,5 +1,6 @@
 package dat.entities;
 
+import dat.dto.QuestionDTO;
 import dat.enums.Roles;
 import dat.enums.TestFormat;
 import jakarta.persistence.*;

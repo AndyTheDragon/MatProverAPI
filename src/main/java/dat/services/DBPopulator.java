@@ -4,9 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import dat.dto.AssignmentInfoDTO;
 import dat.dto.QuestionDTO;
-import dat.dto.QuestionStudentDTO;
 import dat.dto.UserAccountDTO;
-import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
@@ -28,7 +26,7 @@ public class DBPopulator
 {
     private static final Logger logger = LoggerFactory.getLogger(DBPopulator.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private GenericDAO genericDAO;
+    private static GenericDAO genericDAO;
 
     private static final String userAccountJsonDTO = "json/user_account_dto.json";
     private static final String questionJsonDTO = "json/question_dto.json";
@@ -39,16 +37,10 @@ public class DBPopulator
     public static void main(String[] args)
     {
 
-        readAssignmentInfoDTO();
+        //readAssignmentInfoDTO();
         readQuestionDTO();
         readMathTeamDTO();
         readUserAccountDTO();
-        populateDB();
-
-    }
-
-    private void populateDB()
-    {
 
     }
 
@@ -77,7 +69,7 @@ public class DBPopulator
             Set<AssignmentInfoDTO> list = objectMapper.convertValue(node, new TypeReference<Set<AssignmentInfoDTO>>() {});
             for (AssignmentInfoDTO dto : list)
             {
-                genericDAO.create(new Assignment(dto));
+                //genericDAO.create(new Assignment(dto));
             }
 
         } catch (Exception e)
@@ -90,7 +82,7 @@ public class DBPopulator
     {
         try
         {
-            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            JsonNode node = objectMapper.readTree(new File("src/json/user_account_dto.json"));
             Set<UserAccountDTO> list = objectMapper.convertValue(node, new TypeReference<Set<UserAccountDTO>>() {});
             for (UserAccountDTO dto : list)
             {
@@ -120,28 +112,6 @@ public class DBPopulator
         }
     }
 
-    private static void createUsers()
-    {
-        try (Reader reader = new InputStreamReader(
-            ReadHotelsFromJson.class.getClassLoader().getResourceAsStream("hotels_with_rooms.json"),
-            StandardCharsets.UTF_8))
-        {
-            if (reader == null)
-            {
-                throw new FileNotFoundException("Resource not found: hotels_with_rooms.json");
-            }
 
-            // Read hotels from json file
-            ObjectMapper objectMapper = new ObjectMapper();
-            HotelJsonWrapper hotelJsonWrapper = objectMapper.readValue(reader, HotelJsonWrapper.class);
-            EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
-            GenericDAO genericDao = GenericDAO.getInstance(emf);
-
-            // emf.close();
-        } catch (IOException e)
-        {
-        }
-
-    }
 }
 
