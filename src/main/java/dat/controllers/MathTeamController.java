@@ -1,13 +1,19 @@
 package dat.controllers;
 
+import dat.dao.CrudDAO;
+import dat.dao.GenericDAO;
 import dat.dto.ErrorMessage;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
 
+
 public class MathTeamController implements IController
 {
+    private final CrudDAO dao;
+
     public MathTeamController(EntityManagerFactory emf)
     {
+        dao = new GenericDAO(emf);
     }
 
     @Override

@@ -1,14 +1,20 @@
 package dat.controllers;
 
+import dat.dao.CrudDAO;
+import dat.dao.GenericDAO;
 import dat.dto.ErrorMessage;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
+
+
 
 public class AssignmentController implements IController
 {
+    private final CrudDAO dao;
+
     public AssignmentController(EntityManagerFactory emf)
     {
+        dao = new GenericDAO(emf);
     }
 
     @Override
