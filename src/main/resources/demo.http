@@ -4,25 +4,40 @@ GET localhost:7070/api/routes
 GET localhost:7070/api/opgave
 
 ###
-GET localhost:7070/api/hotel/3
+GET localhost:7070/api/opgave/1
 
 ###
-POST localhost:7070/api/hotel
+POST localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "name": "Park Hotel",
-    "address": "Brorsonsvej 2",
-    "rooms":[
-        {
-            "roomNumber": 101,
-            "price": 1000
-        }
-    ]
+    "id": 1,
+
+    "niveau": A,
+
+    "termin": 25-03-2025,
+
+    "year": 2025,
+
+    "delprøve": 1,
+
+    "category": Algebra,
+
+    "author": Me,
+
+    "licens": None,
+
+    "point": 10,
+
+    "opgavenummer": 1,
+
+    "opgavetekst": løs opgaven,
+
+    "billede_url": url,
 }
 
 ###
-PUT localhost:7070/api/hotel/1
+PATCH localhost:7070/api/opgave/1
 Content-Type: "application/json"
 
 {
@@ -31,7 +46,7 @@ Content-Type: "application/json"
 }
 
 ###
-DELETE localhost:7070/api/hotel/1
+DELETE localhost:7070/api/opgave/1
 
 ###
-GET localhost:7070/api/hotel/1/rooms
+GET localhost:7070/api/opgaveset/1
