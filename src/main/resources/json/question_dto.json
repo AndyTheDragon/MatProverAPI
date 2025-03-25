@@ -1,0 +1,14 @@
+{
+  "id": "Number",
+  "niveau": ["A", "B", "C", null],
+  "termin": "Date",
+  "year": "Number",
+  "delprøve": [1, 2, null],
+  "category": ["String1", "String2", "String3", "String4"],
+  "author": "String",
+  "licens": "String",
+  "point": "Number",
+  "opgavenummer": "Number",
+  "opgavetekst": "String",
+  "billede_url": "String"
+}
