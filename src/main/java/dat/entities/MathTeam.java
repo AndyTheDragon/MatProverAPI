@@ -72,12 +72,12 @@ public class MathTeam
         }
     }
 
-    public void addQuestion(Question question)
+  public void addQuestion(Question question)
     {
         if (question != null)
         {
             questions.add(question);
-            question.setMathTeams(this);
+            //question.setMathTeams(this);
         }
     }
 
