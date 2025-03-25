@@ -108,4 +108,23 @@ public class UserAccount
         //roles.remove(Roles.valueOf(roleName.toUpperCase()));
         roles.removeIf(r -> r.toString().equals(roleName));
     }
+
+
+    public void addMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.add(mathTeam);
+            mathTeam.setOwner(this);
+        }
+    }
+
+    public void removeMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.remove(mathTeam);
+            mathTeam.setOwner(null);
+        }
+    }
 }
