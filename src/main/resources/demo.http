@@ -1,5 +1,8 @@
+
 GET localhost:7070/api/routes
 
+
+### -------------- QUESTIONS ROUTES ----------------
 ###
 GET localhost:7070/api/opgave
 
@@ -7,33 +10,25 @@ GET localhost:7070/api/opgave
 GET localhost:7070/api/opgave/1
 
 ###
+GET localhost:7070/api/Algebra
+
+###
 POST localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "id": 1,
-
-    "niveau": A,
-
-    "termin": 25-03-2025,
-
-    "year": 2025,
-
-    "delprøve": 1,
-
-    "category": Algebra,
-
-    "author": Me,
-
-    "licens": None,
-
-    "point": 10,
-
-    "opgavenummer": 1,
-
-    "opgavetekst": løs opgaven,
-
-    "billede_url": url,
+    "id": "1",
+    "niveau": "A",
+    "termin": "25-03-2025",
+    "year": "2025",
+    "delprøve": "1",
+    "category": "Algebra",
+    "author": "Me",
+    "license: "None",
+    "point": "10",
+    "opgavenummer": "1",
+    "opgavetekst": "løs opgaven",
+    "billede_url": "url",
 }
 
 ###
@@ -41,12 +36,78 @@ PATCH localhost:7070/api/opgave/1
 Content-Type: "application/json"
 
 {
-    "name": "Lucky Star Hotel",
-    "address": "Brorsonsvej 1"
+    "niveau": "B",
+    "opgavenummer": "2",
 }
 
 ###
 DELETE localhost:7070/api/opgave/1
 
+
+### -------------- ASSIGNMENT ROUTES ----------------
+###
+GET localhost:7070/api/opgaveset/
+
 ###
 GET localhost:7070/api/opgaveset/1
+
+###
+POST localhost:7070/api/opgaveset
+
+{
+    "id": Number,
+    "owner": UserAccount (id?),
+    "intro_text": String,
+    "total_antal_opgaver": Number,
+    "total_point": Number
+    "delprove1": [ question_student, question_student, …] (3)
+    "delprove2": [ question_student, question_student, …] (3)
+}
+
+###
+POST localhost:7070/api/opgaveset/1/add
+
+###
+DELETE localhost:7070/api/opgaveset/1/remove
+
+###
+DELETE localhost:7070/api/opgaveset/1
+
+
+### -------------- MATHTEAM ROUTES ----------------
+###
+GET localhost:7070/api/hold
+
+###
+GET localhost:7070/api/hold/1
+
+###
+POST localhost:7070/api/hold
+
+{
+    "id": Number,
+    "owner": UserAccount (id?),
+    "desc": String,
+    "used_examquestions": [ question, question, ...] (2)
+    "assignments": [ assignment_info, assoignment_info, ...] (4)
+}
+
+###
+POST localhost:7070/api/hold/1/add
+
+###
+DELETE localhost:7070/api/hold/1/remove
+
+###
+DELETE localhost:7070/api/hold/1
+
+
+### -------------- USER ROUTES ----------------
+###
+GET localhost:7070/api/user
+
+###
+GET localhost:7070/api/user/1
+
+###
+DELETE localhost:7070/api/user/1
