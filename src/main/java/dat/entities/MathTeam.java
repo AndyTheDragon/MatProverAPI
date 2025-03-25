@@ -53,4 +53,32 @@ public class MathTeam
         this.owner = owner;
         this.questions = questions;
     }
+
+    public void addAssignment(Assignment assignment)
+    {
+        if (assignment != null)
+        {
+            assignments.add(assignment);
+            assignment.setMathTeam(this);
+        }
+    }
+
+    public void removeAssignment(Assignment assignment)
+    {
+        if (assignment != null)
+        {
+            assignments.remove(assignment);
+            assignment.setMathTeam(null);
+        }
+    }
+
+    public void setAssignments(Set<Assignment> assignments)
+    {
+        this.assignments = assignments;
+    }
+
+    public void setOwner(UserAccount owner)
+    {
+        this.owner = owner;
+    }
 }
