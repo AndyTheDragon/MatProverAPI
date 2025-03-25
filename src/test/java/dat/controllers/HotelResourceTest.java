@@ -33,9 +33,10 @@ class HotelResourceTest
     static void setUpAll()
     {
         QuestionController questionController = new QuestionController(emf);
+        AssignmentController assignmentController = new AssignmentController(emf);
+        MathTeamController mathTeamController = new MathTeamController(emf);
         SecurityController securityController = new SecurityController(emf);
-
-        Routes routes = new Routes(questionController, securityController,);
+        Routes routes = new Routes(questionController, assignmentController, mathTeamController, securityController);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
