@@ -1,12 +1,11 @@
 package dat.routes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dat.controllers.AssignmentController;
-import dat.controllers.MathTeamController;
-import dat.controllers.QuestionController;
-import dat.controllers.SecurityController;
+import dat.controllers.*;
 import dat.enums.Roles;
 import io.javalin.apibuilder.EndpointGroup;
+
+import java.util.Map;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
@@ -18,12 +17,12 @@ public class Routes
     private final SecurityController securityController;
     private final ObjectMapper jsonMapper = new ObjectMapper();
 
-    public Routes(QuestionController questionController, AssignmentController assignmentController, MathTeamController mathTeamController, SecurityController securityController)
+    public Routes(Map<String, IController> controllers)
     {
-        this.questionController = questionController;
-        this.assignmentController = assignmentController;
-        this.mathTeamController = mathTeamController;
-        this.securityController = securityController;
+        this.questionController = (QuestionController) controllers.get("question");
+        this.assignmentController = (AssignmentController) controllers.get("assignment");
+        this.mathTeamController = (MathTeamController) controllers.get("mathTeam");
+        this.securityController = (SecurityController) controllers.get("security");
     }
 
     public  EndpointGroup getRoutes()
