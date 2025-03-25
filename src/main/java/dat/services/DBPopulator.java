@@ -1,12 +1,22 @@
 package dat.services;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import dat.dto.AssignmentInfoDTO;
+import dat.dto.QuestionDTO;
+import dat.dto.QuestionStudentDTO;
+import dat.dto.UserAccountDTO;
+import dat.entities.Assignment;
+import dat.entities.Question;
+import dat.entities.UserAccount;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.Set;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dat.config.HibernateConfig;
 import jakarta.persistence.EntityManagerFactory;
@@ -92,7 +102,19 @@ public class DBPopulator
 
     private void readUserAccountDTO()
     {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            Set<UserAccountDTO> list = objectMapper.convertValue(node, new TypeReference<Set<UserAccountDTO>>() {});
+            for (UserAccountDTO dto : list)
+            {
+                genericDAO.create(new UserAccount(dto));
+            }
 
+        } catch (Exception e)
+        {
+            logger.info("could not create object  : questionStudentDTO to database");
+        }
     }
 
     private void readMathTeamDTO()
