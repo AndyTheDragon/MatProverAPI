@@ -5,7 +5,9 @@ import dat.dao.HotelDAO;
 import dat.dto.ErrorMessage;
 import dat.dto.HotelDTO;
 import dat.entities.Hotel;
+import dat.entities.Question;
 import dat.entities.Room;
+import dat.exceptions.ApiException;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
@@ -25,25 +27,18 @@ public class QuestionController implements IController
         dao = new HotelDAO(emf);
     }
 
-    public QuestionController(CrudDAO dao)
-    {
-        this.dao = dao;
-    }
-
-
 
     @Override
     public void getAll(Context ctx)
     {
         try
         {
-            ctx.json(dao.getAll(Hotel.class));
+            ctx.json(dao.getAll(Question.class));
         }
         catch (Exception ex)
         {
             logger.error("Error getting entities", ex);
-            ErrorMessage error = new ErrorMessage("Error getting entities");
-            ctx.status(404).json(error);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -138,9 +133,9 @@ public class QuestionController implements IController
         }
     }
 
-    public void getCategory(Context ctx)
-    {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
-    }
+//    public void getCategory(Context ctx)
+//    {
+//        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+//        ctx.status(501).json(error);
+//    }
 }
