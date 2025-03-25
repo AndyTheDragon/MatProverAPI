@@ -24,7 +24,7 @@ public class AssignmentInfoDTO
         this.Id = assignment.getId();
         this.owner = assignment.getOwner();
         this.introText = assignment.getIntroText();
-        this.quantityOfExercises = assignment.numberOfQuestionsInAssignment();
-        this.totalPoints = assignment.totalPointsInAssignment();
+        this.quantityOfExercises = assignment.getAmountOfQuestions();
+        this.totalPoints = assignment.getTotalPoints();
     }
 }

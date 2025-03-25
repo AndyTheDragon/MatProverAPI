@@ -1,11 +1,13 @@
 package dat.entities;
 
+import dat.dto.MathTeamDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,11 +30,11 @@ public class MathTeam
     @ManyToMany
     private Set<Question> questions;
 
-    public MathTeam(MathTeamDTO MathTeamDTO)
+    public MathTeam(MathTeamDTO mathTeamDTO)
     {
-        this.description = MathTeamDTO.getDescription();
-        this.assignments = MathTeamDTO.getAssignments.stream.map(Assignment::new).toSet();
-        this.questions = MathTeamDTO.getQuestions.stream.map(Question::new).toSet();
+        this.description = mathTeamDTO.getDescription();
+        this.assignments = mathTeamDTO.getAssignments().stream().map(Assignment::new).collect(Collectors.toSet());
+        this.questions = mathTeamDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
     }
     public MathTeam(String description)
     {
