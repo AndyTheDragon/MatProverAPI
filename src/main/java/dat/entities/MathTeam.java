@@ -77,7 +77,7 @@ public class MathTeam
         if (question != null)
         {
             questions.add(question);
-            //question.setMathTeams(this);
+            question.addMathTeam(this);
         }
     }
 
@@ -86,14 +86,10 @@ public class MathTeam
         if (question != null)
         {
             questions.remove(question);
-            question.setMathTeams(null);
+            question.removeMathTeam(this);
         }
     }
 
-    public void setAssignments(Set<Assignment> assignments)
-    {
-        this.assignments = assignments;
-    }
 
     public void setOwner(UserAccount owner)
     {
