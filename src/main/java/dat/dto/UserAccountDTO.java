@@ -4,9 +4,11 @@ import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.UserAccount;
 import dat.enums.Roles;
+import lombok.Getter;
 
 import java.util.Set;
 
+@Getter
 public class UserAccountDTO
 {
     private Integer id;
