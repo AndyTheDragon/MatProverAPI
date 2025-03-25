@@ -1,11 +1,14 @@
 package dat.entities;
 
+import dat.dto.AssignmentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,13 +27,13 @@ public class Assignment
     @ManyToOne
     private UserAccount owner;
 
-    @ManyToMany
-    private Set<Question> questions;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Question> questions = new HashSet<>();
 
     public Assignment(AssignmentDTO assignmentDTO)
     {
         this.introText = assignmentDTO.getIntroText();
-        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).toSet();
+        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
     }
 
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)

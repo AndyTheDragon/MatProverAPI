@@ -16,8 +16,8 @@ public class UserAccountDTO
     private String uniLogin;
     private String password;
     private Set<Roles> roles;
-    private Set<Assignment> assignments;
-    private MathTeam mathTeams;
+    private Set<AssignmentDTO> assignments;
+    private Set<MathTeamDTO> mathTeams;
 
     public UserAccountDTO(UserAccount userAccount)
     {
@@ -28,7 +28,7 @@ public class UserAccountDTO
        this.uniLogin = userAccount.getUniLogin();
        this.password = userAccount.getPassword();
        this.roles = userAccount.getRoles();
-       this.assignments = userAccount.getAssignments();
-       this.mathTeams = userAccount.getMathTeams();
+       //this.assignments = userAccount.getAssignments();
+       //this.mathTeams = userAccount.getMathTeams();
     }
 }

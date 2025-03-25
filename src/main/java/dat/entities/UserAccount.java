@@ -36,9 +36,6 @@ public class UserAccount
     private Set<Roles> roles = new HashSet<>();
 
     @OneToMany
-    private Set<Assignment> assignments = new HashSet<>();
-
-    @OneToMany
     private Set<MathTeam> mathTeams = new HashSet<>();
 
 
@@ -51,7 +48,7 @@ public class UserAccount
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public UserAccount(Integer id, String name, String email, String workplace, String uniLogin, String password, Set<Assignment> assignments)
+    public UserAccount(Integer id, String name, String email, String workplace, String uniLogin, String password)
     {
         this.id = id;
         this.name = name;
@@ -59,10 +56,9 @@ public class UserAccount
         this.workplace = workplace;
         this.uniLogin = uniLogin;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
-        this.assignments = assignments;
     }
 
-    public UserAccount(String name, String email, String workplace, String uniLogin, String password, Set<Roles> roles, Set<Assignment> assignments)
+    public UserAccount(String name, String email, String workplace, String uniLogin, String password, Set<Roles> roles)
     {
         this.name = name;
         this.email = email;
@@ -70,7 +66,6 @@ public class UserAccount
         this.uniLogin = uniLogin;
         this.password = BCrypt.hashpw(password, BCrypt.gensalt());
         this.roles = roles;
-        this.assignments = assignments;
     }
 
     public UserAccount(String uniLogin, String userPass)
@@ -126,5 +121,12 @@ public class UserAccount
             mathTeams.remove(mathTeam);
             mathTeam.setOwner(null);
         }
+    }
+
+    public Set<Assignment> getAssignments()
+    {
+        return mathTeams.stream()
+                .flatMap(mathTeam -> mathTeam.getAssignments().stream())
+                .collect(Collectors.toSet());
     }
 }

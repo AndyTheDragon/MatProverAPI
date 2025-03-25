@@ -89,7 +89,7 @@ class SecurityDAOTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(username, result.getUsername());
+        assertEquals(username, result.getUniLogin());
 
         // Verify user was persisted with the user role
         try (EntityManager em = emf.createEntityManager()) {
@@ -116,14 +116,14 @@ class SecurityDAOTest {
     @Test
     void testAddRoleToUser_Success() {
         // Arrange
-        String username = testUserAccount.getUsername();
+        String username = testUserAccount.getUniLogin();
 
         // Act
         UserAccount result = securityDAO.addRoleToUser(username, Roles.ADMIN);
 
         // Assert
         assertNotNull(result);
-        assertEquals(username, result.getUsername());
+        assertEquals(username, result.getUniLogin());
         assertEquals(2, result.getRoles().size());
         assertTrue(result.getRoles().contains(Roles.USER_READ));
         assertTrue(result.getRoles().contains(Roles.ADMIN));
@@ -163,7 +163,7 @@ class SecurityDAOTest {
 
         // Assert
         assertNotNull(result);
-        assertEquals(username, result.getUsername());
+        assertEquals(username, result.getUniLogin());
         assertEquals(1, result.getRoles().size());
         assertTrue(result.getRoles().contains(Roles.USER_READ));
         assertFalse(result.getRoles().contains(Roles.ADMIN));

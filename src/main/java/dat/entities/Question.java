@@ -1,5 +1,6 @@
 package dat.entities;
 
+import dat.dto.QuestionDTO;
 import dat.enums.Roles;
 import dat.enums.TestFormat;
 import jakarta.persistence.*;
@@ -37,9 +38,6 @@ public class Question
 
     @ManyToMany
     private Set<Assignment> assignments;
-
-    @ManyToMany
-    private Set<MathTeam> mathTeams;
 
 
     public Question(QuestionDTO questionDTO)
@@ -90,7 +88,7 @@ public class Question
         this.testFormat = testFormat;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat, Set<Assignment> assignments, Set<MathTeam> mathTeams)
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat, Set<Assignment> assignments)
     {
         this.termDate = termDate;
         this.year = year;
@@ -102,7 +100,6 @@ public class Question
         this.level = level;
         this.testFormat = testFormat;
         this.assignments = assignments;
-        this.mathTeams = mathTeams;
     }
 
     public void addAssignment(Assignment assignment)
@@ -121,28 +118,5 @@ public class Question
             assignments.remove(assignment);
             assignment.removeQuestion(this);
         }
-    }
-
-    public void addMathTeam(MathTeam mathTeam)
-    {
-        if (mathTeam != null)
-        {
-            mathTeams.add(mathTeam);
-            mathTeam.addQuestion(this);
-        }
-    }
-
-    public void removeMathTeam(MathTeam mathTeam)
-    {
-        if (mathTeam != null)
-        {
-            mathTeams.remove(mathTeam);
-            mathTeam.removeQuestion(this);
-        }
-    }
-
-    public void setMathTeams(Set<MathTeam> mathTeams)
-    {
-        this.mathTeams = mathTeams;
     }
 }

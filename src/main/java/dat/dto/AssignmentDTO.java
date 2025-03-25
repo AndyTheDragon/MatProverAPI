@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -20,7 +22,7 @@ public class AssignmentDTO
     private String introText;
     private MathTeam mathTeam;
     private UserAccount owner;
-    private Set<Question> questions;
+    private Set<QuestionDTO> questions;
     private Integer amountOfQuestions;
     private Integer totalPoints;
 
