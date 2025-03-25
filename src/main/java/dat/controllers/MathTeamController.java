@@ -44,4 +44,16 @@ public class MathTeamController implements IController
         ErrorMessage error = new ErrorMessage("Error, not implementet yet");
         ctx.status(501).json(error);
     }
+
+    public void addAssignmentToTeam(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
+
+    public void removeAssignmentFromTeam(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
 }
