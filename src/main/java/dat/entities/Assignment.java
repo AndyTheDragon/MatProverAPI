@@ -56,6 +56,22 @@ public class Assignment
         return totalPoints;
     }
 
+    public void addQuestion(Question question)
+    {
+        if (question != null)
+        {
+            questions.add(question);
+        }
+    }
+
+    public void removeQuestion(Question question)
+    {
+        if (question != null)
+        {
+            questions.remove(question);
+        }
+    }
+
     public void setIntroText(String introText)
     {
         this.introText = introText;
