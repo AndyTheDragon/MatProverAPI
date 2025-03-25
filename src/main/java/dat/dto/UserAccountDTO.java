@@ -19,7 +19,7 @@ public class UserAccountDTO
     private String password;
     private Set<Roles> roles;
     private Set<Assignment> assignments;
-    private MathTeam mathTeams;
+    private Set<MathTeam> mathTeams;
 
     public UserAccountDTO(UserAccount userAccount)
     {
