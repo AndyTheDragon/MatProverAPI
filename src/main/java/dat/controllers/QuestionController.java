@@ -14,18 +14,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class HotelController implements IController
+public class QuestionController implements IController
 {
     private final CrudDAO dao;
-    private static final Logger logger = LoggerFactory.getLogger(HotelController.class);
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
 
-    public HotelController(EntityManagerFactory emf)
+    public QuestionController(EntityManagerFactory emf)
     {
         dao = new HotelDAO(emf);
     }
 
-    public HotelController(CrudDAO dao)
+    public QuestionController(CrudDAO dao)
     {
         this.dao = dao;
     }
@@ -138,21 +138,9 @@ public class HotelController implements IController
         }
     }
 
-    public void getRooms(@NotNull Context context)
+    public void getCategory(Context ctx)
     {
-        try
-        {
-            long id = context.pathParamAsClass("id", Long.class)
-                    .check(i -> i>0, "id must be at least 0")
-                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            Hotel hotel = dao.getById(Hotel.class, id);
-            context.json(hotel.getRooms());
-        }
-        catch (Exception ex)
-        {
-            logger.error("Error getting rooms", ex);
-            ErrorMessage error = new ErrorMessage("Error getting rooms");
-            context.status(404).json(error);
-        }
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
     }
 }

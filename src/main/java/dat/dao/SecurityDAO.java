@@ -42,7 +42,7 @@ public class SecurityDAO extends GenericDAO implements ISecurityDAO
     public UserAccount createUser(String username, String password)
     {
         UserAccount userAccount = new UserAccount(username, password);
-        userAccount.addRole(Roles.USER);
+        userAccount.addRole(Roles.USER_READ);
         try
         {
             userAccount = super.create(userAccount);
