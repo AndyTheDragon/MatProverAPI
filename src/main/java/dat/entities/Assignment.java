@@ -28,6 +28,11 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
+    public Assignment(AssignmentDTO assignmentDTO)
+    {
+        this.introText = assignmentDTO.getIntroText();
+        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).toSet();
+    }
 
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
     {
@@ -37,12 +42,12 @@ public class Assignment
         this.questions = questions;
     }
 
-    public int numberOfQuestionsInAssignment()
+    public int getAmountOfQuestions()
     {
         return questions.size();
     }
 
-    public int totalPointsInAssignment()
+    public int getTotalPoints()
     {
         int totalPoints = 0;
         for (Question question : questions)
