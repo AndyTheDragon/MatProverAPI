@@ -66,21 +66,20 @@ public class QuestionController implements IController
     {
         try
         {
-            HotelDTO incomingTest = ctx.bodyAsClass(HotelDTO.class);
-            Hotel entity = new Hotel(incomingTest);
-            Hotel createdEntity = dao.create(entity);
-            for (Room room : entity.getRooms())
-            {
-                room.setHotel(createdEntity);
-                dao.update(room);
-            }
-            ctx.json(new HotelDTO(createdEntity));
+            logger.info("Received request to create a new Question");
+            QuestionDTO incomingTest = ctx.bodyAsClass(QuestionDTO.class);
+            logger.info("Request data: {}", incomingTest);
+
+            Question entity = new Question(incomingTest);
+            Question createdEntity = dao.create(entity);
+
+            logger.info("Created new Question with ID: {}", createdEntity.getId());
+            ctx.json(new QuestionDTO(createdEntity));
         }
         catch (Exception ex)
         {
             logger.error("Error creating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error creating entity");
-            ctx.status(400).json(error);
+            throw new ApiException(400, "Field ‘xxx’ is required"); //Jeg ved ikke hvordan jeg gør `xxx´ dynamisk.
         }
     }
 
