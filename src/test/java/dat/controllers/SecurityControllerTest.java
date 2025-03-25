@@ -32,11 +32,12 @@ class SecurityControllerTest {
 
     @BeforeAll
     static void setUpAll() {
-        QuestionController questionController = new QuestionController(emf);
-        AssignmentController assignmentController = new AssignmentController(emf);
-        MathTeamController mathTeamController = new MathTeamController(emf);
-        SecurityController securityController = new SecurityController(emf);
-        Routes routes = new Routes(questionController, assignmentController, mathTeamController, securityController);
+        final Map<String, IController> controllers = new HashMap<>();
+        controllers.put("question", new QuestionController(emf));
+        controllers.put("assignment", new AssignmentController(emf));
+        controllers.put("mathTeam", new MathTeamController(emf));
+        controllers.put("security", new SecurityController(emf));
+        Routes routes = new Routes(controllers);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
