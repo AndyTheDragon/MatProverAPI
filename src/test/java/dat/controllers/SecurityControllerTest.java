@@ -58,12 +58,12 @@ class SecurityControllerTest {
 
             // Create test user with user role
             UserAccount testUserAccount = new UserAccount(TEST_USER, TEST_PASSWORD);
-            testUserAccount.addRole(Roles.USER);
+            testUserAccount.addRole(Roles.USER_READ);
             em.persist(testUserAccount);
 
             // Create test admin with admin role
             UserAccount testAdmin = new UserAccount(TEST_ADMIN, TEST_PASSWORD);
-            testAdmin.addRole(Roles.USER);
+            testAdmin.addRole(Roles.USER_READ);
             testAdmin.addRole(Roles.ADMIN);
             em.persist(testAdmin);
 
