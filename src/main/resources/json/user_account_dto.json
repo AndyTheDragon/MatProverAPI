@@ -1,0 +1,7 @@
+{
+  "name": "String",
+  "email": "String",
+  "skole": "String",
+  "unilogin": "String",
+  "role": "Enum"
+}
