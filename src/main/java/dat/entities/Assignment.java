@@ -18,7 +18,6 @@ public class Assignment
     @Column(name = "assignment_id", nullable = false)
     private Integer id;
     private String introText;
-
     @ManyToOne
     private MathTeam mathTeam;
 
@@ -55,5 +54,20 @@ public class Assignment
             totalPoints += question.getPoints();
         }
         return totalPoints;
+    }
+
+    public void setIntroText(String introText)
+    {
+        this.introText = introText;
+    }
+
+    public void setMathTeam(MathTeam mathTeam)
+    {
+        this.mathTeam = mathTeam;
+    }
+
+    public void setOwner(UserAccount owner)
+    {
+        this.owner = owner;
     }
 }
