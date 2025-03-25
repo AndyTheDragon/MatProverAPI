@@ -28,6 +28,7 @@ public class Question
     private String questionText;
     private String pictureURL;
     private String category;
+    private String license;
 
     @ElementCollection
     private List<String> level = new ArrayList<>(Arrays.asList("A", "B", "C", null));
