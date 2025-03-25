@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,20 +22,16 @@ public class MathTeam
     private Integer id;
     private String description;
 
-    @OneToMany
-    private Set<Assignment> assignments;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Assignment> assignments = new HashSet<>();
 
     @ManyToOne
     private UserAccount owner;
-
-    @ManyToMany
-    private Set<Question> questions;
 
     public MathTeam(MathTeamDTO mathTeamDTO)
     {
         this.description = mathTeamDTO.getDescription();
         this.assignments = mathTeamDTO.getAssignments().stream().map(Assignment::new).collect(Collectors.toSet());
-        this.questions = mathTeamDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
     }
     public MathTeam(String description)
     {
@@ -48,20 +45,13 @@ public class MathTeam
         this.owner = owner;
     }
 
-    public MathTeam(String description, Set<Assignment> assignments, UserAccount owner, Set<Question> questions)
-    {
-        this.description = description;
-        this.assignments = assignments;
-        this.owner = owner;
-        this.questions = questions;
-    }
-
     public void addAssignment(Assignment assignment)
     {
         if (assignment != null)
         {
             assignments.add(assignment);
             assignment.setMathTeam(this);
+            assignment.setOwner(owner);
         }
     }
 
@@ -74,27 +64,15 @@ public class MathTeam
         }
     }
 
-  public void addQuestion(Question question)
-    {
-        if (question != null)
-        {
-            questions.add(question);
-            question.addMathTeam(this);
-        }
-    }
-
-    public void removeQuestion(Question question)
-    {
-        if (question != null)
-        {
-            questions.remove(question);
-            question.removeMathTeam(this);
-        }
-    }
-
-
     public void setOwner(UserAccount owner)
     {
         this.owner = owner;
+    }
+
+    public Set<Question> getQuestions()
+    {
+        return assignments.stream()
+                .flatMap(assignment -> assignment.getQuestions().stream())
+                .collect(Collectors.toSet());
     }
 }

@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -26,8 +27,8 @@ public class Assignment
     @ManyToOne
     private UserAccount owner;
 
-    @ManyToMany
-    private Set<Question> questions;
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Question> questions = new HashSet<>();
 
     public Assignment(AssignmentDTO assignmentDTO)
     {
