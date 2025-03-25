@@ -47,23 +47,47 @@ public class DBPopulator
             Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
             for (QuestionDTO dto : questions)
             {
-                genericDAO.persist(dto);
+                genericDAO.create(new Question(dto));
             }
 
         } catch (Exception e)
         {
-            //
+            logger.info("could not create object  : question to database");
         }
     }
 
     private void readQuestionStudentDTO()
     {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            Set<QuestionStudentDTO> list = objectMapper.convertValue(node, new TypeReference<Set<QuestionStudentDTO>>() {});
+            for (QuestionStudentDTO dto : list)
+            {
+                //genericDAO.create(new Question(dto));
+            }
 
+        } catch (Exception e)
+        {
+            logger.info("could not create object  : questionStudentDTO to database");
+        }
     }
 
     private void readAssignmentInfoDTO()
     {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            Set<AssignmentInfoDTO> list = objectMapper.convertValue(node, new TypeReference<Set<AssignmentInfoDTO>>() {});
+            for (AssignmentInfoDTO dto : list)
+            {
+                genericDAO.create(new Assignment(dto));
+            }
 
+        } catch (Exception e)
+        {
+            logger.info("could not create object  : questionStudentDTO to database");
+        }
     }
 
     private void readUserAccountDTO()
