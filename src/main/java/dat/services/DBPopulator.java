@@ -7,6 +7,7 @@ import dat.dto.QuestionDTO;
 import dat.dto.QuestionStudentDTO;
 import dat.dto.UserAccountDTO;
 import dat.entities.Assignment;
+import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
 import org.slf4j.Logger;
@@ -37,11 +38,13 @@ public class DBPopulator
 
     public static void main(String[] args)
     {
-        // Run this line once to insert data to the DB from the JSON file.
 
-        /*
+        readAssignmentInfoDTO();
+        readQuestionDTO();
+        readMathTeamDTO();
+        readUserAccountDTO();
         populateDB();
-        // */
+
     }
 
     private void populateDB()
@@ -49,7 +52,7 @@ public class DBPopulator
 
     }
 
-    private void readQuestionDTO()
+    private static void readQuestionDTO()
     {
         try
         {
@@ -66,24 +69,7 @@ public class DBPopulator
         }
     }
 
-    private void readQuestionStudentDTO()
-    {
-        try
-        {
-            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
-            Set<QuestionStudentDTO> list = objectMapper.convertValue(node, new TypeReference<Set<QuestionStudentDTO>>() {});
-            for (QuestionStudentDTO dto : list)
-            {
-                //genericDAO.create(new Question(dto));
-            }
-
-        } catch (Exception e)
-        {
-            logger.info("could not create object  : questionStudentDTO to database");
-        }
-    }
-
-    private void readAssignmentInfoDTO()
+    private static void readAssignmentInfoDTO()
     {
         try
         {
@@ -100,7 +86,7 @@ public class DBPopulator
         }
     }
 
-    private void readUserAccountDTO()
+    private static void readUserAccountDTO()
     {
         try
         {
@@ -117,12 +103,24 @@ public class DBPopulator
         }
     }
 
-    private void readMathTeamDTO()
+    private static void readMathTeamDTO()
     {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/json/math_team_dto.json"));
+            Set<MathTeam> list = objectMapper.convertValue(node, new TypeReference<Set<MathTeam>>() {});
+            for (MathTeam dto : list)
+            {
+                genericDAO.create(new MathTeam(String.valueOf(dto)));
+            }
 
+        } catch (Exception e)
+        {
+            logger.info("could not create object  : questionStudentDTO to database");
+        }
     }
 
-    private void createUsers()
+    private static void createUsers()
     {
         try (Reader reader = new InputStreamReader(
             ReadHotelsFromJson.class.getClassLoader().getResourceAsStream("hotels_with_rooms.json"),
