@@ -14,7 +14,8 @@ public class AssignmentController implements IController
     @Override
     public void create(Context ctx)
     {
-
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
     }
 
     @Override
