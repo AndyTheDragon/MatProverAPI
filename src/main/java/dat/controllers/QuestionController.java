@@ -4,6 +4,7 @@ import dat.dao.CrudDAO;
 import dat.dao.HotelDAO;
 import dat.dto.ErrorMessage;
 import dat.dto.HotelDTO;
+import dat.dto.QuestionDTO;
 import dat.entities.Hotel;
 import dat.entities.Question;
 import dat.entities.Room;
@@ -51,13 +52,12 @@ public class QuestionController implements IController
             long id = ctx.pathParamAsClass("id", Long.class)
                     .check(i -> i>0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            HotelDTO foundEntity = new HotelDTO(dao.getById(Hotel.class, id));
+            QuestionDTO foundEntity = new QuestionDTO(dao.getById(Question.class, id));
             ctx.json(foundEntity);
 
         } catch (Exception ex){
             logger.error("Error getting entity", ex);
-            ErrorMessage error = new ErrorMessage("No entity with that id");
-            ctx.status(404).json(error);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
