@@ -244,4 +244,9 @@ public class SecurityController implements ISecurityController
         ctx.status(501).json(error);
     }
 
+    public void delete(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
 }
