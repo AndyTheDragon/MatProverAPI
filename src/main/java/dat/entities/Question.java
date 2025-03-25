@@ -140,4 +140,9 @@ public class Question
             mathTeam.removeQuestion(this);
         }
     }
+
+    public void setMathTeams(Set<MathTeam> mathTeams)
+    {
+        this.mathTeams = mathTeams;
+    }
 }
