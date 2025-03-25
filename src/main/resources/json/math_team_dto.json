@@ -1,0 +1,57 @@
+{
+  "id": "Number",
+  "owner": {
+    "id": "Number"
+  },
+  "desc": "String",
+  "used_examquestions": [
+    {
+      "id": "Number",
+      "niveau": ["A", "B", "C", null],
+      "termin": "Date",
+      "year": "Number",
+      "delprøve": [1, 2, null],
+      "category": ["String1", "String2", "String3", "String4"],
+      "author": "String",
+      "licens": "String",
+      "point": "Number",
+      "opgavenummer": "Number",
+      "opgavetekst": "String",
+      "billede_url": "String"
+    },
+    {
+      "id": "Number",
+      "niveau": ["A", "B", "C", null],
+      "termin": "Date",
+      "year": "Number",
+      "delprøve": [1, 2, null],
+      "category": ["String1", "String2", "String3", "String4"],
+      "author": "String",
+      "licens": "String",
+      "point": "Number",
+      "opgavenummer": "Number",
+      "opgavetekst": "String",
+      "billede_url": "String"
+    }
+  ],
+  "assignments": [
+    {
+      "id": "Number",
+      "owner": {
+        "id": "Number"
+      },
+      "intro_text": "String",
+      "total_antal_opgaver": "Number",
+      "total_point": "Number"
+    },
+    {
+      "id": "Number",
+      "owner": {
+        "id": "Number"
+      },
+      "intro_text": "String",
+      "total_antal_opgaver": "Number",
+      "total_point": "Number"
+    }
+  ]
+}
