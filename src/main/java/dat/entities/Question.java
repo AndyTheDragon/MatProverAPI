@@ -1,6 +1,7 @@
 package dat.entities;
 
 import dat.enums.Roles;
+import dat.enums.TestFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,12 +30,10 @@ public class Question
     private String pictureURL;
     private String category;
     private String license;
+    private String level;
 
-    @ElementCollection
-    private List<String> level = new ArrayList<>(Arrays.asList("A", "B", "C", null));
-
-    @ElementCollection
-    private List<Integer> testForm = new ArrayList<>(Arrays.asList(1, 2, null)); //Har kaldt denne for testForm istedet for delprøve. Den kan vi lige vende sammen.
+    @Enumerated(EnumType.STRING)
+    private TestFormat testFormat;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
@@ -68,7 +67,7 @@ public class Question
         this.pictureURL = pictureURL;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, List<String> level, List<Integer> testForm)
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, TestFormat testFormat)
     {
         this.termDate = termDate;
         this.year = year;
@@ -77,10 +76,10 @@ public class Question
         this.questionText = questionText;
         this.pictureURL = pictureURL;
         this.level = level;
-        this.testForm = testForm;
+        this.testFormat = testFormat;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, List<String> level, List<Integer> testForm, Set<Roles> roles, Set<Assignment> assignments, Set<MathTeam> mathTeams)
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, TestFormat testFormat, Set<Roles> roles, Set<Assignment> assignments, Set<MathTeam> mathTeams)
     {
         this.termDate = termDate;
         this.year = year;
@@ -89,7 +88,7 @@ public class Question
         this.questionText = questionText;
         this.pictureURL = pictureURL;
         this.level = level;
-        this.testForm = testForm;
+        this.testFormat = testFormat;
         this.roles = roles;
         this.assignments = assignments;
         this.mathTeams = mathTeams;
