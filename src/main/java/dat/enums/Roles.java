@@ -11,5 +11,4 @@ public enum Roles implements RouteRole
     ADMIN,
     CONTRIBUTOR,
     ANYONE,
-    USER;
 }
