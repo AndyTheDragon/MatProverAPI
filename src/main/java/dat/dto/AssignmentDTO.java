@@ -29,7 +29,7 @@ public class AssignmentDTO
         this.id = assignment.getId();
         this.owner = assignment.getOwner();
         this.introText = assignment.getIntroText();
-        this.amountOfQuestions = assignment.numberOfQuestionsInAssignment();
-        this.totalPoints = assignment.totalPointsInAssignment();
+        this.amountOfQuestions = assignment.getAmountOfQuestions();
+        this.totalPoints = assignment.getTotalPoints();
     }
 }
