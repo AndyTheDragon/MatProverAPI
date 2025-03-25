@@ -57,6 +57,7 @@ public class Routes
             post(assignmentController::create, Roles.ANYONE);
             post("/{id}/add", assignmentController::addQuestionToAssignment, Roles.ANYONE);
             delete("/{id}/remove", assignmentController::removeQuestionFromAssignment, Roles.ANYONE);
+            delete("/{id}", assignmentController::delete, Roles.ANYONE);
         };
     }
 
@@ -66,6 +67,9 @@ public class Routes
             get(mathTeamController::getAll, Roles.ANYONE);
             get("/{id}", mathTeamController::getById, Roles.ANYONE);
             post(mathTeamController::create, Roles.ANYONE);
+            post("/{id}/add", mathTeamController::addAssignmentToTeam, Roles.ANYONE);
+            delete("/{id}/remove", mathTeamController::removeAssignmentFromTeam, Roles.ANYONE);
+            delete("/{id}", mathTeamController::delete, Roles.ANYONE);
         };
     }
 
@@ -74,6 +78,7 @@ public class Routes
         return () -> {
             get(securityController::getAll, Roles.ANYONE);
             get("/{id}", securityController::getById, Roles.ANYONE);
+            delete("/{id}", securityController::delete, Roles.ANYONE);
         };
     }
 
