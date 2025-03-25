@@ -1,11 +1,10 @@
 package dat.services;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.IOException;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.Reader;
+
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -17,6 +16,9 @@ import dat.dao.GenericDAO;
 public class DBPopulator
 {
     private static final Logger logger = LoggerFactory.getLogger(DBPopulator.class);
+    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private GenericDAO genericDAO;
+
     private static final String userAccountJsonDTO = "json/user_account_dto.json";
     private static final String questionJsonDTO = "json/question_dto.json";
     private static final String questionStudentJsonDTO = "json/question_student_dto.json";
@@ -39,7 +41,19 @@ public class DBPopulator
 
     private void readQuestionDTO()
     {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
+            for (QuestionDTO dto : questions)
+            {
+                genericDAO.persist(dto);
+            }
 
+        } catch (Exception e)
+        {
+            //
+        }
     }
 
     private void readQuestionStudentDTO()
