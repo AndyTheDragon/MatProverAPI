@@ -1,5 +1,6 @@
 package dat.entities;
 
+import dat.dto.UserAccountDTO;
 import dat.enums.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,15 @@ public class UserAccount
     private Set<MathTeam> mathTeams = new HashSet<>();
 
 
+    public UserAccount(UserAccountDTO userAccountDTO)
+    {
+        this.id = userAccountDTO.getId();
+        this.name = userAccountDTO.getName();
+        this.email = userAccountDTO.getEmail();
+        this.workplace = userAccountDTO.getWorkplace();
+        this.uniLogin = userAccountDTO.getUniLogin();
+        this.roles = roles.stream().collect(Collectors.toSet());
+    }
     public UserAccount(String name, String email, String workplace, String uniLogin, String password)
     {
         this.name = name;
