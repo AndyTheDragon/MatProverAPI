@@ -72,6 +72,24 @@ public class MathTeam
         }
     }
 
+    public void addQuestion(Question question)
+    {
+        if (question != null)
+        {
+            questions.add(question);
+            question.setMathTeams(this);
+        }
+    }
+
+    public void removeQuestion(Question question)
+    {
+        if (question != null)
+        {
+            questions.remove(question);
+            question.setMathTeams(null);
+        }
+    }
+
     public void setAssignments(Set<Assignment> assignments)
     {
         this.assignments = assignments;
