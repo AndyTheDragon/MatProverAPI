@@ -23,7 +23,7 @@ public class Question
     private LocalDate termDate;
     private int year;
     private String author;
-    private int points; //Har kaldt denne her points da point lød mærkeligt.
+    private int points;
     @Column(nullable = false, unique = true)
     private int questionNumber;
     private String questionText;
@@ -35,10 +35,6 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private Set<Roles> roles = new HashSet<>();
-
     @ManyToMany
     private Set<Assignment> assignments;
 
@@ -46,6 +42,20 @@ public class Question
     private Set<MathTeam> mathTeams;
 
 
+    public Question(QuestionDTO questionDTO)
+    {
+        this.termDate = questionDTO.getTermDate();
+        this.year = questionDTO.getYear();
+        this.author = questionDTO.getAuthor();
+        this.points = questionDTO.getPoints();
+        this.questionNumber = questionDTO.getQuestionNumber();
+        this.questionText = questionDTO.getQuestionText();
+        this.pictureURL = questionDTO.getPictureURL();
+        this.category = questionDTO.getCategory();
+        this.license = questionDTO.getLicense();
+        this.level = questionDTO.getLevel();
+        this.testFormat = questionDTO.getTestFormat();
+    }
     public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText)
     {
         this.termDate = termDate;
@@ -67,7 +77,7 @@ public class Question
         this.pictureURL = pictureURL;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, TestFormat testFormat)
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat)
     {
         this.termDate = termDate;
         this.year = year;
@@ -75,11 +85,12 @@ public class Question
         this.points = points;
         this.questionText = questionText;
         this.pictureURL = pictureURL;
+        this.license = license;
         this.level = level;
         this.testFormat = testFormat;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, TestFormat testFormat, Set<Roles> roles, Set<Assignment> assignments, Set<MathTeam> mathTeams)
+    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat, Set<Assignment> assignments, Set<MathTeam> mathTeams)
     {
         this.termDate = termDate;
         this.year = year;
@@ -87,10 +98,46 @@ public class Question
         this.points = points;
         this.questionText = questionText;
         this.pictureURL = pictureURL;
+        this.license = license;
         this.level = level;
         this.testFormat = testFormat;
-        this.roles = roles;
         this.assignments = assignments;
         this.mathTeams = mathTeams;
+    }
+
+    public void addAssignment(Assignment assignment)
+    {
+        if (assignment != null)
+        {
+            assignments.add(assignment);
+            assignment.addQuestion(this);
+        }
+    }
+
+    public void removeAssignment(Assignment assignment)
+    {
+        if (assignment != null)
+        {
+            assignments.remove(assignment);
+            assignment.removeQuestion(this);
+        }
+    }
+
+    public void addMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.add(mathTeam);
+            mathTeam.addQuestion(this);
+        }
+    }
+
+    public void removeMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.remove(mathTeam);
+            mathTeam.removeQuestion(this);
+        }
     }
 }
