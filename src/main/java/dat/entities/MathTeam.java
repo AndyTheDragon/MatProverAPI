@@ -28,7 +28,12 @@ public class MathTeam
     @ManyToMany
     private Set<Question> questions;
 
-
+    public MathTeam(MathTeamDTO MathTeamDTO)
+    {
+        this.description = MathTeamDTO.getDescription();
+        this.assignments = MathTeamDTO.getAssignments.stream.map(Assignment::new).toSet();
+        this.questions = MathTeamDTO.getQuestions.stream.map(Question::new).toSet();
+    }
     public MathTeam(String description)
     {
         this.description = description;
