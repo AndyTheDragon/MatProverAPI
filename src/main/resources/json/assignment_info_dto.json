@@ -1,0 +1,9 @@
+{
+  "id": "Number",
+  "owner": {
+    "id": "Number"
+  },
+  "intro_text": "String",
+  "total_antal_opgaver": "Number",
+  "total_point": "Number"
+}
