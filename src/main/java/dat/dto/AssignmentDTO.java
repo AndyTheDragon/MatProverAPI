@@ -21,7 +21,7 @@ public class AssignmentDTO
     private Integer id;
     private String introText;
     private MathTeam mathTeam;
-    private UserAccount owner;
+    private Integer owner;
     private Set<QuestionDTO> questions;
     private Integer amountOfQuestions;
     private Integer totalPoints;
@@ -29,9 +29,9 @@ public class AssignmentDTO
     public AssignmentDTO(Assignment assignment)
     {
         this.id = assignment.getId();
-        this.owner = assignment.getOwner();
+        this.owner = assignment.getOwner().getId();
         this.introText = assignment.getIntroText();
-        this.amountOfQuestions = assignment.getAmountOfQuestions();
+        //this.amountOfQuestions = assignment.getAmountOfQuestions();
         this.totalPoints = assignment.getTotalPoints();
     }
 }
