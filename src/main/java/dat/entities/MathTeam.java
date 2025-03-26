@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,8 +34,8 @@ public class MathTeam
     public MathTeam(MathTeamDTO MathTeamDTO)
     {
         this.description = MathTeamDTO.getDescription();
-        this.assignments = MathTeamDTO.getAssignments.stream.map(Assignment::new).toSet();
-        this.questions = MathTeamDTO.getQuestions.stream.map(Question::new).toSet();
+        this.assignments = MathTeamDTO.getAssignments().stream().collect(Collectors.toSet());
+        this.questions = MathTeamDTO.getQuestions().stream().collect(Collectors.toSet());
     }
     public MathTeam(String description)
     {
