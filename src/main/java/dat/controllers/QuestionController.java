@@ -33,7 +33,7 @@ public class QuestionController implements IController, IQuestionController
     {
         try
         {
-            ctx.status(200).json(dao.getAll(Question.class));
+            ctx.status(200).json(dao.getMany(Question.class));
         }
         catch (Exception ex)
         {
