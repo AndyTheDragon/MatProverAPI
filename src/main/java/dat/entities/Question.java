@@ -36,7 +36,7 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 
 
