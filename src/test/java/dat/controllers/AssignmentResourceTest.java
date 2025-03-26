@@ -79,7 +79,7 @@ class AssignmentResourceTest
             MathTeam test_myMathTeam = new MathTeam("MathTeam 2a");
             test_myMathTeam = test_dao.create(test_myMathTeam);
             test_myUser.addMathTeam(test_myMathTeam);
-            test_myUser = test_dao.update(test_myUser);
+            test_dao.update(test_myUser);
 
             Assignment assignment = new Assignment();
             test_myMathTeam.addAssignment(assignment);
@@ -87,8 +87,8 @@ class AssignmentResourceTest
             test_myMathTeam = test_dao.update(test_myMathTeam);
 
             assignment.addQuestion(test_question);
-            assignment = test_dao.update(assignment);
-            test_myMathTeam = test_dao.update(test_myMathTeam);
+            test_dao.update(assignment);
+            test_dao.update(test_myMathTeam);
 
 
             em.getTransaction().commit();
