@@ -16,8 +16,10 @@ import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Consumer;
 
-public class QuestionController implements IController
+
+public class QuestionController implements IController, IQuestionController
 {
     private final CrudDAO dao;
     private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
@@ -74,7 +76,7 @@ public class QuestionController implements IController
             Question createdEntity = dao.create(entity);
 
             logger.info("Created new Question with ID: {}", createdEntity.getId());
-            ctx.json(new QuestionDTO(createdEntity));
+            ctx.status(201).json(new QuestionDTO(createdEntity));
         }
         catch (Exception ex)
         {
@@ -87,29 +89,37 @@ public class QuestionController implements IController
     {
         try
         {
-            //int id = Integer.parseInt(ctx.pathParam("id"));
-            long id = ctx.pathParamAsClass("id", Long.class)
-                    .check(i -> i>0, "id must be at least 0")
-                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            HotelDTO incomingEntity = ctx.bodyAsClass(HotelDTO.class);
-            Hotel hotelToUpdate = dao.getById(Hotel.class, id);
-            if (incomingEntity.getName() != null)
-            {
-                hotelToUpdate.setName(incomingEntity.getName());
+            logger.info("Received request to update a Question");
+            QuestionDTO questionDTO = ctx.bodyAsClass(QuestionDTO.class);
+            logger.info("Request data: {}", questionDTO);
+
+            if (questionDTO.getId() == null || questionDTO.getId() <= 0) {
+                logger.warn("Invalid id: {}", questionDTO.getId());
+                throw new BadRequestResponse("Invalid id");
             }
-            if (incomingEntity.getAddress() != null)
-            {
-                hotelToUpdate.setAddress(incomingEntity.getAddress());
-            }
-            Hotel updatedEntity = dao.update(hotelToUpdate);
-            HotelDTO returnedEntity = new HotelDTO(updatedEntity);
-            ctx.json(returnedEntity);
+            logger.info("Updating Question with ID: {}", questionDTO.getId());
+
+            Question questionToUpdate = dao.getById(Question.class, questionDTO.getId());
+
+            updateFieldIfNotNull(questionToUpdate::setTermDate, questionDTO.getTermDate());
+            updateFieldIfNotNull(questionToUpdate::setAuthor, questionDTO.getAuthor());
+            updateFieldIfNotNull(questionToUpdate::setPoints, questionDTO.getPoints());
+            updateFieldIfNotNull(questionToUpdate::setYear, questionDTO.getYear());
+            updateFieldIfNotNull(questionToUpdate::setQuestionText, questionDTO.getQuestionText());
+            updateFieldIfNotNull(questionToUpdate::setPictureURL, questionDTO.getPictureURL());
+            updateFieldIfNotNull(questionToUpdate::setCategory, questionDTO.getCategory());
+            updateFieldIfNotNull(questionToUpdate::setLicense, questionDTO.getLicense());
+            updateFieldIfNotNull(questionToUpdate::setLevel, questionDTO.getLevel());
+            updateFieldIfNotNull(questionToUpdate::setTestFormat, questionDTO.getTestFormat());
+
+            Question updatedEntity = dao.update(questionToUpdate);
+            logger.info("Successfully updated Question with ID: {}", updatedEntity.getId());
+            ctx.json(new QuestionDTO(updatedEntity));
         }
         catch (Exception ex)
         {
             logger.error("Error updating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error updating entity. " + ex.getMessage());
-            ctx.status(400).json(error);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -121,7 +131,7 @@ public class QuestionController implements IController
             long id = ctx.pathParamAsClass("id", Long.class)
                     .check(i -> i>0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            dao.delete(Hotel.class, id);
+            dao.delete(Question.class, id);
             ctx.status(204);
         }
         catch (Exception ex)
@@ -129,6 +139,13 @@ public class QuestionController implements IController
             logger.error("Error deleting entity", ex);
             ErrorMessage error = new ErrorMessage("Error deleting entity");
             ctx.status(400).json(error);
+        }
+    }
+
+    @Override
+    public <T> void updateFieldIfNotNull(Consumer<T> setter, T value) {
+        if (value != null) {
+            setter.accept(value);
         }
     }
 
