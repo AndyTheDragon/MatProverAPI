@@ -25,8 +25,9 @@ public class Question
     private int year;
     private String author;
     private int points;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int questionNumber;
+    @Column(nullable = false)
     private String questionText;
     private String pictureURL;
     private String category;
@@ -36,7 +37,7 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 
 
@@ -118,5 +119,60 @@ public class Question
             assignments.remove(assignment);
             assignment.removeQuestion(this);
         }
+    }
+
+    public void setTermDate(LocalDate termDate)
+    {
+        this.termDate = termDate;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+
+    public void setPoints(int points)
+    {
+        this.points = points;
+    }
+
+    public void setQuestionNumber(int questionNumber)
+    {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionText(String questionText)
+    {
+        this.questionText = questionText;
+    }
+
+    public void setPictureURL(String pictureURL)
+    {
+        this.pictureURL = pictureURL;
+    }
+
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
+
+    public void setLicense(String license)
+    {
+        this.license = license;
+    }
+
+    public void setLevel(String level)
+    {
+        this.level = level;
+    }
+
+    public void setTestFormat(TestFormat testFormat)
+    {
+        this.testFormat = testFormat;
     }
 }

@@ -41,7 +41,7 @@ public class Routes
         return () -> {
             get(questionController::getAll, Roles.ANYONE);
             get("/{id}", questionController::getById, Roles.ANYONE);
-            get("/{category}", questionController::getCategory, Roles.ANYONE);
+            //get("/{category}", questionController::getCategory, Roles.ANYONE);
             post(questionController::create, Roles.ANYONE);
             patch(questionController::update, Roles.ANYONE);
             delete("/{id}", questionController::delete, Roles.ANYONE);
