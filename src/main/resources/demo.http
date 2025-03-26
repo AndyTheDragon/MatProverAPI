@@ -10,7 +10,7 @@ GET localhost:7070/api/opgave
 GET localhost:7070/api/opgave/1
 
 ###
-###GET localhost:7070/api/Algebra
+GET localhost:7070/api/opgave/1?output=full
 
 ###
 POST localhost:7070/api/opgave
