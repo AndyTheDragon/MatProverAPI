@@ -9,7 +9,6 @@ import dat.entities.Room;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,7 +36,7 @@ public class QuestionController implements IController
     {
         try
         {
-            ctx.json(dao.getAll(Hotel.class));
+            ctx.json(dao.getMany(Hotel.class));
         }
         catch (Exception ex)
         {

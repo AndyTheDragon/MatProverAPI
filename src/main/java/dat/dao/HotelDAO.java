@@ -15,7 +15,7 @@ public class HotelDAO extends GenericDAO implements IHotelDAO
 
     public List<Hotel> getAllHotels()
     {
-        return super.getAll(Hotel.class);
+        return super.getMany(Hotel.class);
     }
 
     public Hotel getHotelById(Long id)
