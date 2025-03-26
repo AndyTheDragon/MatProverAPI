@@ -32,24 +32,9 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
-    private String termin;
-    @JsonProperty("questionnumber")
-    private String questionNumber;
-    private String level;
-    private Integer year;
-    private String author;
-    private String licens;
-    @JsonProperty("testformat")
-    @Enumerated(EnumType.STRING)
-    private TestFormat testFormat;
     private Integer amountOfQuestions;
-    @JsonProperty("points")
     private Integer totalPoints;
-    private String category;
-    @JsonProperty("questiontext")
-    private String questionText;
-    @JsonProperty("pictureurl")
-    private String pictureUrl;
+
 
     public Assignment(AssignmentDTO assignmentDTO)
     {
