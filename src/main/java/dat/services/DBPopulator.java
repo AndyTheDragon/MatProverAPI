@@ -6,6 +6,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dat.dto.MathTeamDTO;
 import dat.dto.QuestionDTO;
 import dat.dto.UserAccountDTO;
+import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
@@ -36,7 +37,24 @@ public class DBPopulator
         readQuestionDTO();
         readMathTeamDTO();
         readUserAccountDTO();
+        readAssignments();
 
+    }
+
+    private static void readAssignments()
+    {
+        try
+        {
+            JsonNode node = objectMapper.readTree(new File("src/main/resources/json/opgaver.json"));
+            Set<Assignment> assignments = objectMapper.convertValue(node, new TypeReference<Set<Assignment>>() {});
+            for (Assignment ass : assignments)
+            {
+                genericDAO.create(ass);
+            }
+        } catch (Exception e)
+        {
+            logger.info("could not create object  : assignment(s) to database", e);
+        }
     }
 
     private static void readQuestionDTO()
