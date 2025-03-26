@@ -3,7 +3,7 @@ package dat.services;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import dat.dto.AssignmentInfoDTO;
+import dat.dto.MathTeamDTO;
 import dat.dto.QuestionDTO;
 import dat.dto.UserAccountDTO;
 import dat.entities.MathTeam;
@@ -13,8 +13,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -36,8 +34,8 @@ public class DBPopulator
 
 
         readQuestionDTO();
-        //readMathTeamDTO();
-        //readUserAccountDTO();
+        readMathTeamDTO();
+        readUserAccountDTO();
 
     }
 
@@ -48,13 +46,13 @@ public class DBPopulator
         try
         {
             JsonNode node = objectMapper.readTree(new File("src/main/resources/json/question_dto.json"));
-            QuestionDTO dto = objectMapper.convertValue(node, new TypeReference<QuestionDTO>() {});
-            //Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
-            genericDAO.create(new Question(dto));
-            /*for (QuestionDTO dto : questions)
+            //QuestionDTO dto = objectMapper.convertValue(node, new TypeReference<QuestionDTO>() {});
+            Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
+            //genericDAO.create(new Question(dto));
+            for (QuestionDTO dto : questions)
             {
                 genericDAO.create(new Question(dto));
-            }*/
+            }
 
         } catch (Exception e)
         {
@@ -64,36 +62,36 @@ public class DBPopulator
 
     private static void readUserAccountDTO()
     {
+        objectMapper.registerModule(new JavaTimeModule());
+
         try
         {
-            InputStream inputStream = DBPopulator.class.getClassLoader().getResourceAsStream("json/question_dto.json");
-            if (inputStream == null)
-            {
-                throw new IllegalArgumentException("file not found! ");
-            }
-
-            //JsonNode node = objectMapper.readTree(new File("src/json/user_account_dto.json"));
-            Set<UserAccountDTO> list = objectMapper.convertValue(inputStream, new TypeReference<Set<UserAccountDTO>>() {});
-            for (UserAccountDTO dto : list)
+            JsonNode node = objectMapper.readTree(new File("src/main/resources/json/user_account.json"));
+            //QuestionDTO dto = objectMapper.convertValue(node, new TypeReference<QuestionDTO>() {});
+            Set<UserAccountDTO> users = objectMapper.convertValue(node, new TypeReference<Set<UserAccountDTO>>() {});
+            //genericDAO.create(new Question(dto));
+            for (UserAccountDTO dto : users)
             {
                 genericDAO.create(new UserAccount(dto));
             }
 
         } catch (Exception e)
         {
-            logger.info("could not create object  : questionStudentDTO to database");
+            logger.info("could not create object  : question to database", e);
         }
     }
 
     private static void readMathTeamDTO()
     {
+        objectMapper.registerModule(new JavaTimeModule());
+
         try
         {
-            JsonNode node = objectMapper.readTree(new File("src/json/math_team_dto.json"));
-            Set<MathTeam> list = objectMapper.convertValue(node, new TypeReference<Set<MathTeam>>() {});
-            for (MathTeam dto : list)
+            JsonNode node = objectMapper.readTree(new File("src/main/resources/json/math_team_dto.json"));
+            Set<MathTeamDTO> list = objectMapper.convertValue(node, new TypeReference<Set<MathTeamDTO>>() {});
+            for (MathTeamDTO dto : list)
             {
-                genericDAO.create(new MathTeam(String.valueOf(dto)));
+                genericDAO.create(new MathTeam(String.valueOf(new MathTeam(dto))));
             }
 
         } catch (Exception e)
