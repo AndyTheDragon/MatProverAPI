@@ -53,25 +53,52 @@ GET localhost:7070/api/opgaveset/1
 
 ###
 POST localhost:7070/api/opgaveset
+Content-Type: "application/json"
 
 {
-    "id": Number,
-    "owner": UserAccount (id?),
-    "intro_text": String,
-    "total_antal_opgaver": Number,
-    "total_point": Number
-    "delprove1": [ question_student, question_student, …] (3)
-    "delprove2": [ question_student, question_student, …] (3)
+    "owner": 1,
+    "introText": "String",
+    "totalPoints": 10
+}
+
+###
+PATCH localhost:7070/api/opgaveset/1
+Content-Type: "application/json"
+
+{
+    "introText": "TEST"
 }
 
 ###
 POST localhost:7070/api/opgaveset/1/add
 
+{
+    "id": 1
+}
+
+###
+POST localhost:7070/api/opgaveset/1/add
+
+{
+    "id": 2
+}
+
 ###
 DELETE localhost:7070/api/opgaveset/1/remove
 
+{
+    "id": 1
+}
+
 ###
-DELETE localhost:7070/api/opgaveset/1
+DELETE localhost:7070/api/opgaveset/1/remove
+
+{
+    "id": 2
+}
+
+###
+DELETE localhost:7070/api/opgaveset/2
 
 
 ### -------------- MATHTEAM ROUTES ----------------
