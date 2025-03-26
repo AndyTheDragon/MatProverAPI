@@ -28,12 +28,6 @@ public class DBPopulator
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static GenericDAO genericDAO;
 
-    private static final String userAccountJsonDTO = "src/json/user_account_dto.json";
-    private static final String questionJsonDTO = "src/json/question_dto.json";
-    private static final String questionStudentJsonDTO = "src/json/question_student_dto.json";
-    private static final String assignmentInfoJsonDTO = "src/json/assignment_info_dto.json";
-    private static final String mathTeamJsonDTO = "src/json/math_team_dto.json";
-
     public static void main(String[] args)
     {
 
@@ -47,7 +41,7 @@ public class DBPopulator
     {
         try
         {
-            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
+            JsonNode node = objectMapper.readTree(new File("src/resources/json/question_dto.json"));
             Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
             for (QuestionDTO dto : questions)
             {
