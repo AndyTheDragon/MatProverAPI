@@ -1,5 +1,8 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import dat.dto.QuestionDTO;
 import dat.enums.TestFormat;
 import jakarta.persistence.*;
@@ -14,25 +17,34 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Entity
+@JsonIgnoreProperties
 public class Question
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
     private Integer id;
+    @JsonProperty("termin")
+    @JsonFormat(pattern = "yyyyMMdd")
     private LocalDate termDate;
     private int year;
     private String author;
     private int points;
     @Column(nullable = false, unique = true)
+    @JsonProperty("questionnumber")
     private int questionNumber;
+    @JsonProperty("questiontext")
+    @Column(columnDefinition = "TEXT")
     private String questionText;
+    @JsonProperty("pictureurl")
     private String pictureURL;
     private String category;
+    @JsonProperty("licens")
     private String license;
     private String level;
 
     @Enumerated(EnumType.STRING)
+    @JsonProperty("testformat")
     private TestFormat testFormat;
 
     @ManyToMany

@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 @Entity
-@JsonIgnoreProperties
 public class Assignment
 {
     @Id

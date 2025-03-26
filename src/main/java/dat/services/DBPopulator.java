@@ -2,11 +2,12 @@ package dat.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dat.dto.MathTeamDTO;
 import dat.dto.QuestionDTO;
 import dat.dto.UserAccountDTO;
-import dat.entities.Assignment;
+import dat.entities.Question;
 import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
@@ -14,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Set;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -31,36 +34,33 @@ public class DBPopulator
 
     public static void main(String[] args)
     {
+        objectMapper.registerModule(new JavaTimeModule());
 
-
-
+        readQuestions();
         readQuestionDTO();
         readMathTeamDTO();
         readUserAccountDTO();
-        readAssignments();
 
     }
 
-    private static void readAssignments()
+    private static void readQuestions()
     {
         try
         {
             JsonNode node = objectMapper.readTree(new File("src/main/resources/json/opgaver.json"));
-            Set<Assignment> assignments = objectMapper.convertValue(node, new TypeReference<Set<Assignment>>() {});
-            for (Assignment ass : assignments)
+            Set<Question> questions = objectMapper.convertValue(node, new TypeReference<Set<Question>>() {});
+            for (Question q : questions)
             {
-                genericDAO.create(ass);
+                genericDAO.create(q);
             }
         } catch (Exception e)
         {
-            logger.info("could not create object  : assignment(s) to database", e);
+            logger.info("could not create object  : question(s) to database", e);
         }
     }
 
     private static void readQuestionDTO()
     {
-        objectMapper.registerModule(new JavaTimeModule());
-
         try
         {
             JsonNode node = objectMapper.readTree(new File("src/main/resources/json/question_dto.json"));
@@ -80,8 +80,6 @@ public class DBPopulator
 
     private static void readUserAccountDTO()
     {
-        objectMapper.registerModule(new JavaTimeModule());
-
         try
         {
             JsonNode node = objectMapper.readTree(new File("src/main/resources/json/user_account.json"));
@@ -101,7 +99,6 @@ public class DBPopulator
 
     private static void readMathTeamDTO()
     {
-        objectMapper.registerModule(new JavaTimeModule());
 
         try
         {
