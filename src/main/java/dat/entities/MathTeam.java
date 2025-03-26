@@ -1,5 +1,6 @@
 package dat.entities;
 
+import dat.dto.MathTeamDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,6 +28,7 @@ public class MathTeam
 
     @ManyToMany
     private Set<Question> questions;
+
 
     public MathTeam(MathTeamDTO MathTeamDTO)
     {
