@@ -6,6 +6,8 @@ import dat.dto.*;
 import dat.entities.Assignment;
 import dat.entities.Question;
 import dat.entities.UserAccount;
+import dat.exceptions.ApiException;
+import dat.exceptions.DaoException;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
@@ -39,9 +41,8 @@ public class AssignmentController implements IController
             ctx.status(201).json("Assignment created");
         } catch (Exception ex)
         {
-            logger.error("Error creating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error creating entity");
-            ctx.status(400).json(error);
+            logger.error("Error creating entity. " + ex.getMessage());
+            throw new ApiException(400, "Error creating entity, check required field values is not null");
         }
     }
 
@@ -57,9 +58,8 @@ public class AssignmentController implements IController
             ctx.json(assignmentDTOs);
         } catch (Exception ex)
         {
-            logger.error("Error getting entities", ex);
-            ErrorMessage error = new ErrorMessage("Error getting entities");
-            ctx.status(404).json(error);
+            logger.error("Error getting entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -77,8 +77,8 @@ public class AssignmentController implements IController
 
         } catch (Exception ex)
         {
-            ErrorMessage error = new ErrorMessage("No entity with that id");
-            ctx.status(404).json(error);
+            logger.error("Error getting entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -99,11 +99,14 @@ public class AssignmentController implements IController
             Assignment updatedAssignment = dao.update(assignmentUpdate);
             AssignmentDTO returnedAssignment = new AssignmentDTO(updatedAssignment);
             ctx.json(returnedAssignment);
+        } catch (DaoException ex)
+        {
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(400, "Error creating entity, check required field values is not null");
         } catch (Exception ex)
         {
-            logger.error("Error updating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error updating entity. " + ex.getMessage());
-            ctx.status(400).json(error);
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -119,9 +122,8 @@ public class AssignmentController implements IController
             ctx.status(204);
         } catch (Exception ex)
         {
-            logger.error("Error deleting entity", ex);
-            ErrorMessage error = new ErrorMessage("Error deleting entity. " + ex.getMessage());
-            ctx.status(400).json(error);
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -147,11 +149,14 @@ public class AssignmentController implements IController
             assignment.addQuestion(question);
             dao.update(assignment);
             ctx.status(200).json("Question added to assignment");
+        } catch (DaoException ex)
+        {
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(400, "Error creating entity, check required field values is not null");
         } catch (Exception ex)
         {
-            logger.error("Error adding question to assignment", ex);
-            ErrorMessage error = new ErrorMessage("Error adding question to assignment. " + ex.getMessage());
-            ctx.status(400).json(error);
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -162,11 +167,9 @@ public class AssignmentController implements IController
             Integer assignmentId = ctx.pathParamAsClass("id", Integer.class)
                     .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            logger.info("Received request to remove question from assignment with id: {}", assignmentId);
 
             QuestionStudentDTO incomingQuestion = ctx.bodyAsClass(QuestionStudentDTO.class);
             Integer questionId = incomingQuestion.getId();
-            logger.info("Question id to be removed: {}", questionId);
 
             Assignment assignment = dao.getById(Assignment.class, assignmentId);
             if (assignment == null)
@@ -181,16 +184,13 @@ public class AssignmentController implements IController
                 logger.warn("Question with id {} not found in assignment with id {}", questionId, assignmentId);
                 throw new BadRequestResponse("Question not found in assignment");
             }
-
             dao.update(assignment);
-            logger.info("Question with id {} removed from assignment with id {}", questionId, assignmentId);
 
             ctx.status(200).json("Question removed from assignment");
         } catch (Exception ex)
         {
-            logger.error("Error removing question from assignment", ex);
-            ErrorMessage error = new ErrorMessage("Error removing question from assignment. " + ex.getMessage());
-            ctx.status(400).json(error);
+            logger.error("Error updating entity. " + ex.getMessage());
+            throw new ApiException(404, "No content found for this request");
         }
     }
 }
