@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import dat.dto.AssignmentDTO;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -27,10 +27,19 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
+    private Integer amountOfQuestions;
+
+    private Integer totalPoints;
+
     public Assignment(AssignmentDTO assignmentDTO)
     {
+        this.id = assignmentDTO.getId();
         this.introText = assignmentDTO.getIntroText();
+        this.owner = assignmentDTO.getOwner();
         this.questions = assignmentDTO.getQuestions().stream().map(Question::new).toSet();
+        this.amountOfQuestions = assignmentDTO.getAmountOfQuestions();
+        this.totalPoints = assignmentDTO.getTotalPoints();
+
     }
 
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
