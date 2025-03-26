@@ -119,4 +119,59 @@ public class Question
             assignment.removeQuestion(this);
         }
     }
+
+    public void setTermDate(LocalDate termDate)
+    {
+        this.termDate = termDate;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+
+    public void setPoints(int points)
+    {
+        this.points = points;
+    }
+
+    public void setQuestionNumber(int questionNumber)
+    {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionText(String questionText)
+    {
+        this.questionText = questionText;
+    }
+
+    public void setPictureURL(String pictureURL)
+    {
+        this.pictureURL = pictureURL;
+    }
+
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
+
+    public void setLicense(String license)
+    {
+        this.license = license;
+    }
+
+    public void setLevel(String level)
+    {
+        this.level = level;
+    }
+
+    public void setTestFormat(TestFormat testFormat)
+    {
+        this.testFormat = testFormat;
+    }
 }
