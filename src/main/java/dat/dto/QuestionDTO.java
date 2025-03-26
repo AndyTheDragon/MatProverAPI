@@ -17,10 +17,10 @@ public class QuestionDTO
 {
     private Integer id;
     private LocalDate termDate;
-    private int year;
+    private Integer year;
     private String author;
-    private int points;
-    private int questionNumber;
+    private Integer points;
+    private Integer questionNumber;
     private String questionText;
     private String pictureURL;
     private String category;

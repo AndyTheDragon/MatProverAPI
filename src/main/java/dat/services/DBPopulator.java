@@ -2,6 +2,7 @@ package dat.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import dat.dto.AssignmentInfoDTO;
 import dat.dto.QuestionDTO;
 import dat.dto.UserAccountDTO;
@@ -26,7 +27,8 @@ public class DBPopulator
 {
     private static final Logger logger = LoggerFactory.getLogger(DBPopulator.class);
     private static final ObjectMapper objectMapper = new ObjectMapper();
-    private static GenericDAO genericDAO;
+    private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactory();
+    private static GenericDAO genericDAO = new GenericDAO(emf);
 
     public static void main(String[] args)
     {
@@ -41,18 +43,22 @@ public class DBPopulator
 
     private static void readQuestionDTO()
     {
+        objectMapper.registerModule(new JavaTimeModule());
+
         try
         {
-            JsonNode node = objectMapper.readTree(new File("/src/main/resources/json/question_dto.json"));
-            Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
-            for (QuestionDTO dto : questions)
+            JsonNode node = objectMapper.readTree(new File("src/main/resources/json/question_dto.json"));
+            QuestionDTO dto = objectMapper.convertValue(node, new TypeReference<QuestionDTO>() {});
+            //Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
+            genericDAO.create(new Question(dto));
+            /*for (QuestionDTO dto : questions)
             {
                 genericDAO.create(new Question(dto));
-            }
+            }*/
 
         } catch (Exception e)
         {
-            logger.info("could not create object  : question to database");
+            logger.info("could not create object  : question to database", e);
         }
     }
 

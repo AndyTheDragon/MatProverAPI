@@ -1,14 +1,14 @@
 {
   "id": 1,
-  "niveau": ["A", "B", "C", null],
-  "termin": "2025-01-01",
+  "termDate": "2025-03-26",
   "year": 2025,
-  "delprøve": [1, 2, null],
-  "category": ["delprove1", "delprove2", "String3", "String4"],
-  "author": "Undervisningsministeriet",
-  "licens": "Aktiv",
-  "point": 10,
-  "opgavenummer": 3,
-  "opgavetekst": "Beregn areal af denne trekant",
-  "billede_url": "null"
+  "author": "Jane Doe",
+  "points": 5,
+  "questionNumber": 2,
+  "questionText": "What is 2 + 2?",
+  "pictureURL": "http://example.com/image2.jpg",
+  "category": "Math",
+  "license": "MIT",
+  "level": "B",
+  "testFormat": "UDEN"
 }
