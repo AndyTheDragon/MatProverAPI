@@ -28,19 +28,18 @@ public class DBPopulator
     private static final ObjectMapper objectMapper = new ObjectMapper();
     private static GenericDAO genericDAO;
 
-    private static final String userAccountJsonDTO = "json/user_account_dto.json";
-    private static final String questionJsonDTO = "json/question_dto.json";
-    private static final String questionStudentJsonDTO = "json/question_student_dto.json";
-    private static final String assignmentInfoJsonDTO = "json/assignment_info_dto.json";
-    private static final String mathTeamJsonDTO = "json/math_team_dto.json";
+    private static final String userAccountJsonDTO = "src/json/user_account_dto.json";
+    private static final String questionJsonDTO = "src/json/question_dto.json";
+    private static final String questionStudentJsonDTO = "src/json/question_student_dto.json";
+    private static final String assignmentInfoJsonDTO = "src/json/assignment_info_dto.json";
+    private static final String mathTeamJsonDTO = "src/json/math_team_dto.json";
 
     public static void main(String[] args)
     {
 
-        //readAssignmentInfoDTO();
         readQuestionDTO();
-        readMathTeamDTO();
-        readUserAccountDTO();
+        //readMathTeamDTO();
+        //readUserAccountDTO();
 
     }
 
@@ -58,23 +57,6 @@ public class DBPopulator
         } catch (Exception e)
         {
             logger.info("could not create object  : question to database");
-        }
-    }
-
-    private static void readAssignmentInfoDTO()
-    {
-        try
-        {
-            JsonNode node = objectMapper.readTree(new File("src/json/question_dto.json"));
-            Set<AssignmentInfoDTO> list = objectMapper.convertValue(node, new TypeReference<Set<AssignmentInfoDTO>>() {});
-            for (AssignmentInfoDTO dto : list)
-            {
-                //genericDAO.create(new Assignment(dto));
-            }
-
-        } catch (Exception e)
-        {
-            logger.info("could not create object  : questionStudentDTO to database");
         }
     }
 
