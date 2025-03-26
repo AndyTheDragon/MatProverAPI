@@ -1,6 +1,7 @@
 package dat.dto;
 
 import dat.entities.Question;
+import dat.enums.TestFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,10 @@ public class QuestionDTO
     private int questionNumber;
     private String questionText;
     private String pictureURL;
+    private String category;
+    private String license;
+    private String level;
+    private TestFormat testFormat;
 
     public QuestionDTO(Question question)
     {
