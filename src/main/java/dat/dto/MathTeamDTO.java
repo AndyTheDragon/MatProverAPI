@@ -4,9 +4,11 @@ import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
+import lombok.Getter;
 
 import java.util.Set;
 
+@Getter
 public class MathTeamDTO
 {
     private Integer id;
