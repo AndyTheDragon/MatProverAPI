@@ -2,15 +2,24 @@ package dat.controllers;
 
 import dat.dao.CrudDAO;
 import dat.dao.GenericDAO;
-import dat.dto.ErrorMessage;
+import dat.dto.*;
+import dat.entities.Assignment;
+import dat.entities.Question;
+import dat.entities.UserAccount;
+import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 public class AssignmentController implements IController
 {
     private final CrudDAO dao;
+    private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
 
     public AssignmentController(EntityManagerFactory emf)
     {
@@ -20,47 +29,168 @@ public class AssignmentController implements IController
     @Override
     public void create(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
-    }
-
-    @Override
-    public void getById(Context ctx)
-    {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            AssignmentDTO assignmentDTO = ctx.bodyAsClass(AssignmentDTO.class);
+            UserAccount owner = dao.getById(UserAccount.class, assignmentDTO.getOwner());
+            Assignment assignment = new Assignment(assignmentDTO);
+            assignment.setOwner(owner);
+            dao.create(assignment);
+            ctx.status(201).json("Assignment created");
+        } catch (Exception ex)
+        {
+            logger.error("Error creating entity", ex);
+            ErrorMessage error = new ErrorMessage("Error creating entity");
+            ctx.status(400).json(error);
+        }
     }
 
     @Override
     public void getAll(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            List<Assignment> assignments = dao.getAll(Assignment.class);
+            List<AssignmentDTO> assignmentDTOs = assignments.stream()
+                    .map(AssignmentDTO::new)
+                    .collect(Collectors.toList());
+            ctx.json(assignmentDTOs);
+        } catch (Exception ex)
+        {
+            logger.error("Error getting entities", ex);
+            ErrorMessage error = new ErrorMessage("Error getting entities");
+            ctx.status(404).json(error);
+        }
+    }
+
+    @Override
+    public void getById(Context ctx)
+    {
+        try
+        {
+            //long id = Long.parseLong(ctx.pathParam("id"));
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
+            AssignmentDTO foundEntity = new AssignmentDTO(dao.getById(Assignment.class, id));
+            ctx.json(foundEntity);
+
+        } catch (Exception ex)
+        {
+            ErrorMessage error = new ErrorMessage("No entity with that id");
+            ctx.status(404).json(error);
+        }
     }
 
     @Override
     public void update(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
+            AssignmentDTO incomingAssignment = ctx.bodyAsClass(AssignmentDTO.class);
+            Assignment assignmentUpdate = dao.getById(Assignment.class, id);
+            if (incomingAssignment.getIntroText() != null)
+            {
+                assignmentUpdate.setIntroText(incomingAssignment.getIntroText());
+            }
+            Assignment updatedAssignment = dao.update(assignmentUpdate);
+            AssignmentDTO returnedAssignment = new AssignmentDTO(updatedAssignment);
+            ctx.json(returnedAssignment);
+        } catch (Exception ex)
+        {
+            logger.error("Error updating entity", ex);
+            ErrorMessage error = new ErrorMessage("Error updating entity. " + ex.getMessage());
+            ctx.status(400).json(error);
+        }
     }
 
     @Override
     public void delete(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
+            dao.delete(Assignment.class, id);
+            ctx.status(204);
+        } catch (Exception ex)
+        {
+            logger.error("Error deleting entity", ex);
+            ErrorMessage error = new ErrorMessage("Error deleting entity. " + ex.getMessage());
+            ctx.status(400).json(error);
+        }
     }
 
     public void addQuestionToAssignment(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            Integer assignmentId = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
+            QuestionStudentDTO incomingQuestion = ctx.bodyAsClass(QuestionStudentDTO.class);
+            Integer questionId = incomingQuestion.getId();
+            Assignment assignment = dao.getById(Assignment.class, assignmentId);
+            if (assignment == null)
+            {
+                throw new BadRequestResponse("Assignment not found");
+            }
+            Question question = dao.getById(Question.class, questionId);
+            if (question == null)
+            {
+                throw new BadRequestResponse("Question not found");
+            }
+            assignment.addQuestion(question);
+            dao.update(assignment);
+            ctx.status(200).json("Question added to assignment");
+        } catch (Exception ex)
+        {
+            logger.error("Error adding question to assignment", ex);
+            ErrorMessage error = new ErrorMessage("Error adding question to assignment. " + ex.getMessage());
+            ctx.status(400).json(error);
+        }
     }
 
     public void removeQuestionFromAssignment(Context ctx)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        try
+        {
+            Integer assignmentId = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
+            logger.info("Received request to remove question from assignment with id: {}", assignmentId);
+
+            QuestionStudentDTO incomingQuestion = ctx.bodyAsClass(QuestionStudentDTO.class);
+            Integer questionId = incomingQuestion.getId();
+            logger.info("Question id to be removed: {}", questionId);
+
+            Assignment assignment = dao.getById(Assignment.class, assignmentId);
+            if (assignment == null)
+            {
+                logger.warn("Assignment with id {} not found", assignmentId);
+                throw new BadRequestResponse("Assignment not found");
+            }
+
+            boolean removed = assignment.getQuestions().removeIf(q -> q.getId().equals(questionId));
+            if (!removed)
+            {
+                logger.warn("Question with id {} not found in assignment with id {}", questionId, assignmentId);
+                throw new BadRequestResponse("Question not found in assignment");
+            }
+
+            dao.update(assignment);
+            logger.info("Question with id {} removed from assignment with id {}", questionId, assignmentId);
+
+            ctx.status(200).json("Question removed from assignment");
+        } catch (Exception ex)
+        {
+            logger.error("Error removing question from assignment", ex);
+            ErrorMessage error = new ErrorMessage("Error removing question from assignment. " + ex.getMessage());
+            ctx.status(400).json(error);
+        }
     }
 }
