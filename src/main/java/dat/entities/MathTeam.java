@@ -1,5 +1,7 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.dto.MathTeamDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,9 +24,11 @@ public class MathTeam
     private Integer id;
     private String description;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments = new HashSet<>();
 
+    @JsonBackReference
     @ManyToOne
     private UserAccount owner;
 
