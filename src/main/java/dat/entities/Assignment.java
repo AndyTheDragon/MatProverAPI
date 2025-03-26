@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import dat.dto.AssignmentDTO;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,7 +37,7 @@ public class Assignment
         this.id = assignmentDTO.getId();
         this.introText = assignmentDTO.getIntroText();
         this.owner = assignmentDTO.getOwner();
-        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).toSet();
+        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
         this.amountOfQuestions = assignmentDTO.getAmountOfQuestions();
         this.totalPoints = assignmentDTO.getTotalPoints();
 

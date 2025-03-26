@@ -20,7 +20,7 @@ public class AssignmentDTO
     private String introText;
     private MathTeam mathTeam;
     private UserAccount owner;
-    private Set<Question> questions;
+    private Set<QuestionDTO> questions;
     private Integer amountOfQuestions;
     private Integer totalPoints;
 
