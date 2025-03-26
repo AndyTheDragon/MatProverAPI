@@ -3,8 +3,10 @@ package dat.controllers;
 import dat.dao.CrudDAO;
 import dat.dao.HotelDAO;
 import dat.dto.QuestionDTO;
+import dat.dto.QuestionStudentDTO;
 import dat.entities.Question;
 import dat.exceptions.ApiException;
+import dat.exceptions.DaoException;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
@@ -45,12 +47,20 @@ public class QuestionController implements IController, IQuestionController
     {
         try
         {
-            long id = ctx.pathParamAsClass("id", Long.class)
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
                     .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            QuestionDTO foundEntity = new QuestionDTO(dao.getById(Question.class, id));
-            ctx.status(200).json(foundEntity);
-
+            String output = ctx.queryParam("output");
+            if ("full".equals(output))
+            {
+                QuestionDTO foundQuestion = new QuestionDTO(dao.getById(Question.class, id));
+                ctx.status(200).json(foundQuestion);
+            }
+            else
+            {
+            QuestionStudentDTO foundQuestion = new QuestionStudentDTO(dao.getById(Question.class, id));
+            ctx.status(200).json(foundQuestion);
+            }
         }
         catch (Exception ex)
         {
@@ -104,6 +114,11 @@ public class QuestionController implements IController, IQuestionController
             Question updatedEntity = dao.update(questionToUpdate);
             ctx.status(200).json(new QuestionDTO(updatedEntity));
         }
+        catch (DaoException ex)
+        {
+            logger.error("Error updating entity", ex);
+            throw new ApiException(400, "Field ‘xxx’ is required"); //TODO Lav hjælpe metode til fejlmelding
+        }
         catch (Exception ex)
         {
             logger.error("Error updating entity", ex);
@@ -115,8 +130,7 @@ public class QuestionController implements IController, IQuestionController
     {
         try
         {
-            //long id = Long.parseLong(ctx.pathParam("id"));
-            long id = ctx.pathParamAsClass("id", Long.class)
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
                     .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
             dao.delete(Question.class, id);
