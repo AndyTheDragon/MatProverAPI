@@ -72,7 +72,7 @@ public class QuestionController implements IController, IQuestionController
         }
         catch (Exception ex)
         {
-            logger.error("Error getting entity", ex);
+            logger.error("Error getting question", ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -83,13 +83,13 @@ public class QuestionController implements IController, IQuestionController
         try
         {
             QuestionDTO incomingTest = ctx.bodyAsClass(QuestionDTO.class);
-            Question entity = new Question(incomingTest);
-            Question createdEntity = dao.create(entity);
-            ctx.status(201).json(new QuestionDTO(createdEntity));
+            Question question = new Question(incomingTest);
+            Question createdQuestion = dao.create(question);
+            ctx.status(201).json(new QuestionDTO(createdQuestion));
         }
         catch (Exception ex)
         {
-            logger.error("Error creating entity", ex);
+            logger.error("Error creating question", ex);
             throw new ApiException(400, "Field ‘xxx’ is required"); //TODO Lav hjælpe metode til fejlmelding
         }
     }
@@ -119,17 +119,17 @@ public class QuestionController implements IController, IQuestionController
             updateFieldIfNotNull(questionToUpdate::setLevel, questionDTO.getLevel());
             updateFieldIfNotNull(questionToUpdate::setTestFormat, questionDTO.getTestFormat());
 
-            Question updatedEntity = dao.update(questionToUpdate);
-            ctx.status(200).json(new QuestionDTO(updatedEntity));
+            Question updatedQuestion = dao.update(questionToUpdate);
+            ctx.status(200).json(new QuestionDTO(updatedQuestion));
         }
         catch (DaoException ex)
         {
-            logger.error("Error updating entity", ex);
+            logger.error("Error updating question", ex);
             throw new ApiException(400, "Field ‘xxx’ is required"); //TODO Lav hjælpe metode til fejlmelding
         }
         catch (Exception ex)
         {
-            logger.error("Error updating entity", ex);
+            logger.error("Error updating question", ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -146,7 +146,7 @@ public class QuestionController implements IController, IQuestionController
         }
         catch (Exception ex)
         {
-            logger.error("Error deleting entity", ex);
+            logger.error("Error deleting question", ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
