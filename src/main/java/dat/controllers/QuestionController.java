@@ -33,7 +33,15 @@ public class QuestionController implements IController, IQuestionController
     {
         try
         {
-            ctx.status(200).json(dao.getMany(Question.class));
+            int pageSize = ctx.queryParamAsClass("pageSize", Integer.class)
+                    .check(i -> i > 0, "pageSize must be at least 1")
+                    .check(i -> i <= 50, "pageSize must be at most 50")
+                    .getOrDefault(10);
+            int pageNumber = ctx.queryParamAsClass("pageNumber", Integer.class)
+                    .check(i -> i > 0, "pageNumber must be at least 1")
+                    .getOrDefault(1);
+            ctx.status(200).json(dao.getMany(Question.class, pageSize, pageNumber));
+
         }
         catch (Exception ex)
         {
