@@ -1,5 +1,8 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import dat.enums.TestFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +15,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Getter
 @Entity
+@JsonIgnoreProperties
 public class Assignment
 {
     @Id
@@ -28,9 +32,24 @@ public class Assignment
     @ManyToMany
     private Set<Question> questions;
 
+    private String termin;
+    @JsonProperty("questionnumber")
+    private String questionNumber;
+    private String level;
+    private Integer year;
+    private String author;
+    private String licens;
+    @JsonProperty("testformat")
+    @Enumerated(EnumType.STRING)
+    private TestFormat testFormat;
     private Integer amountOfQuestions;
-
+    @JsonProperty("points")
     private Integer totalPoints;
+    private String category;
+    @JsonProperty("questiontext")
+    private String questionText;
+    @JsonProperty("pictureurl")
+    private String pictureUrl;
 
     public Assignment(AssignmentDTO assignmentDTO)
     {
