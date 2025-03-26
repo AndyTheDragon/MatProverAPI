@@ -31,6 +31,8 @@ public class DBPopulator
     public static void main(String[] args)
     {
 
+
+
         readQuestionDTO();
         //readMathTeamDTO();
         //readUserAccountDTO();
@@ -41,7 +43,7 @@ public class DBPopulator
     {
         try
         {
-            JsonNode node = objectMapper.readTree(new File("src/resources/json/question_dto.json"));
+            JsonNode node = objectMapper.readTree(new File("/src/main/resources/json/question_dto.json"));
             Set<QuestionDTO> questions = objectMapper.convertValue(node, new TypeReference<Set<QuestionDTO>>() {});
             for (QuestionDTO dto : questions)
             {
@@ -58,8 +60,14 @@ public class DBPopulator
     {
         try
         {
-            JsonNode node = objectMapper.readTree(new File("src/json/user_account_dto.json"));
-            Set<UserAccountDTO> list = objectMapper.convertValue(node, new TypeReference<Set<UserAccountDTO>>() {});
+            InputStream inputStream = DBPopulator.class.getClassLoader().getResourceAsStream("json/question_dto.json");
+            if (inputStream == null)
+            {
+                throw new IllegalArgumentException("file not found! ");
+            }
+
+            //JsonNode node = objectMapper.readTree(new File("src/json/user_account_dto.json"));
+            Set<UserAccountDTO> list = objectMapper.convertValue(inputStream, new TypeReference<Set<UserAccountDTO>>() {});
             for (UserAccountDTO dto : list)
             {
                 genericDAO.create(new UserAccount(dto));
