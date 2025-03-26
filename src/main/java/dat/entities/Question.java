@@ -25,7 +25,7 @@ public class Question
     private int year;
     private String author;
     private int points;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private int questionNumber;
     private String questionText;
     private String pictureURL;
