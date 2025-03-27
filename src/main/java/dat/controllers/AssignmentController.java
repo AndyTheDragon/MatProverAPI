@@ -33,7 +33,7 @@ public class AssignmentController implements IController
     {
         try
         {
-            AssignmentDTO assignmentDTO = ctx.bodyAsClass(AssignmentDTO.class);
+            AssignmentInfoDTO assignmentDTO = ctx.bodyAsClass(AssignmentInfoDTO.class);
             UserAccount owner = dao.getById(UserAccount.class, assignmentDTO.getOwner());
             Assignment assignment = new Assignment(assignmentDTO);
             assignment.setOwner(owner);
@@ -51,7 +51,7 @@ public class AssignmentController implements IController
     {
         try
         {
-            List<Assignment> assignments = dao.getAll(Assignment.class);
+            List<Assignment> assignments = dao.getMany(Assignment.class);
             List<AssignmentDTO> assignmentDTOs = assignments.stream()
                     .map(AssignmentDTO::new)
                     .collect(Collectors.toList());
