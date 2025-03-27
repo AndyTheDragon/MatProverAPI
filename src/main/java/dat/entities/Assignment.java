@@ -3,6 +3,7 @@ package dat.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.dto.AssignmentDTO;
+import dat.dto.AssignmentInfoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -36,6 +37,12 @@ public class Assignment
     private Set<Question> questions = new HashSet<>();
 
     public Assignment(AssignmentDTO assignmentDTO)
+    {
+        this.introText = assignmentDTO.getIntroText();
+        //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
+    }
+
+    public Assignment(AssignmentInfoDTO assignmentDTO)
     {
         this.introText = assignmentDTO.getIntroText();
         //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
