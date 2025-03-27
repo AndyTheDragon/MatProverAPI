@@ -1,9 +1,11 @@
 package dat.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.dto.AssignmentDTO;
 import dat.dto.AssignmentInfoDTO;
+import dat.dto.AssignmentInputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +30,8 @@ public class Assignment
     @ManyToOne
     private MathTeam mathTeam;
 
-    @JsonBackReference
+
+    @JsonIgnore
     @ManyToOne
     private UserAccount owner;
 
@@ -46,6 +49,11 @@ public class Assignment
     {
         this.introText = assignmentDTO.getIntroText();
         //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
+    }
+    public Assignment(AssignmentInputDTO assignmentDTO)
+    {
+        this.introText = assignmentDTO.getIntroText();
+        this.mathTeam = new MathTeam(assignmentDTO.getMathTeam());
     }
 
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
