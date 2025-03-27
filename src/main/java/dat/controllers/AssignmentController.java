@@ -4,6 +4,7 @@ import dat.dao.CrudDAO;
 import dat.dao.GenericDAO;
 import dat.dto.*;
 import dat.entities.Assignment;
+import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
 import dat.exceptions.ApiException;
@@ -33,11 +34,15 @@ public class AssignmentController implements IController
     {
         try
         {
-            AssignmentInfoDTO assignmentDTO = ctx.bodyAsClass(AssignmentInfoDTO.class);
-            UserAccount owner = dao.getById(UserAccount.class, assignmentDTO.getOwner());
+            AssignmentInputDTO assignmentDTO = ctx.bodyAsClass(AssignmentInputDTO.class);
+            logger.info(assignmentDTO.toString());
             Assignment assignment = new Assignment(assignmentDTO);
-            assignment.setOwner(owner);
+            logger.info(assignment.toString());
+            MathTeam mathTeam = dao.getById(MathTeam.class, assignmentDTO.getMathTeam().getId());
+            logger.info(mathTeam.toString());
+            mathTeam.addAssignment(assignment);
             dao.create(assignment);
+            dao.update(mathTeam);
             ctx.status(201).json("Assignment created");
         } catch (Exception ex)
         {
