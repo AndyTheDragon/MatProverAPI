@@ -13,7 +13,6 @@ import dat.enums.Roles;
 import dat.routes.Routes;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
@@ -23,11 +22,13 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.jupiter.api.Assertions.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
@@ -116,6 +117,17 @@ class AssignmentResourceTest
                 .body("[0].questions.size()", equalTo(1))
                 .body("[1].id", equalTo(test_a2.getId()))
                 .body("[1].questions.size()", equalTo(2));
+    }
+
+    @Test
+    void test_getAssignmentById()
+    {
+        given()
+                .when()
+                .get("/opgaveset"+"/" + test_a1.getId())
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(test_a1.getId()));
     }
 
 }
