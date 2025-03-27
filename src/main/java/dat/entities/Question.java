@@ -40,7 +40,7 @@ public class Question
     @JsonIgnore
     @JsonBackReference
     @ManyToMany(fetch = FetchType.LAZY)
-    private Set<Assignment> assignments;
+    private Set<Assignment> assignments = new HashSet<>();
 
     public Question(QuestionDTO questionDTO)
     {
