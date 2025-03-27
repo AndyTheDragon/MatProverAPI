@@ -24,8 +24,7 @@ public class Question
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "question_id", nullable = false)
     private Integer id;
-    @JsonProperty("termin")
-    @JsonFormat(pattern = "yyyyMMdd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate termDate;
     private int year;
     private String author;
