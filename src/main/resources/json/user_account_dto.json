@@ -1,7 +1,23 @@
-{
-  "name": "String",
-  "email": "String",
-  "skole": "String",
-  "unilogin": "String",
-  "role": "Enum"
-}
+[
+  {
+    "name": "John Doe",
+    "email": "john.doe@example.com",
+    "workplace": "Tech Company",
+    "unilogin": "jdoe123",
+    "role": "USER_READ"
+  },
+  {
+    "name": "Jane Smith",
+    "email": "jane.smith@example.com",
+    "workplace": "Business Inc.",
+    "unilogin": "jsmith456",
+    "role": "TEACHER_WRITE"
+  },
+  {
+    "name": "Alice Johnson",
+    "email": "alice.johnson@example.com",
+    "workplace": "Healthcare Solutions",
+    "unilogin": "ajohnson789",
+    "role": "ADMIN"
+  }
+]
