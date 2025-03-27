@@ -7,7 +7,7 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber":"1",
+    "questionnumber": "1",
     "category": "Vektorer og analytisk geometri",
     "questiontext": "Bestem koordinatsættet til punktet på linjen, når \\( t=2 \\).\n Angiv en retningsvektor for linjen.\n En ret linje er bestemt ved paramterfremstillingen \\[ \\binom{x}{y} = \\binom{6}{0} + t \\cdot \\binom{3}{4}. \\]",
     "pictureurl": "null"
@@ -23,7 +23,7 @@
     "questionnumber": "2",
     "category": "Kombinatorik og sandsynlighedsfelter",
     "questiontext": "Bestem antallet af måder, hvorpå man kan danne udvalget.\n En bestyrelse består af 8 medlemmer. Der skal vælges 3 personer blandt bestyrelsens medlemmer til et udvalg.",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -36,7 +36,7 @@
     "questionnumber": "3",
     "category": "Andengradspolynomier",
     "questiontext": "Tegn parablen.\n Bestem førstekoordinaten til toppunktet \\( T \\) for parablen.\n En parabel er bestem ved ligningen \\[ y=x^2-4x+5. \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -49,7 +49,7 @@
     "questionnumber": "4",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Reducér udtrykket \\[ (a-b)^2+2a\\cdot b \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -62,7 +62,7 @@
     "questionnumber": "5",
     "category": "Differentialregning",
     "questiontext": "Bestem monotoniforholdende for \\( f \\).\n Bestem \\( f'(x) \\).\n En funktion \\( f \\) er givet ved \\[ f(x) = \\frac{1}{3}x^3-2x^2+3x+1. \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -75,7 +75,7 @@
     "questionnumber": "6",
     "category": "Differentialregning",
     "questiontext": "Bestem maksimum for \\( f \\).\n Tegn grafen for \\( f \\).\n En funktion \\( f \\) er givet ved \\[ f(x) = 0.5 \\cdot x \\cdot \\sqrt{144-x^2}, 0\\leq x \\leq 12. \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -88,7 +88,7 @@
     "questionnumber": "7",
     "category": "Vektorer og analytisk geometri",
     "questiontext": "Bestem den spidse vinkel mellem $l$ og $m$.\n Bestem koordinatsættet til skæringspunktet mellem $l$ og $m$.\n \\[ m: -x+2y=4 \\]\n \\[ l: 2x+3y=-1 \\]\n Linjerne $l$ og $m$ er givet ved ligningerne",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -101,7 +101,7 @@
     "questionnumber": "8",
     "category": "Differentialregning",
     "questiontext": "Bestem væksthastigheden for det årlige antal nedlagte råvildt til tidspunktet $x=40$.\n Benyt modellen til at bestemme det årstal, hvor det årlige antal nedlagte råvildt var 120000.\n hvor $f(x)$ angiver det årlige antal nedlagte råvildt til tispunktet $x$ (målt i antal år efter 1980).\n I en model kan udviklingen i det årlige antal nedlagte råvildt i Danmark beskrives ved \\[ f(x)=\\frac{150000}{1+2.6\\cdot \\mathrm{e}^{-0.1\\cdot x}} ,\\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -114,7 +114,7 @@
     "questionnumber": "9",
     "category": "Regression",
     "questiontext": "Kilde: statistikbanken.dk\n Bestem residualspredningen.\n Bestem tallene $a$ og $b$ ved regression på tabellens data.\n I en model kan udviklingen beskrives ved \\[ f(t) = a\\cdot t +b ,\\] hvor $f(t)$ betegner gennemsnitsalderen (målt i år) til tidspunktet $t$ (målt i antal år efter 2004).\n TABEL\n Tabellen viser udviklingen i gennemsnitsalderen for førstegangsfødende kvinder i Danmark i perioden 2004-2018.",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -127,7 +127,7 @@
     "questionnumber": "10",
     "category": "Kombinatorik og sandsynlighedsfelter",
     "questiontext": "En person ønsker at undersøge nulhypotesen:\n Bestem middelværdien af \\( X \\).\n Den stokastiske variabel \\( X \\) angiver antallet af stykker mørk chokolade i en julekalender. \\( X \\) er binomialfordelt med antalsparameter \\( n=24 \\) og sandsynlighedsparameter \\( p=\\frac{1}{2} \\).\n En chokoladefabrik påstår, at de producerer lige mange stykker lys og mørk chokolade. Alle chokoladestykkerne fyldes på en tilfældig måde i julekalendere. Hver julekalender indeholder i alt 24 stykker chokolade.\n Benyt et tosidet binomialtest til at undersøge, om man kan forkaste nulhypotesen på et 5% signifikansniveau.\n Personen køber en julekalender fra fabrikken med 24 stykker chokolade, hvoraf 7 er mørk chokolade.\n Chokoladenfabrikken producerer lige mange stykker lys og mørk chokolade, dvs. \\( p=\\frac{1}{2} \\).",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -139,8 +139,8 @@
     "points": "10",
     "questionnumber": "11",
     "category": "Vektorer og analytisk geometri",
-    "questiontext": "Beskriv linje for linje de omskrivninger eller konklusioner, der er foretaget.\n En omskrivning af cirklens ligning ses nedenfor. \\begin{align*}\r\n1.&amp; &amp;x^2-2x+y^2+2y &amp;=83 \\\\\r\n2.&amp; &amp;x^2-8x+16+y^2+2y+1 &amp;= 83+16+1 \\\\\r\n3.&amp; &amp;(x-4)^2 + (y+1)^2 &amp;= 83+16+1 \\\\\r\n4.&amp; &amp;(x-4)^2 + (y+1)^2 &amp;= 100 \\\\\r\n5.&amp; &amp;C(4,-1) \\text{ og } r &amp;=10 \\\\\r\n\\end{align*}\n Undersøg, om punktet $P(12,5)$ ligger på cirklen.\n En cirkel er givet ved ligningen \\[ x^2 - 8x + y^2 +2y = 83. \\]",
-    "pictureurl":  "null"
+    "questiontext": "Beskriv linje for linje de omskrivninger eller konklusioner, der er foretaget.\n En omskrivning af cirklens ligning ses nedenfor. \\begin{align*}\r\n1.& &x^2-2x+y^2+2y &=83 \\\\\r\n2.& &x^2-8x+16+y^2+2y+1 &= 83+16+1 \\\\\r\n3.& &(x-4)^2 + (y+1)^2 &= 83+16+1 \\\\\r\n4.& &(x-4)^2 + (y+1)^2 &= 100 \\\\\r\n5.& &C(4,-1) \\text{ og } r &=10 \\\\\r\n\\end{align*}\n Undersøg, om punktet $P(12,5)$ ligger på cirklen.\n En cirkel er givet ved ligningen \\[ x^2 - 8x + y^2 +2y = 83. \\]",
+    "pictureurl": "null"
   },
   {
     "level": "stx B vejledende",
@@ -150,10 +150,10 @@
     "licens": "fri",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "1",
+    "questionnumber": "12",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Reducér udtrykket $2q\\cdot (p+q)-p\\cdot (2q+p)$.",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B vejledende",
@@ -163,10 +163,10 @@
     "licens": "fri",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "4",
+    "questionnumber": "13",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Løs andengradligningen $x^2-4x-60=0$.",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B vejledende",
@@ -176,10 +176,10 @@
     "licens": "fri",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "2",
+    "questionnumber": "14",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Reducér udtrykket \\[ (a+b)^2-2a\\cdot b-b^2. \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -189,10 +189,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "1",
+    "questionnumber": "15",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Løs ligningen.\n Bestem diskriminanten for ligningen.\n En andengradsligning er givet ved \\[ x^2-14x+13=0.\\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -202,10 +202,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "2",
+    "questionnumber": "16",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Løs andengradsligningen \\[ 2x^2+6x+4=0.\\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -215,10 +215,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "2",
+    "questionnumber": "17",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Benyt det vedlagte bilag til at løse ligningen $f(x)=g(x)$.\n BILLEDE\n På figuren ses graferne for to funktioner $f$ og $g$.\n BILAG",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -228,10 +228,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "4",
+    "questionnumber": "18",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Forklar linje for linje de omskrivninger, der er foretaget.\n Nedenstående omskrivninger viser en korrekt løsning af ligningen $x^2+5x-6=5x+12$. \\begin{align*}\r\n2x^2+5x-6 &amp;=5x+12 \\\\\r\n2x^2+5x &amp;=5x+18 \\\\\r\n2x^2&amp;=18 \\\\\r\nx^2&amp;=9 \\\\\r\nx &amp;= -3 \\text{ eller } x=3\r\n\\end{align*}",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -241,10 +241,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "7",
+    "questionnumber": "19",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Gør rede for, at arealet af glaspladen er $36+27\\pi \\text{ dm}^2$.\n På fotoet ses en brændeovn på en dråbeformet glasplade samt en model af glaspladen.\n BILLEDE",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -254,10 +254,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "2",
+    "questionnumber": "20",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Reducér følgende udtryk \\[ 2a\\cdot b+(a-b)^2. \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -267,10 +267,10 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "1",
+    "questionnumber": "21",
     "category": "Reduktioner, ligninger og formler",
     "questiontext": "Løs ligningen \\[ 2(x-1)=6 . \\]",
-    "pictureurl":  "null"
+    "pictureurl": "null"
   },
   {
     "level": "stx B",
@@ -280,15 +280,17 @@
     "licens": "STUK",
     "testformat": "UDEN",
     "points": "10",
-    "questionnumber": "4",
+    "questionnumber": "22",
     "category": "Reduktioner, ligninger og formler",
-    "questiontext": "\\begin{align*}\r\n &amp; (a-b)^2+b\\cdot (5a-b) \\\\\r\n= &amp; a^2+b^2-2ab+b\\cdot(5a-b) \\\\\r\n= &amp; a^2+b^2-2ab+5ab-b^2 \\\\\r\n= &amp; a^2-2ab+5ab \\\\\r\n= &amp; a^2+3ab. \\\\\r\n\\end{align*}\n Forklar nedenstående omskrivninger linje for linje.\n Der er givet udtrykket \\[ (a-b)^2+b\\cdot (5a-b) . \\]",
-    "pictureurl":  "null"
+    "questiontext": "\\begin{align*}\r\n & (a-b)^2+b\\cdot (5a-b) \\\\\r\n= & a^2+b^2-2ab+b\\cdot(5a-b) \\\\\r\n= & a^2+b^2-2ab+5ab-b^2 \\\\\r\n= & a^2-2ab+5ab \\\\\r\n= & a^2+3ab. \\\\\r\n\\end{align*}\n Forklar nedenstående omskrivninger linje for linje.\n Der er givet udtrykket \\[ (a-b)^2+b\\cdot (5a-b) . \\]",
+    "pictureurl": "null"
   },
   {
     "level": "stx A",
     "termin": "20241204",
     "year": "2024",
     "author": "UVM",
-    "licens": "STUK"
-  }]
+    "licens": "STUK",
+    "questionnumber": "23"
+  }
+]

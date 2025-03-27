@@ -37,9 +37,9 @@ public class DBPopulator
         objectMapper.registerModule(new JavaTimeModule());
 
         readQuestions();
-        readQuestionDTO();
-        readMathTeamDTO();
-        readUserAccountDTO();
+        //readQuestionDTO();
+        //readMathTeamDTO();
+        //readUserAccountDTO();
 
     }
 
