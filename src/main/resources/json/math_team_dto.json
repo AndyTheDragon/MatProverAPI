@@ -1,57 +1,59 @@
 {
-  "id": "Number",
-  "owner": {
-    "id": "Number"
-  },
-  "desc": "String",
-  "used_examquestions": [
-    {
-      "id": "Number",
-      "niveau": ["A", "B", "C", null],
-      "termin": "Date",
-      "year": "Number",
-      "delprøve": [1, 2, null],
-      "category": ["String1", "String2", "String3", "String4"],
-      "author": "String",
-      "licens": "String",
-      "point": "Number",
-      "opgavenummer": "Number",
-      "opgavetekst": "String",
-      "billede_url": "String"
-    },
-    {
-      "id": "Number",
-      "niveau": ["A", "B", "C", null],
-      "termin": "Date",
-      "year": "Number",
-      "delprøve": [1, 2, null],
-      "category": ["String1", "String2", "String3", "String4"],
-      "author": "String",
-      "licens": "String",
-      "point": "Number",
-      "opgavenummer": "Number",
-      "opgavetekst": "String",
-      "billede_url": "String"
-    }
-  ],
+  "id": 1,
+  "desc": "Advanced Math Team",
   "assignments": [
     {
-      "id": "Number",
+      "id": 101,
+      "introText": "Introduction to Algebra",
       "owner": {
-        "id": "Number"
+        "id": 1,
+        "username": "ownerUser",
+        "email": "owner@example.com"
       },
-      "intro_text": "String",
-      "total_antal_opgaver": "Number",
-      "total_point": "Number"
-    },
-    {
-      "id": "Number",
-      "owner": {
-        "id": "Number"
-      },
-      "intro_text": "String",
-      "total_antal_opgaver": "Number",
-      "total_point": "Number"
+      "questions": [
+        {
+          "id": 201,
+          "termDate": "2024-05-01",
+          "year": 2024,
+          "author": "Author Name",
+          "points": 10,
+          "questionNumber": 1,
+          "questionText": "What is the derivative of x^2?",
+          "pictureURL": "http://example.com/derivative.jpg"
+        }
+      ],
+      "amountOfQuestions": 5,
+      "totalPoints": 50
     }
-  ]
+  ],
+  "owner": {
+    "id": 1,
+    "username": "teamOwner",
+    "email": "owner@example.com"
+  },
+  "questions": [
+    {
+      "id": 201,
+      "termDate": "2024-05-01",
+      "year": 2024,
+      "author": "Author Name",
+      "points": 10,
+      "questionNumber": 1,
+      "questionText": "What is the derivative of x^2?",
+      "pictureURL": "http://example.com/derivative.jpg"
+    }
+  ],
+  "used_examquestions": [
+    {
+      "id": 301,
+      "termDate": "2023-11-01",
+      "year": 2023,
+      "author": "Exam Author",
+      "points": 15,
+      "questionNumber": 2,
+      "questionText": "What is the integral of x^2?",
+      "pictureURL": "http://example.com/integral.jpg"
+    }
+  ],
+  "level": "Advanced"
 }
