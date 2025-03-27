@@ -4,6 +4,7 @@ import dat.config.ApplicationConfig;
 import dat.config.HibernateConfig;
 import dat.dao.CrudDAO;
 import dat.dao.GenericDAO;
+import dat.dto.MathTeamDTO;
 import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
@@ -18,12 +19,14 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.jupiter.api.Assertions.fail;
@@ -66,8 +69,8 @@ public class MathTeamResourceTest
             em.createQuery("DELETE FROM Question").executeUpdate();
 
             CrudDAO test_dao = new GenericDAO(emf);
-            test_q1 = test_dao.create(new Question());
-            //test_q2 = test_dao.create(new Question());
+            test_q1 = test_dao.create(new Question(10, "fuck det her test"));
+            test_q2 = test_dao.create(new Question(11, "stadig en lortetest"));
             UserAccount test_myUser = new UserAccount("unilogin", "kodeord");
             test_myUser.addRole(Roles.ADMIN);
             test_myUser.addRole(Roles.USER_READ);
@@ -99,7 +102,7 @@ public class MathTeamResourceTest
     @Test
     void getAll()
     {
-        RestAssured.given()
+        given()
                 .when()
                 .get("/hold")
                 .then()
@@ -111,7 +114,7 @@ public class MathTeamResourceTest
     @Test
     void getOne()
     {
-        RestAssured.given()
+        given()
                 .when()
                 .get("/hold/1")
                 .then()
@@ -122,7 +125,23 @@ public class MathTeamResourceTest
     @Test
     void create()
     {
-        fail();
+        MathTeam entity = new MathTeam(("Mathteam A"));
+        try
+        {
+            String json = objectMapper.writeValueAsString(new MathTeamDTO(entity));
+            given().when()
+                .contentType("application/json")
+                .accept("application/json")
+                .body(json)
+                .post("/hold")
+                .then()
+                .statusCode(204)
+                .body("description", equalTo(entity.getDescription()));
+        } catch (JsonProcessingException e)
+        {
+            logger.error("Error creating math team", e);
+            fail();
+        }
     }
 
     @Test
@@ -140,7 +159,7 @@ public class MathTeamResourceTest
     @Test
     void delete()
     {
-        RestAssured.given()
+        given()
                 .when()
                 .delete("/hold/1")
                 .then()
