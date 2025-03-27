@@ -149,9 +149,9 @@ class QuestionResourceTest {
     public void update() {
         try {
             // Prepare a valid QuestionDTO JSON payload
-            String requestBody = """
+            String requestBody = String.format("""
             {
-                "id": 1,
+                "id": %d,
                 "year": 2024,
                 "author": "Updated Author",
                 "questionText": "Updated Question Text",
@@ -163,7 +163,7 @@ class QuestionResourceTest {
                 "level": "Updated Level",
                 "testFormat": "MED"
             }
-        """;
+        """, q1.getId());
 
             given()
                     .when()
