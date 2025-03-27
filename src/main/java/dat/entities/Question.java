@@ -25,10 +25,10 @@ public class Question
     private LocalDate termDate;
     private int year;
     private String author;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private int points;
     private int questionNumber;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     private String questionText;
     private String pictureURL;
     private String category;
@@ -38,10 +38,9 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
-    @JsonIgnore
     @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Assignment> assignments;
+    private Set<Assignment> assignments = new HashSet<>();
 
     public Question(int year, String author, int points, int questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
     {
