@@ -41,7 +41,7 @@ public class AssignmentController implements IController
             ctx.status(201).json("Assignment created");
         } catch (Exception ex)
         {
-            logger.error("Error creating entity. " + ex.getMessage());
+            logger.error("Error creating entity. " + ex);
             throw new ApiException(400, "Error creating entity, check required field values is not null");
         }
     }
@@ -58,7 +58,7 @@ public class AssignmentController implements IController
             ctx.json(assignmentDTOs);
         } catch (Exception ex)
         {
-            logger.error("Error getting entity. " + ex.getMessage());
+            logger.error("Error getting entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -76,7 +76,7 @@ public class AssignmentController implements IController
 
         } catch (Exception ex)
         {
-            logger.error("Error getting entity. " + ex.getMessage());
+            logger.error("Error getting entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -100,11 +100,11 @@ public class AssignmentController implements IController
             ctx.status(200).json(returnedAssignment + "Assignment updated");
         } catch (DaoException ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(400, "Error creating entity, check required field values is not null");
         } catch (Exception ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -121,7 +121,7 @@ public class AssignmentController implements IController
             ctx.status(204);
         } catch (Exception ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -142,11 +142,11 @@ public class AssignmentController implements IController
             ctx.status(204);
         } catch (DaoException ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(400, "Error creating entity, check required field values is not null");
         } catch (Exception ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
@@ -180,7 +180,7 @@ public class AssignmentController implements IController
             ctx.status(204);
         } catch (Exception ex)
         {
-            logger.error("Error updating entity. " + ex.getMessage());
+            logger.error("Error updating entity. " + ex);
             throw new ApiException(404, "No content found for this request");
         }
     }
