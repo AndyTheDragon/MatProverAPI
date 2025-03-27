@@ -37,8 +37,8 @@ public class DBPopulator
         objectMapper.registerModule(new JavaTimeModule());
 
         readQuestions();
-        //readQuestionDTO();
-        //readMathTeamDTO();
+        //readQuestionDTO(); // fix duplicate values for "questionnumber" in "qustiondto.json"
+        readMathTeamDTO();
         //readUserAccountDTO();
 
     }
@@ -111,7 +111,7 @@ public class DBPopulator
 
         } catch (Exception e)
         {
-            logger.info("could not create object  : questionStudentDTO to database");
+            logger.info("could not create object  : MathTeamDTO to database", e);
         }
     }
 
