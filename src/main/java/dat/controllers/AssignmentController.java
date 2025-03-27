@@ -68,7 +68,6 @@ public class AssignmentController implements IController
     {
         try
         {
-            //long id = Long.parseLong(ctx.pathParam("id"));
             Integer id = ctx.pathParamAsClass("id", Integer.class)
                     .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
