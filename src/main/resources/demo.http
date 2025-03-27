@@ -59,6 +59,10 @@ Content-Type: "application/json"
     "owner": 1,
     "introText": "String",
     "totalPoints": 10
+    "mathTeam" : {
+        "id": 1,
+        "name": "Math Team Name"
+    }
 }
 
 ###
