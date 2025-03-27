@@ -1,5 +1,6 @@
 package dat.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import dat.entities.Question;
 import dat.enums.TestFormat;
 import lombok.AllArgsConstructor;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @ToString
+@JsonIgnoreProperties
 public class QuestionDTO
 {
     private Integer id;
