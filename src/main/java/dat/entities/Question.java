@@ -40,6 +40,19 @@ public class Question
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 
+    public Question(int year, String author, int points, int questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
+    {
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionNumber = questionNumber;
+        this.questionText = questionText;
+        this.pictureURL = pictureURL;
+        this.category = category;
+        this.license = license;
+        this.level = level;
+        this.testFormat = testFormat;
+    }
 
     public Question(QuestionDTO questionDTO)
     {
@@ -174,5 +187,10 @@ public class Question
     public void setTestFormat(TestFormat testFormat)
     {
         this.testFormat = testFormat;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 }
