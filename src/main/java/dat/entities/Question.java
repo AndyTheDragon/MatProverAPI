@@ -43,6 +43,11 @@ public class Question
     @ManyToMany
     private Set<Assignment> assignments;
 
+    public Question(int questionNumber, String questionText)
+    {
+        this.questionNumber = questionNumber;
+        this.questionText = questionText;
+    }
 
     public Question(QuestionDTO questionDTO)
     {
