@@ -14,17 +14,19 @@ import lombok.ToString;
 public class AssignmentInfoDTO
 {
     private Integer Id;
-    private UserAccount owner;
+    private OwnerDTO owner;
     private String introText;
-    private Integer quantityOfExercises;
+    private Integer amountOfQuestions;
     private Integer totalPoints;
+    private MathTeamDTO mathTeam;
 
     public AssignmentInfoDTO(Assignment assignment)
     {
         this.Id = assignment.getId();
-        this.owner = assignment.getOwner();
+        this.owner = new OwnerDTO(assignment.getOwner());
+        this.mathTeam = new MathTeamDTO(assignment.getMathTeam());
         this.introText = assignment.getIntroText();
-        this.quantityOfExercises = assignment.getAmountOfQuestions();
+        this.amountOfQuestions = assignment.getAmountOfQuestions();
         this.totalPoints = assignment.getTotalPoints();
     }
 }
