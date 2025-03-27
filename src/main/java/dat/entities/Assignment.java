@@ -43,10 +43,9 @@ public class Assignment
         this.questions = questions;
     }
 
-    public Assignment(String introText, Set<Question> questions)
+    public Assignment(String introText)
     {
         this.introText = introText;
-        this.questions = questions;
     }
 
     public int getAmountOfQuestions()
