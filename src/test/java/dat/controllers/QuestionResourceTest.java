@@ -7,6 +7,7 @@ import dat.entities.Question;
 import dat.enums.TestFormat;
 import dat.routes.Routes;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -56,8 +58,26 @@ class QuestionResourceTest {
     void setUp() {
         logger.info("Setting up each test");
         try (EntityManager em = emf.createEntityManager()) {
-            q1 = new Question(LocalDate.now(), 2023, "Author1", 10, "What is Java?", "url1", "A", "License1", TestFormat.MED);
-            q2 = new Question(LocalDate.now(), 2023, "Author2", 10, "What is Hibernate?", "url2", "B", "License2", TestFormat.UDEN);
+            q1 = new Question(2024,
+                    "Johnny",
+                    10,
+                    1,
+                    "What is Doofus?",
+                    "http://example.com/image.jpg",
+                    "Sample Category",
+                    "Sample License",
+                    "Sample Level",
+                    TestFormat.MED);
+            q2 = new Question(2023,
+                    "Author Name",
+                    10,
+                    2,
+                    "What is Dingus?",
+                    "http://example.com/image.jpg",
+                    "Sample Category",
+                    "Sample License",
+                    "Sample Level",
+                    TestFormat.MED);
             em.getTransaction().begin();
             em.createQuery("DELETE FROM Question").executeUpdate();
             em.persist(q1);
@@ -84,7 +104,12 @@ class QuestionResourceTest {
     @Test
     void getById() {
         logger.info("Executing getById test");
-        given().when().get("/opgave/" + q2.getId()).then().statusCode(200).body("id", equalTo(q2.getId().intValue()));
+        given()
+                .when()
+                .get("/opgave/" + q2.getId())
+                .then()
+                .statusCode(200)
+                .body("id", equalTo(q2.getId().intValue()));
         logger.info("getById test executed successfully");
     }
 
@@ -95,8 +120,8 @@ class QuestionResourceTest {
                 2023,
                 "Author Name",
                 10,
-                1,
-                "What is Doofus?",
+                3,
+                "What is Love?",
                 "http://example.com/image.jpg",
                 "Sample Category",
                 "Sample License",
@@ -121,44 +146,49 @@ class QuestionResourceTest {
     }
 
     @Test
-    void update() {
-        logger.info("Executing update test");
-        Question updatedQuestion = new Question(
-                q1.getYear(),
-                q1.getAuthor(),
-                q1.getPoints(),
-                q1.getQuestionNumber(),
-                "What is dingus?",
-                q1.getPictureURL(),
-                q1.getCategory(),
-                q1.getLicense(),
-                q1.getLevel(),
-                q1.getTestFormat()
-        );
-        updatedQuestion.setId(q1.getId());
-
+    public void update() {
         try {
-            String json = objectMapper.writeValueAsString(new QuestionDTO(updatedQuestion));
-            given().when()
+            // Prepare a valid QuestionDTO JSON payload
+            String requestBody = """
+            {
+                "id": 1,
+                "year": 2024,
+                "author": "Updated Author",
+                "questionText": "Updated Question Text",
+                "points": 10,
+                "questionNumber": 1,
+                "pictureURL": "http://example.com/updated_image.jpg",
+                "category": "Updated Category",
+                "license": "Updated License",
+                "level": "Updated Level",
+                "testFormat": "MED"
+            }
+        """;
+
+            given()
+                    .when()
                     .contentType("application/json")
                     .accept("application/json")
-                    .body(json)
-                    .put("/opgave/")
+                    .body(requestBody)
+                    .patch("/opgave")
                     .then()
                     .statusCode(200)
-                    .body("questionText", equalTo("What is dingus?"));
-            logger.info("update test executed successfully");
-        } catch (JsonProcessingException e) {
-            logger.error("Error updating question", e);
-            fail();
+                    .body("id", equalTo(q1.getId().intValue()))
+                    .body("author", equalTo("Updated Author"))
+                    .body("questionText", equalTo("Updated Question Text"));
+            logger.info("Update test executed successfully");
+        } catch (Exception e) {
+            logger.error("Error during update test", e);
+            fail("Exception occurred during update test: " + e.getMessage());
         }
     }
 
     @Test
     void delete() {
         logger.info("Executing delete test");
-        given().when()
-                .delete("/question/" + q1.getId())
+        given()
+                .when()
+                .delete("/opgave/" + q1.getId())
                 .then()
                 .statusCode(204);
         logger.info("delete test executed successfully");
