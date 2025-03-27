@@ -142,7 +142,7 @@ class GenericDAOTest
         List<Hotel> expected = List.of(h1, h2);
 
         // Act
-        List<Hotel> result = genericDAO.getAll(Hotel.class);
+        List<Hotel> result = genericDAO.getMany(Hotel.class);
 
         // Assert
         assertNotNull(result);

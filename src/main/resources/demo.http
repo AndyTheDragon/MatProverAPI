@@ -10,34 +10,34 @@ GET localhost:7070/api/opgave
 GET localhost:7070/api/opgave/1
 
 ###
-GET localhost:7070/api/Algebra
+GET localhost:7070/api/opgave/1?output=full
 
 ###
 POST localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "id": "1",
-    "niveau": "A",
-    "termin": "25-03-2025",
-    "year": "2025",
-    "delprøve": "1",
-    "category": "Algebra",
-    "author": "Me",
-    "license: "None",
-    "point": "10",
-    "opgavenummer": "1",
-    "opgavetekst": "løs opgaven",
-    "billede_url": "url",
+  "id": 1,
+  "termDate": "2023-10-01",
+  "year": 2023,
+  "author": "Author Name",
+  "points": 10,
+  "questionNumber": 1,
+  "questionText": "Sample question text",
+  "pictureURL": "http://example.com/image.jpg",
+  "category": "Sample Category",
+  "license": "Sample License",
+  "level": "Sample Level",
+  "testFormat": "MED"
 }
 
 ###
-PATCH localhost:7070/api/opgave/1
+PATCH localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "niveau": "B",
-    "opgavenummer": "2",
+    "id": 1,
+    "author": "Updated Author Name"
 }
 
 ###

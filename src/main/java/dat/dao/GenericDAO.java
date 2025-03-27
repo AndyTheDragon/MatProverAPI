@@ -74,7 +74,7 @@ public class GenericDAO implements CrudDAO
     }
 
     @Override
-    public <T> List<T> getAll(Class<T> type) throws DaoException
+    public <T> List<T> getMany(Class<T> type) throws DaoException
     {
         try (EntityManager em = emf.createEntityManager())
         {
@@ -84,6 +84,32 @@ public class GenericDAO implements CrudDAO
                 throw new EntityNotFoundException("No entities found in db");
             }
             return em.createQuery("SELECT t FROM " + type.getSimpleName() + " t", type).getResultList();
+        }
+        catch (Exception e)
+        {
+            logger.error("Error reading objects from db", e);
+            throw new DaoException("Error reading objects from db", e);
+        }
+    }
+
+    public <T> List<T> getMany(Class<T> type, int limit, int page)
+    {
+        int offset = (page - 1) * limit;
+        if (offset < 0)
+        {
+            offset = 0;
+        }
+        if (limit < 0)
+        {
+            limit = 5 ;
+        }
+
+        try (EntityManager em = emf.createEntityManager())
+        {
+            return em.createQuery("SELECT t FROM " + type.getSimpleName() + " t", type)
+                    .setMaxResults(limit)
+                    .setFirstResult(offset)
+                    .getResultList();
         }
         catch (Exception e)
         {

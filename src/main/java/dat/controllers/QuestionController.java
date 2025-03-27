@@ -2,19 +2,21 @@ package dat.controllers;
 
 import dat.dao.CrudDAO;
 import dat.dao.HotelDAO;
-import dat.dto.ErrorMessage;
-import dat.dto.HotelDTO;
-import dat.entities.Hotel;
-import dat.entities.Room;
+import dat.dto.QuestionDTO;
+import dat.dto.QuestionStudentDTO;
+import dat.entities.Question;
+import dat.exceptions.ApiException;
+import dat.exceptions.DaoException;
 import io.javalin.http.BadRequestResponse;
 import io.javalin.http.Context;
 import jakarta.persistence.EntityManagerFactory;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.function.Consumer;
 
-public class QuestionController implements IController
+
+public class QuestionController implements IController, IQuestionController
 {
     private final CrudDAO dao;
     private static final Logger logger = LoggerFactory.getLogger(QuestionController.class);
@@ -25,44 +27,53 @@ public class QuestionController implements IController
         dao = new HotelDAO(emf);
     }
 
-    public QuestionController(CrudDAO dao)
-    {
-        this.dao = dao;
-    }
-
-
 
     @Override
     public void getAll(Context ctx)
     {
         try
         {
-            ctx.json(dao.getAll(Hotel.class));
+            int pageSize = ctx.queryParamAsClass("pageSize", Integer.class)
+                    .check(i -> i > 0, "pageSize must be at least 1")
+                    .check(i -> i <= 50, "pageSize must be at most 50")
+                    .getOrDefault(10);
+            int pageNumber = ctx.queryParamAsClass("pageNumber", Integer.class)
+                    .check(i -> i > 0, "pageNumber must be at least 1")
+                    .getOrDefault(1);
+            ctx.status(200).json(dao.getMany(Question.class, pageSize, pageNumber));
+
         }
         catch (Exception ex)
         {
             logger.error("Error getting entities", ex);
-            ErrorMessage error = new ErrorMessage("Error getting entities");
-            ctx.status(404).json(error);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
     @Override
     public void getById(Context ctx)
     {
-
-        try {
-            //long id = Long.parseLong(ctx.pathParam("id"));
-            long id = ctx.pathParamAsClass("id", Long.class)
-                    .check(i -> i>0, "id must be at least 0")
+        try
+        {
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            HotelDTO foundEntity = new HotelDTO(dao.getById(Hotel.class, id));
-            ctx.json(foundEntity);
-
-        } catch (Exception ex){
-            logger.error("Error getting entity", ex);
-            ErrorMessage error = new ErrorMessage("No entity with that id");
-            ctx.status(404).json(error);
+            String output = ctx.queryParam("output");
+            if ("full".equals(output))
+            {
+                QuestionDTO foundQuestion = new QuestionDTO(dao.getById(Question.class, id));
+                ctx.status(200).json(foundQuestion);
+            }
+            else
+            {
+            QuestionStudentDTO foundQuestion = new QuestionStudentDTO(dao.getById(Question.class, id));
+            ctx.status(200).json(foundQuestion);
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.error("Error getting question", ex);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -71,21 +82,15 @@ public class QuestionController implements IController
     {
         try
         {
-            HotelDTO incomingTest = ctx.bodyAsClass(HotelDTO.class);
-            Hotel entity = new Hotel(incomingTest);
-            Hotel createdEntity = dao.create(entity);
-            for (Room room : entity.getRooms())
-            {
-                room.setHotel(createdEntity);
-                dao.update(room);
-            }
-            ctx.json(new HotelDTO(createdEntity));
+            QuestionDTO incomingTest = ctx.bodyAsClass(QuestionDTO.class);
+            Question question = new Question(incomingTest);
+            Question createdQuestion = dao.create(question);
+            ctx.status(201).json(new QuestionDTO(createdQuestion));
         }
         catch (Exception ex)
         {
-            logger.error("Error creating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error creating entity");
-            ctx.status(400).json(error);
+            logger.error("Error creating question", ex);
+            throw new ApiException(400, "Field ‘xxx’ is required"); //TODO Lav hjælpe metode til fejlmelding
         }
     }
 
@@ -93,29 +98,26 @@ public class QuestionController implements IController
     {
         try
         {
-            //int id = Integer.parseInt(ctx.pathParam("id"));
-            long id = ctx.pathParamAsClass("id", Long.class)
-                    .check(i -> i>0, "id must be at least 0")
+            QuestionDTO questionDTO = ctx.bodyValidator(QuestionDTO.class)
+                    .check(q -> q.getId() != null, "id must not be null")
+                    .check(q -> q.getId() > 0, "id must be at least 1")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            HotelDTO incomingEntity = ctx.bodyAsClass(HotelDTO.class);
-            Hotel hotelToUpdate = dao.getById(Hotel.class, id);
-            if (incomingEntity.getName() != null)
-            {
-                hotelToUpdate.setName(incomingEntity.getName());
-            }
-            if (incomingEntity.getAddress() != null)
-            {
-                hotelToUpdate.setAddress(incomingEntity.getAddress());
-            }
-            Hotel updatedEntity = dao.update(hotelToUpdate);
-            HotelDTO returnedEntity = new HotelDTO(updatedEntity);
-            ctx.json(returnedEntity);
+
+            Question questionToUpdate = dao.getById(Question.class, questionDTO.getId());
+
+            updateQuestionIfNotNull(questionDTO, questionToUpdate);
+            Question updatedEntity = dao.update(questionToUpdate);
+            ctx.status(200).json(new QuestionDTO(updatedEntity));
+        }
+        catch (DaoException ex)
+        {
+            logger.error("Error updating question", ex);
+            throw new ApiException(400, "Field ‘xxx’ is required"); //TODO Lav hjælpe metode til fejlmelding
         }
         catch (Exception ex)
         {
-            logger.error("Error updating entity", ex);
-            ErrorMessage error = new ErrorMessage("Error updating entity. " + ex.getMessage());
-            ctx.status(400).json(error);
+            logger.error("Error updating question", ex);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
@@ -123,24 +125,40 @@ public class QuestionController implements IController
     {
         try
         {
-            //long id = Long.parseLong(ctx.pathParam("id"));
-            long id = ctx.pathParamAsClass("id", Long.class)
-                    .check(i -> i>0, "id must be at least 0")
+            Integer id = ctx.pathParamAsClass("id", Integer.class)
+                    .check(i -> i > 0, "id must be at least 0")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
-            dao.delete(Hotel.class, id);
+            dao.delete(Question.class, id);
             ctx.status(204);
         }
         catch (Exception ex)
         {
-            logger.error("Error deleting entity", ex);
-            ErrorMessage error = new ErrorMessage("Error deleting entity");
-            ctx.status(400).json(error);
+            logger.error("Error deleting question", ex);
+            throw new ApiException(404, "No content found for this request");
         }
     }
 
-    public void getCategory(Context ctx)
+    @Override
+    public void updateQuestionIfNotNull(QuestionDTO questionDTO, Question questionToUpdate)
     {
-        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-        ctx.status(501).json(error);
+        updateFieldIfNotNull(questionToUpdate::setTermDate, questionDTO.getTermDate());
+        updateFieldIfNotNull(questionToUpdate::setAuthor, questionDTO.getAuthor());
+        updateFieldIfNotNull(questionToUpdate::setPoints, questionDTO.getPoints());
+        updateFieldIfNotNull(questionToUpdate::setYear, questionDTO.getYear());
+        updateFieldIfNotNull(questionToUpdate::setQuestionText, questionDTO.getQuestionText());
+        updateFieldIfNotNull(questionToUpdate::setPictureURL, questionDTO.getPictureURL());
+        updateFieldIfNotNull(questionToUpdate::setCategory, questionDTO.getCategory());
+        updateFieldIfNotNull(questionToUpdate::setLicense, questionDTO.getLicense());
+        updateFieldIfNotNull(questionToUpdate::setLevel, questionDTO.getLevel());
+        updateFieldIfNotNull(questionToUpdate::setTestFormat, questionDTO.getTestFormat());
+
+    }
+    @Override
+    public <T> void updateFieldIfNotNull(Consumer<T> setter, T value)
+    {
+        if (value != null)
+        {
+            setter.accept(value);
+        }
     }
 }
