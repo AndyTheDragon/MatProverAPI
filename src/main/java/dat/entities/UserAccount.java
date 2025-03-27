@@ -1,5 +1,6 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.enums.Roles;
 import jakarta.persistence.*;
@@ -125,6 +126,7 @@ public class UserAccount
         }
     }
 
+    @JsonIgnore
     public Set<Assignment> getAssignments()
     {
         return mathTeams.stream()

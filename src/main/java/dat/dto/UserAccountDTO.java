@@ -1,11 +1,9 @@
 package dat.dto;
 
-import dat.entities.Assignment;
-import dat.entities.MathTeam;
 import dat.entities.UserAccount;
-import dat.enums.Roles;
 
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class UserAccountDTO
 {
@@ -15,9 +13,7 @@ public class UserAccountDTO
     private String workplace;
     private String uniLogin;
     private String password;
-    private Set<Roles> roles;
-    private Set<AssignmentDTO> assignments;
-    private Set<MathTeamDTO> mathTeams;
+    private Set<MathTeamNoOwnerDTO> mathTeams;
 
     public UserAccountDTO(UserAccount userAccount)
     {
@@ -27,8 +23,6 @@ public class UserAccountDTO
        this.workplace = userAccount.getWorkplace();
        this.uniLogin = userAccount.getUniLogin();
        this.password = userAccount.getPassword();
-       this.roles = userAccount.getRoles();
-       //this.assignments = userAccount.getAssignments();
-       //this.mathTeams = userAccount.getMathTeams();
+       this.mathTeams = userAccount.getMathTeams().stream().map(MathTeamNoOwnerDTO::new).collect(Collectors.toSet());
     }
 }

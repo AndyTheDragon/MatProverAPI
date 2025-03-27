@@ -2,7 +2,7 @@ package dat.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import dat.dto.MathTeamDTO;
+import dat.dto.MathTeamFullDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,16 +23,16 @@ public class MathTeam
     @Column(name = "math_team_id", nullable = false)
     private Integer id;
     private String description;
+    @JsonBackReference
+    @ManyToOne
+    private UserAccount owner;
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments = new HashSet<>();
 
-    @JsonBackReference
-    @ManyToOne
-    private UserAccount owner;
 
-    public MathTeam(MathTeamDTO mathTeamDTO)
+    public MathTeam(MathTeamFullDTO mathTeamDTO)
     {
         this.description = mathTeamDTO.getDescription();
         this.assignments = mathTeamDTO.getAssignments().stream().map(Assignment::new).collect(Collectors.toSet());
@@ -42,11 +42,10 @@ public class MathTeam
         this.description = description;
     }
 
-    public MathTeam(String description, Set<Assignment> assignments, UserAccount owner)
+    public MathTeam(String description,  UserAccount owner)
     {
         this.description = description;
-        this.assignments = assignments;
-        this.owner = owner;
+        owner.addMathTeam(this);
     }
 
     public void addAssignment(Assignment assignment)
@@ -55,7 +54,6 @@ public class MathTeam
         {
             assignments.add(assignment);
             assignment.setMathTeam(this);
-            assignment.setOwner(owner);
         }
     }
 

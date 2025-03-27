@@ -1,31 +1,31 @@
 package dat.dto;
 
 import dat.entities.Assignment;
-import dat.entities.UserAccount;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.Set;
+import java.util.stream.Collectors;
+
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AssignmentInfoDTO
+public class AssignmentOutputNoTeamDTO
 {
-    private Integer Id;
-    private OwnerDTO owner;
+    private Integer id;
     private String introText;
+    private Set<QuestionStudentDTO> questions;
     private Integer amountOfQuestions;
     private Integer totalPoints;
-    private MathTeamDTO mathTeam;
 
-    public AssignmentInfoDTO(Assignment assignment)
+    public AssignmentOutputNoTeamDTO(Assignment assignment)
     {
-        this.Id = assignment.getId();
-        this.owner = new OwnerDTO(assignment.getOwner());
-        this.mathTeam = new MathTeamDTO(assignment.getMathTeam());
+        this.id = assignment.getId();
         this.introText = assignment.getIntroText();
+        this.questions = assignment.getQuestions().stream().map(QuestionStudentDTO::new).collect(Collectors.toSet());
         this.amountOfQuestions = assignment.getAmountOfQuestions();
         this.totalPoints = assignment.getTotalPoints();
     }

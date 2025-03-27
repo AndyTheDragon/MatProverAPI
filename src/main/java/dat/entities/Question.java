@@ -23,12 +23,11 @@ public class Question
     @Column(name = "question_id", nullable = false)
     private Integer id;
     private LocalDate termDate;
-    private int year;
+    private Integer year;
     private String author;
-//    @Column(nullable = false)
-    private int points;
-    private int questionNumber;
-//    @Column(nullable = false)
+    private Integer points;
+    private Integer questionNumber;
+    @Column(nullable = false)
     private String questionText;
     private String pictureURL;
     private String category;
@@ -38,23 +37,10 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
+    @JsonIgnore
     @JsonBackReference
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<Assignment> assignments = new HashSet<>();
-
-    public Question(int year, String author, int points, int questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
-    {
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-        this.pictureURL = pictureURL;
-        this.category = category;
-        this.license = license;
-        this.level = level;
-        this.testFormat = testFormat;
-    }
 
     public Question(QuestionDTO questionDTO)
     {
@@ -71,10 +57,18 @@ public class Question
         this.testFormat = questionDTO.getTestFormat();
     }
 
-    public Question(int points, String questionText)
+    public Question(Integer year, String author, Integer points, Integer questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
     {
+        this.year = year;
+        this.author = author;
         this.points = points;
+        this.questionNumber = questionNumber;
         this.questionText = questionText;
+        this.pictureURL = pictureURL;
+        this.category = category;
+        this.license = license;
+        this.level = level;
+        this.testFormat = testFormat;
     }
 
     public void addAssignment(Assignment assignment)

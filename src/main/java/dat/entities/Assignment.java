@@ -3,6 +3,7 @@ package dat.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import dat.dto.AssignmentOutputDTO;
 import dat.dto.AssignmentDTO;
 import dat.dto.AssignmentInfoDTO;
 import dat.dto.AssignmentInputDTO;
@@ -30,38 +31,28 @@ public class Assignment
     @ManyToOne
     private MathTeam mathTeam;
 
-
-    @JsonIgnore
-    @ManyToOne
-    private UserAccount owner;
-
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
-    public Assignment(AssignmentDTO assignmentDTO)
-    {
-        this.introText = assignmentDTO.getIntroText();
-        //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
-    }
-
-    public Assignment(AssignmentInfoDTO assignmentDTO)
-    {
-        this.introText = assignmentDTO.getIntroText();
-        //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
-    }
     public Assignment(AssignmentInputDTO assignmentDTO)
     {
         this.introText = assignmentDTO.getIntroText();
-        this.mathTeam = new MathTeam(assignmentDTO.getMathTeam());
     }
 
-    public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
+    public Assignment(String introText, MathTeam mathTeam, Set<Question> questions)
     {
         this.introText = introText;
-        this.mathTeam = mathTeam;
-        this.owner = owner;
-        this.questions = questions;
+        mathTeam.addAssignment(this);
+        if (questions!=null)
+        {
+            this.questions = questions;
+        }
+    }
+
+    public Assignment(String introText)
+    {
+        this.introText = introText;
     }
 
     public int getAmountOfQuestions()
@@ -105,8 +96,4 @@ public class Assignment
         this.mathTeam = mathTeam;
     }
 
-    public void setOwner(UserAccount owner)
-    {
-        this.owner = owner;
-    }
 }

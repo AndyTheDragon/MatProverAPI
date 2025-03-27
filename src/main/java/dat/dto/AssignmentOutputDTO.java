@@ -13,22 +13,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class AssignmentDTO
+public class AssignmentOutputDTO
 {
     private Integer id;
     private String introText;
-    private MathTeamDTO mathTeam; //only used for output, should be empty on input ?
-    private OwnerDTO owner; //only used for output, should be empty on input ?
+    private MathTeamSimpleDTO mathTeam; //only used for output, should be empty on input ?
     private Set<QuestionStudentDTO> questions; //only used for output, should be empty on input
     private Integer amountOfQuestions;
     private Integer totalPoints;
 
-    public AssignmentDTO(Assignment assignment)
+    public AssignmentOutputDTO(Assignment assignment)
     {
         this.id = assignment.getId();
         this.introText = assignment.getIntroText();
-        this.mathTeam = new MathTeamDTO(assignment.getMathTeam());
-        this.owner = new OwnerDTO(assignment.getOwner());
+        this.mathTeam = new MathTeamSimpleDTO(assignment.getMathTeam());
         this.questions = assignment.getQuestions().stream().map(QuestionStudentDTO::new).collect(Collectors.toSet());
         this.amountOfQuestions = assignment.getAmountOfQuestions();
         this.totalPoints = assignment.getTotalPoints();
