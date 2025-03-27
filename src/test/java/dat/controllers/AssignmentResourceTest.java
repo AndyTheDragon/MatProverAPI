@@ -130,4 +130,39 @@ class AssignmentResourceTest
                 .body("id", equalTo(test_a1.getId()));
     }
 
+    @Test
+    void test_CreateAssignment() {
+        Assignment assignment = new Assignment();
+        assignment.setIntroText("Assignment 3");
+        assignment.setMathTeam(test_a1.getMathTeam());
+        assignment.setOwner(test_a1.getOwner());
+        assignment.addQuestion(test_q1);
+        assignment.addQuestion(test_q2);
+
+        try {
+            // Manually initialize nested lazy fields before converting to DTO
+            assignment.getQuestions().forEach(q -> Optional.ofNullable(q.getAssignments()).ifPresent(Set::size));
+            assignment.getMathTeam().getAssignments().size(); // if needed
+            assignment.getOwner().getMathTeams().size();      // if needed
+
+            // Convert to DTO *after* initialization
+            String json = objectMapper.writeValueAsString(new AssignmentDTO(assignment));
+
+            given()
+                    .contentType(ContentType.JSON)
+                    .accept(ContentType.JSON)
+                    .body(json)
+                    .post("/opgaveset")
+                    .then()
+                    .statusCode(201)
+                    .body("id", equalTo(assignment.getId()))
+                    .body("mathTeam.id", equalTo(assignment.getMathTeam().getId()))
+                    .body("owner.id", equalTo(assignment.getOwner().getId()));
+            //.body("questions.size()", equalTo(2)); // Uncomment if response returns questions
+        } catch (Exception e) {
+            logger.error("Error creating assignment", e);
+            fail();
+        }
+    }
+
 }
