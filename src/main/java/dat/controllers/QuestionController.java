@@ -98,7 +98,10 @@ public class QuestionController implements IController, IQuestionController
     {
         try
         {
-            QuestionDTO questionDTO = ctx.bodyAsClass(QuestionDTO.class);
+            QuestionDTO questionDTO = ctx.bodyValidator(QuestionDTO.class)
+                    .check(q -> q.getId() != null, "id must not be null")
+                    .check(q -> q.getId() > 0, "id must be at least 1")
+                    .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
 
             if (questionDTO.getId() == null || questionDTO.getId() <= 0)
             {
