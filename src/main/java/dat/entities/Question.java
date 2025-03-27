@@ -40,9 +40,22 @@ public class Question
 
     @JsonIgnore
     @JsonBackReference
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 
+    public Question(int year, String author, int points, int questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
+    {
+        this.year = year;
+        this.author = author;
+        this.points = points;
+        this.questionNumber = questionNumber;
+        this.questionText = questionText;
+        this.pictureURL = pictureURL;
+        this.category = category;
+        this.license = license;
+        this.level = level;
+        this.testFormat = testFormat;
+    }
 
     public Question(QuestionDTO questionDTO)
     {
@@ -122,5 +135,65 @@ public class Question
             assignments.remove(assignment);
             assignment.removeQuestion(this);
         }
+    }
+
+    public void setTermDate(LocalDate termDate)
+    {
+        this.termDate = termDate;
+    }
+
+    public void setYear(int year)
+    {
+        this.year = year;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+
+    public void setPoints(int points)
+    {
+        this.points = points;
+    }
+
+    public void setQuestionNumber(int questionNumber)
+    {
+        this.questionNumber = questionNumber;
+    }
+
+    public void setQuestionText(String questionText)
+    {
+        this.questionText = questionText;
+    }
+
+    public void setPictureURL(String pictureURL)
+    {
+        this.pictureURL = pictureURL;
+    }
+
+    public void setCategory(String category)
+    {
+        this.category = category;
+    }
+
+    public void setLicense(String license)
+    {
+        this.license = license;
+    }
+
+    public void setLevel(String level)
+    {
+        this.level = level;
+    }
+
+    public void setTestFormat(TestFormat testFormat)
+    {
+        this.testFormat = testFormat;
+    }
+
+    public void setId(Integer id)
+    {
+        this.id = id;
     }
 }
