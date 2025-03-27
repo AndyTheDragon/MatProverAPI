@@ -136,15 +136,7 @@ public class AssignmentController implements IController
             QuestionStudentDTO incomingQuestion = ctx.bodyAsClass(QuestionStudentDTO.class);
             Integer questionId = incomingQuestion.getId();
             Assignment assignment = dao.getById(Assignment.class, assignmentId);
-            if (assignment == null)
-            {
-                throw new BadRequestResponse("Assignment not found");
-            }
             Question question = dao.getById(Question.class, questionId);
-            if (question == null)
-            {
-                throw new BadRequestResponse("Question not found");
-            }
             assignment.addQuestion(question);
             dao.update(assignment);
             ctx.status(204);
