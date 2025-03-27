@@ -1,6 +1,7 @@
 package dat.controllers;
 
 import dat.dao.CrudDAO;
+import dat.dao.GenericDAO;
 import dat.dao.HotelDAO;
 import dat.dto.QuestionDTO;
 import dat.dto.QuestionStudentDTO;
@@ -24,7 +25,7 @@ public class QuestionController implements IController, IQuestionController
 
     public QuestionController(EntityManagerFactory emf)
     {
-        dao = new HotelDAO(emf);
+        dao = new GenericDAO(emf);
     }
 
 
