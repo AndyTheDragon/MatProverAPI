@@ -2,8 +2,6 @@ package dat.dto;
 
 import dat.entities.UserAccount;
 
-// OwnerDTO skal indeholde id, navn, skole og email. Den skal have en constructor som tager et UserAccount objekt ind
-// og sætter de relevante attributter. Plan: OwnerDTO og så test. Herefter UserAccount (SecurityController)
 public class OwnerDTO
 {
     private Integer id;
