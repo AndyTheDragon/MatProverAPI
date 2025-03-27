@@ -147,7 +147,7 @@ public class AssignmentController implements IController
             }
             assignment.addQuestion(question);
             dao.update(assignment);
-            ctx.status(200).json("Question added to assignment");
+            ctx.status(204);
         } catch (DaoException ex)
         {
             logger.error("Error updating entity. " + ex.getMessage());
