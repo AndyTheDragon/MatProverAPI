@@ -107,8 +107,8 @@ public class QuestionController implements IController, IQuestionController
             }
             Question questionToUpdate = dao.getById(Question.class, questionDTO.getId());
 
-            Question updatedEntity = dao.update(questionToUpdate);
             updateQuestionIfNotNull(questionDTO, questionToUpdate);
+            Question updatedEntity = dao.update(questionToUpdate);
             ctx.status(200).json(new QuestionDTO(updatedEntity));
         }
         catch (DaoException ex)
