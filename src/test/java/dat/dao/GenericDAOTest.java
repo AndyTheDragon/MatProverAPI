@@ -180,42 +180,33 @@ class GenericDAOTest
 
     }
 
-    /*@Test
-    void createMany()
-    {
-        // Arrange
-        Hotel t3 = new Hotel("TestEntityC");
-        Hotel t4 = new Hotel("TestEntityD");
-        List<Hotel> testEntities = List.of(t3, t4);
-
-        // Act
-        List<Hotel> result = genericDAO.create(testEntities);
-
-        // Assert
-        assertThat(result.get(0), samePropertyValuesAs(t3, "rooms"));
-        assertThat(result.get(1), samePropertyValuesAs(t4, "rooms"));
-        assertNotNull(result);
-        try (EntityManager em = emf.createEntityManager())
-        {
-            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Hotel t", Long.class).getSingleResult();
-            assertThat(amountInDb, is(4L));
-        }
-    }
-
     @Test
     void read()
     {
         // Arrange
-        Hotel expected = h1;
+        Question expectedQuestion = q1;
+        UserAccount expectedUser = userA;
+        MathTeam expectedMathTeam = mathTeamA;
+        Assignment expectedAssignment = assignmentA;
 
         // Act
-        Hotel result = genericDAO.getById(Hotel.class, h1.getId());
+        Question resultQuestion = genericDAO.getById(Question.class, q1.getId());
+        UserAccount resultUser = genericDAO.getById(UserAccount.class, userA.getId());
+        MathTeam resultMathTeam = genericDAO.getById(MathTeam.class, mathTeamA.getId());
+        Assignment resultAssignment = genericDAO.getById(Assignment.class, assignmentA.getId());
 
         // Assert
-        assertThat(result, samePropertyValuesAs(expected, "rooms"));
-        //assertThat(result.getRooms(), containsInAnyOrder(expected.getRooms().toArray()));
+        assertThat(resultQuestion, samePropertyValuesAs(expectedQuestion, "assignments"));
+        assertThat(resultUser, samePropertyValuesAs(expectedUser, "assignments", "mathTeams"));
+        assertThat(resultUser.getMathTeams().size(), equalTo(expectedUser.getMathTeams().size()));
+        assertThat(resultUser.getAssignments().size(), equalTo(expectedUser.getAssignments().size()));
+        assertThat(resultMathTeam, samePropertyValuesAs(expectedMathTeam, "assignments", "owner", "questions"));
+        assertThat(resultMathTeam.getOwner(), samePropertyValuesAs(expectedMathTeam.getOwner(), "assignments", "mathTeams"));
+        assertThat(resultMathTeam.getAssignments().size(), equalTo(expectedMathTeam.getAssignments().size()));
+        assertThat(resultMathTeam.getQuestions().size(), equalTo(expectedMathTeam.getQuestions().size()));
+        assertThat(resultAssignment, samePropertyValuesAs(expectedAssignment, "mathTeam", "questions"));
     }
-
+/*
     @Test
     void read_notFound()
     {
