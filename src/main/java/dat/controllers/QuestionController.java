@@ -103,11 +103,6 @@ public class QuestionController implements IController, IQuestionController
                     .check(q -> q.getId() > 0, "id must be at least 1")
                     .getOrThrow((validator) -> new BadRequestResponse("Invalid id"));
 
-            if (questionDTO.getId() == null || questionDTO.getId() <= 0)
-            {
-                logger.warn("Invalid id: {}", questionDTO.getId());
-                throw new BadRequestResponse("Invalid id");
-            }
             Question questionToUpdate = dao.getById(Question.class, questionDTO.getId());
 
             updateQuestionIfNotNull(questionDTO, questionToUpdate);
