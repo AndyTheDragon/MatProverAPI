@@ -1,5 +1,7 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.dto.AssignmentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,19 +23,22 @@ public class Assignment
     @Column(name = "assignment_id", nullable = false)
     private Integer id;
     private String introText;
+    @JsonBackReference
     @ManyToOne
     private MathTeam mathTeam;
 
+    @JsonBackReference
     @ManyToOne
     private UserAccount owner;
 
+    @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
     public Assignment(AssignmentDTO assignmentDTO)
     {
         this.introText = assignmentDTO.getIntroText();
-        this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
+        //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
     }
 
     public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)

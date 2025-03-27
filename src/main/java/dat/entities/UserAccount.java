@@ -1,5 +1,6 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.enums.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -35,7 +36,8 @@ public class UserAccount
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles = new HashSet<>();
 
-    @OneToMany
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<MathTeam> mathTeams = new HashSet<>();
 
 

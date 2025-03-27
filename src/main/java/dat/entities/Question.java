@@ -1,7 +1,8 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dat.dto.QuestionDTO;
-import dat.enums.Roles;
 import dat.enums.TestFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -37,6 +38,8 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
+    @JsonIgnore
+    @JsonBackReference
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Assignment> assignments;
 
