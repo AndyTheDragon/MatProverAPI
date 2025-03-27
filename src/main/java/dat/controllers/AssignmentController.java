@@ -97,7 +97,7 @@ public class AssignmentController implements IController
             }
             Assignment updatedAssignment = dao.update(assignmentUpdate);
             AssignmentDTO returnedAssignment = new AssignmentDTO(updatedAssignment);
-            ctx.json(returnedAssignment);
+            ctx.status(200).json(returnedAssignment + "Assignment updated");
         } catch (DaoException ex)
         {
             logger.error("Error updating entity. " + ex.getMessage());
