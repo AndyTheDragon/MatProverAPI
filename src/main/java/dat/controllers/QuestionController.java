@@ -105,22 +105,11 @@ public class QuestionController implements IController, IQuestionController
                 logger.warn("Invalid id: {}", questionDTO.getId());
                 throw new BadRequestResponse("Invalid id");
             }
-
             Question questionToUpdate = dao.getById(Question.class, questionDTO.getId());
 
-            updateFieldIfNotNull(questionToUpdate::setTermDate, questionDTO.getTermDate());
-            updateFieldIfNotNull(questionToUpdate::setAuthor, questionDTO.getAuthor());
-            updateFieldIfNotNull(questionToUpdate::setPoints, questionDTO.getPoints());
-            updateFieldIfNotNull(questionToUpdate::setYear, questionDTO.getYear());
-            updateFieldIfNotNull(questionToUpdate::setQuestionText, questionDTO.getQuestionText());
-            updateFieldIfNotNull(questionToUpdate::setPictureURL, questionDTO.getPictureURL());
-            updateFieldIfNotNull(questionToUpdate::setCategory, questionDTO.getCategory());
-            updateFieldIfNotNull(questionToUpdate::setLicense, questionDTO.getLicense());
-            updateFieldIfNotNull(questionToUpdate::setLevel, questionDTO.getLevel());
-            updateFieldIfNotNull(questionToUpdate::setTestFormat, questionDTO.getTestFormat());
-
-            Question updatedQuestion = dao.update(questionToUpdate);
-            ctx.status(200).json(new QuestionDTO(updatedQuestion));
+            Question updatedEntity = dao.update(questionToUpdate);
+            updateQuestionIfNotNull(questionDTO, questionToUpdate);
+            ctx.status(200).json(new QuestionDTO(updatedEntity));
         }
         catch (DaoException ex)
         {
@@ -152,6 +141,21 @@ public class QuestionController implements IController, IQuestionController
     }
 
     @Override
+    public void updateQuestionIfNotNull(QuestionDTO questionDTO, Question questionToUpdate)
+    {
+        updateFieldIfNotNull(questionToUpdate::setTermDate, questionDTO.getTermDate());
+        updateFieldIfNotNull(questionToUpdate::setAuthor, questionDTO.getAuthor());
+        updateFieldIfNotNull(questionToUpdate::setPoints, questionDTO.getPoints());
+        updateFieldIfNotNull(questionToUpdate::setYear, questionDTO.getYear());
+        updateFieldIfNotNull(questionToUpdate::setQuestionText, questionDTO.getQuestionText());
+        updateFieldIfNotNull(questionToUpdate::setPictureURL, questionDTO.getPictureURL());
+        updateFieldIfNotNull(questionToUpdate::setCategory, questionDTO.getCategory());
+        updateFieldIfNotNull(questionToUpdate::setLicense, questionDTO.getLicense());
+        updateFieldIfNotNull(questionToUpdate::setLevel, questionDTO.getLevel());
+        updateFieldIfNotNull(questionToUpdate::setTestFormat, questionDTO.getTestFormat());
+
+    }
+    @Override
     public <T> void updateFieldIfNotNull(Consumer<T> setter, T value)
     {
         if (value != null)
@@ -159,10 +163,4 @@ public class QuestionController implements IController, IQuestionController
             setter.accept(value);
         }
     }
-
-//    public void getCategory(Context ctx)
-//    {
-//        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
-//        ctx.status(501).json(error);
-//    }
 }
