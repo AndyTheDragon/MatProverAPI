@@ -23,6 +23,7 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -69,8 +70,8 @@ class AssignmentResourceTest
             em.createQuery("DELETE FROM Question").executeUpdate();
 
             CrudDAO test_dao = new GenericDAO(emf);
-            Question test_question = new Question();
-            test_dao.create(test_question);
+            test_q1 = test_dao.create(new Question(10, "test question"));
+            test_q2 = test_dao.create(new Question(5, "test question 2"));
             UserAccount test_myUser = new UserAccount("unilogin", "kodeord");
             test_myUser.addRole(Roles.ADMIN);
             test_myUser.addRole(Roles.USER_READ);
@@ -79,17 +80,21 @@ class AssignmentResourceTest
             MathTeam test_myMathTeam = new MathTeam("MathTeam 2a");
             test_myMathTeam = test_dao.create(test_myMathTeam);
             test_myUser.addMathTeam(test_myMathTeam);
-            test_dao.update(test_myUser);
+            test_myUser = test_dao.update(test_myUser);
 
             Assignment assignment = new Assignment();
             test_myMathTeam.addAssignment(assignment);
             assignment = test_dao.create(assignment);
             test_myMathTeam = test_dao.update(test_myMathTeam);
 
-            assignment.addQuestion(test_question);
-            test_dao.update(assignment);
-            test_dao.update(test_myMathTeam);
+            assignment.addQuestion(test_q1);
+            test_a1 = test_dao.update(assignment);
+            test_myMathTeam = test_dao.update(test_myMathTeam);
 
+            test_a2 = new Assignment("Assignment 2", test_myMathTeam, test_myUser, Set.of(test_q1, test_q2));
+            test_a2 = test_dao.create(test_a2);
+            test_dao.update(test_myMathTeam);
+            test_dao.update(test_myUser);
 
             em.getTransaction().commit();
         }
@@ -103,7 +108,14 @@ class AssignmentResourceTest
                 .get("/opgaveset")
                 .then()
                 .statusCode(200)
-                .body("size()", equalTo(1));
+                .body("size()", equalTo(2))
+                .body("[0].id", equalTo(test_a1.getId()))
+                .body("[0].mathTeam.id", equalTo(test_a1.getMathTeam().getId()))
+                .body("[0].mathTeam.description", equalTo(test_a1.getMathTeam().getDescription()))
+                .body("[0].owner", equalTo(test_a1.getOwner().getId())) //Dette skal laves om, brug OwnerDTO i AssignmentDTO
+                .body("[0].questions.size()", equalTo(1))
+                .body("[1].id", equalTo(test_a2.getId()))
+                .body("[1].questions.size()", equalTo(2));
     }
 
 }

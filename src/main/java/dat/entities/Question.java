@@ -1,7 +1,8 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dat.dto.QuestionDTO;
-import dat.enums.Roles;
 import dat.enums.TestFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,9 +25,10 @@ public class Question
     private LocalDate termDate;
     private int year;
     private String author;
-    private int points;
     @Column(nullable = false)
+    private int points;
     private int questionNumber;
+    @Column(nullable = false)
     private String questionText;
     private String pictureURL;
     private String category;
@@ -36,6 +38,8 @@ public class Question
     @Enumerated(EnumType.STRING)
     private TestFormat testFormat;
 
+    @JsonIgnore
+    @JsonBackReference
     @ManyToMany
     private Set<Assignment> assignments;
 
@@ -54,52 +58,11 @@ public class Question
         this.level = questionDTO.getLevel();
         this.testFormat = questionDTO.getTestFormat();
     }
-    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText)
-    {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-    }
 
-    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText, String pictureURL)
+    public Question(int points, String questionText)
     {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-        this.pictureURL = pictureURL;
-    }
-
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat)
-    {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
         this.points = points;
         this.questionText = questionText;
-        this.pictureURL = pictureURL;
-        this.license = license;
-        this.level = level;
-        this.testFormat = testFormat;
-    }
-
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat, Set<Assignment> assignments)
-    {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionText = questionText;
-        this.pictureURL = pictureURL;
-        this.license = license;
-        this.level = level;
-        this.testFormat = testFormat;
-        this.assignments = assignments;
     }
 
     public void addAssignment(Assignment assignment)
