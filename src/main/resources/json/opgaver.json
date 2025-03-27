@@ -1,7 +1,7 @@
 [
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -14,7 +14,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -27,7 +27,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -40,7 +40,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -53,7 +53,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -66,7 +66,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -79,7 +79,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -92,7 +92,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -105,7 +105,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -118,7 +118,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -131,7 +131,7 @@
   },
   {
     "level": "stx B",
-    "termin": "20210526",
+    "termDate": "20210526",
     "year": "2021",
     "author": "UVM",
     "licens": "STUK",
@@ -144,7 +144,7 @@
   },
   {
     "level": "stx B vejledende",
-    "termin": "20180601",
+    "termDate": "20180601",
     "year": "2018",
     "author": "Opgavekommissionen",
     "licens": "fri",
@@ -157,7 +157,7 @@
   },
   {
     "level": "stx B vejledende",
-    "termin": "20180601",
+    "termDate": "20180601",
     "year": "2018",
     "author": "Opgavekommissionen",
     "licens": "fri",
@@ -165,132 +165,5 @@
     "points": "10",
     "questionnumber": "13",
     "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Løs andengradligningen $x^2-4x-60=0$.",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B vejledende",
-    "termin": "20190603",
-    "year": "2019",
-    "author": "Opgavekommissionen",
-    "licens": "fri",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "14",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Reducér udtrykket \\[ (a+b)^2-2a\\cdot b-b^2. \\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20191206",
-    "year": "2019",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "15",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Løs ligningen.\n Bestem diskriminanten for ligningen.\n En andengradsligning er givet ved \\[ x^2-14x+13=0.\\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20200813",
-    "year": "2020",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "16",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Løs andengradsligningen \\[ 2x^2+6x+4=0.\\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20200525",
-    "year": "2020",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "17",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Benyt det vedlagte bilag til at løse ligningen $f(x)=g(x)$.\n BILLEDE\n På figuren ses graferne for to funktioner $f$ og $g$.\n BILAG",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20200525",
-    "year": "2020",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "18",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Forklar linje for linje de omskrivninger, der er foretaget.\n Nedenstående omskrivninger viser en korrekt løsning af ligningen $x^2+5x-6=5x+12$. \\begin{align*}\r\n2x^2+5x-6 &amp;=5x+12 \\\\\r\n2x^2+5x &amp;=5x+18 \\\\\r\n2x^2&amp;=18 \\\\\r\nx^2&amp;=9 \\\\\r\nx &amp;= -3 \\text{ eller } x=3\r\n\\end{align*}",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20200525",
-    "year": "2020",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "19",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Gør rede for, at arealet af glaspladen er $36+27\\pi \\text{ dm}^2$.\n På fotoet ses en brændeovn på en dråbeformet glasplade samt en model af glaspladen.\n BILLEDE",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20200813",
-    "year": "2020",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "20",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Reducér følgende udtryk \\[ 2a\\cdot b+(a-b)^2. \\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20210813",
-    "year": "2021",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "21",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "Løs ligningen \\[ 2(x-1)=6 . \\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx B",
-    "termin": "20211207",
-    "year": "2021",
-    "author": "UVM",
-    "licens": "STUK",
-    "testformat": "UDEN",
-    "points": "10",
-    "questionnumber": "22",
-    "category": "Reduktioner, ligninger og formler",
-    "questiontext": "\\begin{align*}\r\n & (a-b)^2+b\\cdot (5a-b) \\\\\r\n= & a^2+b^2-2ab+b\\cdot(5a-b) \\\\\r\n= & a^2+b^2-2ab+5ab-b^2 \\\\\r\n= & a^2-2ab+5ab \\\\\r\n= & a^2+3ab. \\\\\r\n\\end{align*}\n Forklar nedenstående omskrivninger linje for linje.\n Der er givet udtrykket \\[ (a-b)^2+b\\cdot (5a-b) . \\]",
-    "pictureurl": "null"
-  },
-  {
-    "level": "stx A",
-    "termin": "20241204",
-    "year": "2024",
-    "author": "UVM",
-    "licens": "STUK",
-    "questionnumber": "23"
-  }
-]
+    "questiontext": "Løs and"
+  }]
