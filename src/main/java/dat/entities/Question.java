@@ -71,6 +71,12 @@ public class Question
         this.testFormat = testFormat;
     }
 
+    public Question(Integer points, String questionText)
+    {
+        this.points = points;
+        this.questionText = questionText;
+    }
+
     public void addAssignment(Assignment assignment)
     {
         if (assignment != null)

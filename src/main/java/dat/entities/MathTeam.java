@@ -3,6 +3,7 @@ package dat.entities;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.dto.MathTeamFullDTO;
+import dat.dto.MathTeamSimpleDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,11 +33,11 @@ public class MathTeam
     private Set<Assignment> assignments = new HashSet<>();
 
 
-    public MathTeam(MathTeamFullDTO mathTeamDTO)
+    public MathTeam(MathTeamSimpleDTO mathTeamDTO)
     {
         this.description = mathTeamDTO.getDescription();
-        this.assignments = mathTeamDTO.getAssignments().stream().map(Assignment::new).collect(Collectors.toSet());
     }
+
     public MathTeam(String description)
     {
         this.description = description;

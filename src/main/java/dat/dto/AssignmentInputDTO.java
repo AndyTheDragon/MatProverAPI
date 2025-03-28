@@ -12,7 +12,7 @@ import lombok.ToString;
 @ToString
 public class AssignmentInputDTO
 {
-    private Integer Id;
+    private Integer id;
     private String introText;
     private MathTeamSimpleDTO mathTeam;
 

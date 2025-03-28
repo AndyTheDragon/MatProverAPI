@@ -56,13 +56,17 @@ POST localhost:7070/api/opgaveset
 Content-Type: "application/json"
 
 {
-    "owner": 1,
-    "introText": "String",
-    "totalPoints": 10
-    "mathTeam" : {
-        "id": 1,
-        "name": "Math Team Name"
+  "introText": "Opgavesæt 17 - 2023",
+  "mathTeam": {
+    "id": 1,
+    "description": "MathTeam 2a",
+    "owner": {
+      "id": 1,
+      "name": null,
+      "workplace": null,
+      "email": null
     }
+  }
 }
 
 ###
@@ -77,7 +81,7 @@ Content-Type: "application/json"
 POST localhost:7070/api/opgaveset/1/add
 
 {
-    "id": 1
+    "id": 2
 }
 
 ###

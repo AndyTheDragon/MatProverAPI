@@ -65,7 +65,7 @@ public class Main
         a1 = dao.update(assignment);
         myMathTeam = dao.update(myMathTeam);
 
-        a2 = new Assignment("Assignment 2", myMathTeam, myUser, Set.of(q1, q2));
+        a2 = new Assignment("Assignment 2", myMathTeam, Set.of(q1, q2));
         a2 = dao.create(a2);
         dao.update(myMathTeam);
         dao.update(myUser);
