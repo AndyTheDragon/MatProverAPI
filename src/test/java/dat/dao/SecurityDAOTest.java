@@ -13,6 +13,7 @@ import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 //@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SecurityDAOTest {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();

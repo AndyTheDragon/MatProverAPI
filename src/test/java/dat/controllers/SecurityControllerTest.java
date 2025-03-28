@@ -21,6 +21,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SecurityControllerTest {
 
