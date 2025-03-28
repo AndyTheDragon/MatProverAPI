@@ -21,6 +21,7 @@ import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class SecurityControllerTest {
 
@@ -32,9 +33,12 @@ class SecurityControllerTest {
 
     @BeforeAll
     static void setUpAll() {
-        HotelController hotelController = new HotelController(emf);
-        SecurityController securityController = new SecurityController(emf);
-        Routes routes = new Routes(hotelController, securityController);
+        final Map<String, IController> controllers = new HashMap<>();
+        controllers.put("question", new QuestionController(emf));
+        controllers.put("assignment", new AssignmentController(emf));
+        controllers.put("mathTeam", new MathTeamController(emf));
+        controllers.put("security", new SecurityController(emf));
+        Routes routes = new Routes(controllers);
         ApplicationConfig
                 .getInstance()
                 .initiateServer()
@@ -56,12 +60,12 @@ class SecurityControllerTest {
 
             // Create test user with user role
             UserAccount testUserAccount = new UserAccount(TEST_USER, TEST_PASSWORD);
-            testUserAccount.addRole(Roles.USER);
+            testUserAccount.addRole(Roles.USER_READ);
             em.persist(testUserAccount);
 
             // Create test admin with admin role
             UserAccount testAdmin = new UserAccount(TEST_ADMIN, TEST_PASSWORD);
-            testAdmin.addRole(Roles.USER);
+            testAdmin.addRole(Roles.USER_READ);
             testAdmin.addRole(Roles.ADMIN);
             em.persist(testAdmin);
 

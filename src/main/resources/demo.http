@@ -1,37 +1,148 @@
+
 GET localhost:7070/api/routes
 
+
+### -------------- QUESTIONS ROUTES ----------------
 ###
-GET localhost:7070/api/hotel
+GET localhost:7070/api/opgave
 
 ###
-GET localhost:7070/api/hotel/3
+GET localhost:7070/api/opgave/1
 
 ###
-POST localhost:7070/api/hotel
+GET localhost:7070/api/opgave/1?output=full
+
+###
+POST localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "name": "Park Hotel",
-    "address": "Brorsonsvej 2",
-    "rooms":[
-        {
-            "roomNumber": 101,
-            "price": 1000
-        }
-    ]
+  "id": 1,
+  "termDate": "2023-10-01",
+  "year": 2023,
+  "author": "Author Name",
+  "points": 10,
+  "questionNumber": 1,
+  "questionText": "Sample question text",
+  "pictureURL": "http://example.com/image.jpg",
+  "category": "Sample Category",
+  "license": "Sample License",
+  "level": "Sample Level",
+  "testFormat": "MED"
 }
 
 ###
-PUT localhost:7070/api/hotel/1
+PATCH localhost:7070/api/opgave
 Content-Type: "application/json"
 
 {
-    "name": "Lucky Star Hotel",
-    "address": "Brorsonsvej 1"
+    "id": 1,
+    "author": "Updated Author Name"
 }
 
 ###
-DELETE localhost:7070/api/hotel/1
+DELETE localhost:7070/api/opgave/1
+
+
+### -------------- ASSIGNMENT ROUTES ----------------
+###
+GET localhost:7070/api/opgaveset/
 
 ###
-GET localhost:7070/api/hotel/1/rooms
+GET localhost:7070/api/opgaveset/1
+
+###
+POST localhost:7070/api/opgaveset
+Content-Type: "application/json"
+
+{
+  "introText": "Opgavesæt 17 - 2023",
+  "mathTeam": {
+    "id": 1,
+    "description": "MathTeam 2a",
+    "owner": {
+      "id": 1,
+      "name": null,
+      "workplace": null,
+      "email": null
+    }
+  }
+}
+
+###
+PATCH localhost:7070/api/opgaveset/1
+Content-Type: "application/json"
+
+{
+    "introText": "TEST"
+}
+
+###
+POST localhost:7070/api/opgaveset/1/add
+
+{
+    "id": 2
+}
+
+###
+POST localhost:7070/api/opgaveset/1/add
+
+{
+    "id": 2
+}
+
+###
+DELETE localhost:7070/api/opgaveset/1/remove
+
+{
+    "id": 1
+}
+
+###
+DELETE localhost:7070/api/opgaveset/1/remove
+
+{
+    "id": 2
+}
+
+###
+DELETE localhost:7070/api/opgaveset/2
+
+
+### -------------- MATHTEAM ROUTES ----------------
+###
+GET localhost:7070/api/hold
+
+###
+GET localhost:7070/api/hold/1
+
+###
+POST localhost:7070/api/hold
+
+{
+    "id": Number,
+    "owner": UserAccount (id?),
+    "desc": String,
+    "used_examquestions": [ question, question, ...] (2)
+    "assignments": [ assignment_info, assoignment_info, ...] (4)
+}
+
+###
+POST localhost:7070/api/hold/1/add
+
+###
+DELETE localhost:7070/api/hold/1/remove
+
+###
+DELETE localhost:7070/api/hold/1
+
+
+### -------------- USER ROUTES ----------------
+###
+GET localhost:7070/api/user
+
+###
+GET localhost:7070/api/user/1
+
+###
+DELETE localhost:7070/api/user/1

@@ -28,10 +28,10 @@ public class SecurityDAO extends GenericDAO implements ISecurityDAO
         UserAccount userAccount = super.getById(UserAccount.class, username); //Throws DaoException if user not found
         if (!userAccount.verifyPassword(password))
         {
-            logger.error("{} {}", userAccount.getUsername(), userAccount.getPassword());
+            logger.error("{} {}", userAccount.getUniLogin(), userAccount.getPassword());
             throw new ValidationException("Password does not match");
         }
-        return new UserDTO(userAccount.getUsername(), userAccount.getRoles()
+        return new UserDTO(userAccount.getUniLogin(), userAccount.getRoles()
                                                     .stream()
                                                     .map(Roles::toString)
                                                     .collect(Collectors.toSet()));
@@ -42,7 +42,7 @@ public class SecurityDAO extends GenericDAO implements ISecurityDAO
     public UserAccount createUser(String username, String password)
     {
         UserAccount userAccount = new UserAccount(username, password);
-        userAccount.addRole(Roles.USER);
+        userAccount.addRole(Roles.USER_READ);
         try
         {
             userAccount = super.create(userAccount);

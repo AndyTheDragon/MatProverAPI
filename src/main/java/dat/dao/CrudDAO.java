@@ -8,7 +8,8 @@ public interface CrudDAO
     <T> List<T> create(List<T> objects);
 
     <T> T getById(Class<T> type, Object id);
-    <T> List<T> getAll(Class<T> type);
+    <T> List<T> getMany(Class<T> type);
+    <T> List<T> getMany(Class<T> type, int limit, int offset);
 
     <T> T update(T object);
     <T> List<T> update(List<T> objects);

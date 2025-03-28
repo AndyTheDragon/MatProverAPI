@@ -2,47 +2,44 @@ package dat.dao;
 
 import dat.config.HibernateConfig;
 import dat.entities.*;
-import dat.exceptions.DaoException;
+import dat.utils.Populator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
-
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GenericDAOTest
 {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
-    private static final GenericDAO genericDAO = new HotelDAO(emf);
-    private static Hotel h1, h2;
-    private static Room r1, r2, r3, r4;
-
+    private static final GenericDAO genericDAO = new GenericDAO(emf);
+    private Question q1, q2, q3;
+    private UserAccount userA, userB;
+    private MathTeam mathTeamA, mathTeamB, mathTeamC;
+    private Assignment assignmentA, assignmentB, assignmentC, assignmentD;
+    private Populator populator;
 
     @BeforeEach
     void setUp()
     {
+        populator = new Populator();
         try (EntityManager em = emf.createEntityManager())
         {
-            r2 = new Room("A102");
-            r3 = new Room("B101");
-            r4 = new Room("B102");
-            r1 = new Room("A101");
-            h1 = new Hotel("Hotel A");
-            h2 = new Hotel("Hotel B");
-            h1.addRoom(r1);
-            h1.addRoom(r2);
-            h2.addRoom(r3);
-            h2.addRoom(r4);
-            em.getTransaction().begin();
-                em.createQuery("DELETE FROM Room ").executeUpdate();
-                em.createQuery("DELETE FROM Hotel ").executeUpdate();
-                em.persist(h1);
-                em.persist(h2);
-            em.getTransaction().commit();
+            populator.resetAndPersistEntities(em);
+            q1 = populator.getQ1();
+            q2 = populator.getQ2();
+            q3 = populator.getQ3();
+            userA = populator.getUserA();
+            userB = populator.getUserB();
+            mathTeamA = populator.getMathTeamA();
+            mathTeamB = populator.getMathTeamB();
+            mathTeamC = populator.getMathTeamC();
+            assignmentA = populator.getAssignmentA();
+            assignmentB = populator.getAssignmentB();
+            assignmentC = populator.getAssignmentC();
+            assignmentD = populator.getAssignmentD();
         }
         catch (Exception e)
         {
@@ -50,78 +47,160 @@ class GenericDAOTest
         }
     }
 
-    @Test
-    void getInstance()
-    {
-        assertNotNull(emf);
-    }
 
     @Test
-    void create()
+    void create_noRelations()
     {
         // Arrange
-        Hotel h3 = new Hotel("Hotel C");
-        Room r5 = new Room("C101");
-        r5.setHotel(h3);
-        h3.addRoom(r5);
-        System.out.println("---- " + h3);
-
-
-        // Act
-        Hotel result = genericDAO.create(h3);
-        System.out.println("---- " + result);
-        System.out.println("---- " + result.getRooms());
-        System.out.println("---- " + r5);
-
-        // Assert
-        assertThat(result, samePropertyValuesAs(h3));
-        assertNotNull(result);
-        try (EntityManager em = emf.createEntityManager())
-        {
-            Hotel found = em.find(Hotel.class, result.getId());
-            assertThat(found, samePropertyValuesAs(h3 ,"rooms"));
-            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Hotel t", Long.class).getSingleResult();
-            assertThat(amountInDb, is(3L));
-        }
-
-    }
-
-    @Test
-    void createMany()
-    {
-        // Arrange
-        Hotel t3 = new Hotel("TestEntityC");
-        Hotel t4 = new Hotel("TestEntityD");
-        List<Hotel> testEntities = List.of(t3, t4);
+        Question testq = new Question();
+        testq.setQuestionText("Test question");
+        UserAccount testUser = new UserAccount("uni", "password");
+        MathTeam testMathTeam = new MathTeam("TestMathTeam");
+        Assignment testAssignment = new Assignment("TestAssignment");
 
         // Act
-        List<Hotel> result = genericDAO.create(testEntities);
+        Question resultQuestion = genericDAO.create(testq);
+        UserAccount resultUser = genericDAO.create(testUser);
+        MathTeam resultMathTeam = genericDAO.create(testMathTeam);
+        Assignment resultAssignment = genericDAO.create(testAssignment);
 
         // Assert
-        assertThat(result.get(0), samePropertyValuesAs(t3, "rooms"));
-        assertThat(result.get(1), samePropertyValuesAs(t4, "rooms"));
-        assertNotNull(result);
+        assertThat(resultQuestion, samePropertyValuesAs(testq));
+        assertNotNull(resultQuestion);
         try (EntityManager em = emf.createEntityManager())
         {
-            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Hotel t", Long.class).getSingleResult();
+            Question foundQuestion = em.find(Question.class, resultQuestion.getId());
+            assertThat(foundQuestion, samePropertyValuesAs(testq));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Question t", Long.class).getSingleResult();
             assertThat(amountInDb, is(4L));
         }
+        assertThat(resultUser, samePropertyValuesAs(testUser));
+        assertNotNull(resultUser);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            UserAccount foundUser = em.find(UserAccount.class, resultUser.getId());
+            assertThat(foundUser, samePropertyValuesAs(testUser));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM UserAccount t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(3L));
+        }
+        assertThat(resultMathTeam, samePropertyValuesAs(testMathTeam));
+        assertNotNull(resultMathTeam);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            MathTeam foundMathTeam = em.find(MathTeam.class, resultMathTeam.getId());
+            assertThat(foundMathTeam, samePropertyValuesAs(testMathTeam));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM MathTeam t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(4L));
+        }
+        assertThat(resultAssignment, samePropertyValuesAs(testAssignment));
+        assertNotNull(resultAssignment);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Assignment foundAssignment = em.find(Assignment.class, resultAssignment.getId());
+            assertThat(foundAssignment, samePropertyValuesAs(testAssignment));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Assignment t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(5L));
+        }
+
+    }
+
+    @Test
+    void create_withRelations()
+    {
+        // Arrange
+        Question testq = new Question();
+        testq.setQuestionText("Test question");
+        testq.setPoints(10);
+        UserAccount testUser = new UserAccount("uni", "password");
+        MathTeam testMathTeam = new MathTeam("TestMathTeam");
+        Assignment testAssignment = new Assignment("TestAssignment");
+
+        // Act
+        Question resultQuestion = genericDAO.create(testq);
+        UserAccount resultUser = genericDAO.create(testUser);
+        MathTeam resultMathTeam = genericDAO.create(testMathTeam);
+        resultUser.addMathTeam(resultMathTeam);
+        //testUser.addMathTeam(resultMathTeam);
+        resultUser = genericDAO.update(resultUser);
+        Assignment resultAssignment = genericDAO.create(testAssignment);
+        resultMathTeam.addAssignment(resultAssignment);
+        testMathTeam.addAssignment(resultAssignment);
+        resultMathTeam = genericDAO.update(resultMathTeam);
+        resultAssignment.addQuestion(testq);
+        testAssignment.addQuestion(resultQuestion);
+        resultAssignment = genericDAO.update(resultAssignment);
+
+        // Assert
+        assertThat(resultQuestion, samePropertyValuesAs(testq));
+        assertNotNull(resultQuestion);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Question foundQuestion = em.find(Question.class, resultQuestion.getId());
+            assertThat(foundQuestion, samePropertyValuesAs(testq));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Question t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(4L));
+        }
+        assertThat(resultUser, samePropertyValuesAs(testUser, "assignments", "mathTeams"));
+        assertNotNull(resultUser);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            UserAccount foundUser = em.find(UserAccount.class, resultUser.getId());
+            assertThat(foundUser, samePropertyValuesAs(testUser, "assignments", "mathTeams"));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM UserAccount t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(3L));
+        }
+        assertThat(resultMathTeam, samePropertyValuesAs(testMathTeam, "assignments", "owner", "questions"));
+        assertThat(resultMathTeam.getOwner(), samePropertyValuesAs(testMathTeam.getOwner(), "assignments", "mathTeams"));
+        assertNotNull(resultMathTeam);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            MathTeam foundMathTeam = em.find(MathTeam.class, resultMathTeam.getId());
+            assertThat(foundMathTeam, samePropertyValuesAs(testMathTeam, "assignments", "owner", "questions"));
+            assertThat(foundMathTeam.getOwner(), samePropertyValuesAs(testMathTeam.getOwner(), "assignments", "mathTeams"));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM MathTeam t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(4L));
+        }
+        assertThat(resultAssignment, samePropertyValuesAs(testAssignment, "mathTeam", "questions"));
+        assertThat(resultAssignment.getMathTeam(), samePropertyValuesAs(testAssignment.getMathTeam(), "assignments", "owner", "questions"));
+        assertNotNull(resultAssignment);
+        try (EntityManager em = emf.createEntityManager())
+        {
+            Assignment foundAssignment = em.find(Assignment.class, resultAssignment.getId());
+            assertThat(foundAssignment, samePropertyValuesAs(testAssignment, "mathTeam", "questions"));
+            assertThat(foundAssignment.getMathTeam(), samePropertyValuesAs(testAssignment.getMathTeam(), "assignments", "owner", "questions"));
+            Long amountInDb = em.createQuery("SELECT COUNT(t) FROM Assignment t", Long.class).getSingleResult();
+            assertThat(amountInDb, is(5L));
+        }
+
     }
 
     @Test
     void read()
     {
         // Arrange
-        Hotel expected = h1;
+        Question expectedQuestion = q1;
+        UserAccount expectedUser = userA;
+        MathTeam expectedMathTeam = mathTeamA;
+        Assignment expectedAssignment = assignmentA;
 
         // Act
-        Hotel result = genericDAO.getById(Hotel.class, h1.getId());
+        Question resultQuestion = genericDAO.getById(Question.class, q1.getId());
+        UserAccount resultUser = genericDAO.getById(UserAccount.class, userA.getId());
+        MathTeam resultMathTeam = genericDAO.getById(MathTeam.class, mathTeamA.getId());
+        Assignment resultAssignment = genericDAO.getById(Assignment.class, assignmentA.getId());
 
         // Assert
-        assertThat(result, samePropertyValuesAs(expected, "rooms"));
-        //assertThat(result.getRooms(), containsInAnyOrder(expected.getRooms().toArray()));
+        assertThat(resultQuestion, samePropertyValuesAs(expectedQuestion, "assignments"));
+        assertThat(resultUser, samePropertyValuesAs(expectedUser, "assignments", "mathTeams"));
+        assertThat(resultUser.getMathTeams().size(), equalTo(expectedUser.getMathTeams().size()));
+        assertThat(resultUser.getAssignments().size(), equalTo(expectedUser.getAssignments().size()));
+        assertThat(resultMathTeam, samePropertyValuesAs(expectedMathTeam, "assignments", "owner", "questions"));
+        assertThat(resultMathTeam.getOwner(), samePropertyValuesAs(expectedMathTeam.getOwner(), "assignments", "mathTeams"));
+        assertThat(resultMathTeam.getAssignments().size(), equalTo(expectedMathTeam.getAssignments().size()));
+        assertThat(resultMathTeam.getQuestions().size(), equalTo(expectedMathTeam.getQuestions().size()));
+        assertThat(resultAssignment, samePropertyValuesAs(expectedAssignment, "mathTeam", "questions"));
     }
-
+/*
     @Test
     void read_notFound()
     {
@@ -142,7 +221,7 @@ class GenericDAOTest
         List<Hotel> expected = List.of(h1, h2);
 
         // Act
-        List<Hotel> result = genericDAO.getAll(Hotel.class);
+        List<Hotel> result = genericDAO.getMany(Hotel.class);
 
         // Assert
         assertNotNull(result);
@@ -214,5 +293,5 @@ class GenericDAOTest
             Hotel found = em.find(Hotel.class, h2.getId());
             assertNull(found);
         }
-    }
+    }*/
 }

@@ -1,5 +1,7 @@
 package dat.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dat.enums.Roles;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -20,23 +22,59 @@ import java.util.stream.Collectors;
 public class UserAccount
 {
     @Id
-    private String username;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private Integer id;
+    private String name;
+    @Column(unique = true)
+    private String email;
+    private String workplace;
+    @Column(unique = true)
+    private String uniLogin;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Roles> roles = new HashSet<>();
 
-    public UserAccount(String userName, String userPass)
+    @JsonManagedReference
+    @OneToMany(fetch = FetchType.EAGER)
+    private final Set<MathTeam> mathTeams = new HashSet<>();
+
+
+    public UserAccount(String name, String email, String workplace, String uniLogin, String password)
     {
-        this.username = userName;
-        this.password = BCrypt.hashpw(userPass, BCrypt.gensalt());
+        this.name = name;
+        this.email = email;
+        this.workplace = workplace;
+        this.uniLogin = uniLogin;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public UserAccount(String userName, Set<Roles> roleEntityList)
+    public UserAccount(Integer id, String name, String email, String workplace, String uniLogin, String password)
     {
-        this.username = userName;
-        this.roles = roleEntityList;
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.workplace = workplace;
+        this.uniLogin = uniLogin;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+    }
+
+    public UserAccount(String name, String email, String workplace, String uniLogin, String password, Set<Roles> roles)
+    {
+        this.name = name;
+        this.email = email;
+        this.workplace = workplace;
+        this.uniLogin = uniLogin;
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt());
+        this.roles = roles;
+    }
+
+    public UserAccount(String uniLogin, String userPass)
+    {
+        this.uniLogin = uniLogin;
+        this.password = BCrypt.hashpw(userPass, BCrypt.gensalt());
     }
 
     public Set<String> getRolesAsString()
@@ -49,7 +87,6 @@ public class UserAccount
     {
         return BCrypt.checkpw(pw, this.password);
     }
-
 
     public void addRole(Roles role)
     {
@@ -71,4 +108,29 @@ public class UserAccount
     }
 
 
+    public void addMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.add(mathTeam);
+            mathTeam.setOwner(this);
+        }
+    }
+
+    public void removeMathTeam(MathTeam mathTeam)
+    {
+        if (mathTeam != null)
+        {
+            mathTeams.remove(mathTeam);
+            mathTeam.setOwner(null);
+        }
+    }
+
+    @JsonIgnore
+    public Set<Assignment> getAssignments()
+    {
+        return mathTeams.stream()
+                .flatMap(mathTeam -> mathTeam.getAssignments().stream())
+                .collect(Collectors.toSet());
+    }
 }

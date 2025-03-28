@@ -30,7 +30,7 @@ import java.time.ZonedDateTime;
 import java.util.Objects;
 import java.util.Set;
 
-public class SecurityController implements ISecurityController
+public class SecurityController implements ISecurityController, IController
 {
     private final ObjectMapper objectMapper = new ObjectMapper();
     private final ITokenSecurity tokenSecurity = new TokenSecurity();
@@ -85,9 +85,9 @@ public class SecurityController implements ISecurityController
         try {
             UserDTO userInput = ctx.bodyAsClass(UserDTO.class);
             UserAccount createdUserAccount = securityDAO.createUser(userInput.getUsername(), userInput.getPassword());
-            String token = createToken(new UserDTO(createdUserAccount.getUsername(), Set.of("USER")));
+            String token = createToken(new UserDTO(createdUserAccount.getUniLogin(), Set.of("USER")));
             returnJson.put("token", token)
-                    .put("username", createdUserAccount.getUsername());
+                    .put("username", createdUserAccount.getUniLogin());
 
             ctx.status(HttpStatus.CREATED).json(returnJson);
         }
@@ -233,5 +233,34 @@ public class SecurityController implements ISecurityController
             throw new ApiException(HttpStatus.UNAUTHORIZED.getCode(), "Unauthorized. Could not verify token");
         }
     }
+    public void getAll(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
 
+    @Override
+    public void update(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
+
+    @Override
+    public void create(Context ctx)
+    {
+        register(ctx);
+    }
+
+    public void getById(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
+
+    public void delete(Context ctx)
+    {
+        ErrorMessage error = new ErrorMessage("Error, not implementet yet");
+        ctx.status(501).json(error);
+    }
 }
