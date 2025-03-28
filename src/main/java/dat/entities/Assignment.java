@@ -2,7 +2,7 @@ package dat.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import dat.dto.AssignmentDTO;
+import dat.dto.AssignmentInputDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,26 +26,28 @@ public class Assignment
     @ManyToOne
     private MathTeam mathTeam;
 
-    @JsonBackReference
-    @ManyToOne
-    private UserAccount owner;
-
     @JsonManagedReference
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Question> questions = new HashSet<>();
 
-    public Assignment(AssignmentDTO assignmentDTO)
+    public Assignment(AssignmentInputDTO assignmentDTO)
     {
         this.introText = assignmentDTO.getIntroText();
-        //this.questions = assignmentDTO.getQuestions().stream().map(Question::new).collect(Collectors.toSet());
     }
 
-    public Assignment(String introText, MathTeam mathTeam, UserAccount owner, Set<Question> questions)
+    public Assignment(String introText, MathTeam mathTeam, Set<Question> questions)
     {
         this.introText = introText;
-        this.mathTeam = mathTeam;
-        this.owner = owner;
-        this.questions = questions;
+        mathTeam.addAssignment(this);
+        if (questions!=null)
+        {
+            this.questions = questions;
+        }
+    }
+
+    public Assignment(String introText)
+    {
+        this.introText = introText;
     }
 
     public int getAmountOfQuestions()
@@ -90,8 +91,4 @@ public class Assignment
         this.mathTeam = mathTeam;
     }
 
-    public void setOwner(UserAccount owner)
-    {
-        this.owner = owner;
-    }
 }

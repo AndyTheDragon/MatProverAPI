@@ -2,7 +2,6 @@ package dat.controllers;
 
 import dat.dao.CrudDAO;
 import dat.dao.GenericDAO;
-import dat.dao.HotelDAO;
 import dat.dto.QuestionDTO;
 import dat.dto.QuestionStudentDTO;
 import dat.entities.Question;

@@ -23,11 +23,10 @@ public class Question
     @Column(name = "question_id", nullable = false)
     private Integer id;
     private LocalDate termDate;
-    private int year;
+    private Integer year;
     private String author;
-    private int points;
-    @Column(nullable = false)
-    private int questionNumber;
+    private Integer points;
+    private Integer questionNumber;
     @Column(nullable = false)
     private String questionText;
     private String pictureURL;
@@ -40,22 +39,8 @@ public class Question
 
     @JsonIgnore
     @JsonBackReference
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Assignment> assignments;
-
-    public Question(int year, String author, int points, int questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
-    {
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-        this.pictureURL = pictureURL;
-        this.category = category;
-        this.license = license;
-        this.level = level;
-        this.testFormat = testFormat;
-    }
+    @ManyToMany(fetch = FetchType.LAZY)
+    private Set<Assignment> assignments = new HashSet<>();
 
     public Question(QuestionDTO questionDTO)
     {
@@ -71,52 +56,25 @@ public class Question
         this.level = questionDTO.getLevel();
         this.testFormat = questionDTO.getTestFormat();
     }
-    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText)
-    {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionNumber = questionNumber;
-        this.questionText = questionText;
-    }
 
-    public Question(LocalDate termDate, int year, String author, int points, int questionNumber, String questionText, String pictureURL)
+    public Question(Integer year, String author, Integer points, Integer questionNumber, String questionText, String pictureURL, String category, String license, String level, TestFormat testFormat)
     {
-        this.termDate = termDate;
         this.year = year;
         this.author = author;
         this.points = points;
         this.questionNumber = questionNumber;
         this.questionText = questionText;
         this.pictureURL = pictureURL;
-    }
-
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat)
-    {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
-        this.points = points;
-        this.questionText = questionText;
-        this.pictureURL = pictureURL;
+        this.category = category;
         this.license = license;
         this.level = level;
         this.testFormat = testFormat;
     }
 
-    public Question(LocalDate termDate, int year, String author, int points, String questionText, String pictureURL, String level, String license, TestFormat testFormat, Set<Assignment> assignments)
+    public Question(Integer points, String questionText)
     {
-        this.termDate = termDate;
-        this.year = year;
-        this.author = author;
         this.points = points;
         this.questionText = questionText;
-        this.pictureURL = pictureURL;
-        this.license = license;
-        this.level = level;
-        this.testFormat = testFormat;
-        this.assignments = assignments;
     }
 
     public void addAssignment(Assignment assignment)

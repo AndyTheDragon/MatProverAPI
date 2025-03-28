@@ -54,6 +54,7 @@ public class Routes
             get(assignmentController::getAll, Roles.ANYONE);
             get("/{id}", assignmentController::getById, Roles.ANYONE);
             post(assignmentController::create, Roles.ANYONE);
+            patch("{id}",assignmentController::update, Roles.ANYONE);
             post("/{id}/add", assignmentController::addQuestionToAssignment, Roles.ANYONE);
             delete("/{id}/remove", assignmentController::removeQuestionFromAssignment, Roles.ANYONE);
             delete("/{id}", assignmentController::delete, Roles.ANYONE);
