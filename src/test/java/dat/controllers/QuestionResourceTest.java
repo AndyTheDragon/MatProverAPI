@@ -7,7 +7,6 @@ import dat.entities.Question;
 import dat.enums.TestFormat;
 import dat.routes.Routes;
 import io.restassured.RestAssured;
-import io.restassured.http.ContentType;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
@@ -16,11 +15,9 @@ import org.slf4j.LoggerFactory;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.hamcrest.Matchers.is;
 import static org.junit.jupiter.api.Assertions.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
@@ -109,7 +106,7 @@ class QuestionResourceTest {
                 .get("/opgave/" + q2.getId())
                 .then()
                 .statusCode(200)
-                .body("id", equalTo(q2.getId().intValue()));
+                .body("id", equalTo(q2.getId()));
         logger.info("getById test executed successfully");
     }
 
@@ -173,7 +170,7 @@ class QuestionResourceTest {
                     .patch("/opgave")
                     .then()
                     .statusCode(200)
-                    .body("id", equalTo(q1.getId().intValue()))
+                    .body("id", equalTo(q1.getId()))
                     .body("author", equalTo("Updated Author"))
                     .body("questionText", equalTo("Updated Question Text"));
             logger.info("Update test executed successfully");

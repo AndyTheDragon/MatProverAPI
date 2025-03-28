@@ -6,7 +6,6 @@ import dat.dto.*;
 import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
-import dat.entities.UserAccount;
 import dat.exceptions.ApiException;
 import dat.exceptions.DaoException;
 import io.javalin.http.BadRequestResponse;

@@ -119,7 +119,7 @@ class AssignmentResourceTest
                     .then()
                     .statusCode(201)
                     .body("id", notNullValue())
-                    .body("mathTeam.id", equalTo(assignment.getMathTeam().getId()));;
+                    .body("mathTeam.id", equalTo(assignment.getMathTeam().getId()));
         } catch (Exception e) {
             logger.error("Error creating assignment", e);
             //fail();

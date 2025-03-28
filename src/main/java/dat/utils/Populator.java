@@ -15,10 +15,18 @@ import java.util.Set;
 @Getter
 public class Populator
 {
-    private Question q1, q2, q3;
-    private UserAccount userA, userB;
-    private MathTeam mathTeamA, mathTeamB, mathTeamC;
-    private Assignment assignmentA, assignmentB, assignmentC, assignmentD;
+    private final Question q1;
+    private final Question q2;
+    private final Question q3;
+    private final UserAccount userA;
+    private final UserAccount userB;
+    private final MathTeam mathTeamA;
+    private final MathTeam mathTeamB;
+    private final MathTeam mathTeamC;
+    private final Assignment assignmentA;
+    private final Assignment assignmentB;
+    private final Assignment assignmentC;
+    private final Assignment assignmentD;
 
     public Populator()
     {

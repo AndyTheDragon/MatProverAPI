@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 
 public class UserAccountDTO
 {
-    private Integer id;
-    private String name;
-    private String email;
-    private String workplace;
-    private String uniLogin;
-    private String password;
-    private Set<MathTeamNoOwnerDTO> mathTeams;
+    private final Integer id;
+    private final String name;
+    private final String email;
+    private final String workplace;
+    private final String uniLogin;
+    private final String password;
+    private final Set<MathTeamNoOwnerDTO> mathTeams;
 
     public UserAccountDTO(UserAccount userAccount)
     {

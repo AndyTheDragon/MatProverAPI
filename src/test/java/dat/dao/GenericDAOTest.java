@@ -2,20 +2,15 @@ package dat.dao;
 
 import dat.config.HibernateConfig;
 import dat.entities.*;
-import dat.exceptions.DaoException;
 import dat.utils.Populator;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import org.junit.jupiter.api.*;
 
-import java.util.List;
-import java.util.Set;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GenericDAOTest
 {
     private static final EntityManagerFactory emf = HibernateConfig.getEntityManagerFactoryForTest();
@@ -48,7 +43,6 @@ class GenericDAOTest
         }
         catch (Exception e)
         {
-            e.printStackTrace();
             fail();
         }
     }

@@ -39,7 +39,7 @@ public class UserAccount
 
     @JsonManagedReference
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<MathTeam> mathTeams = new HashSet<>();
+    private final Set<MathTeam> mathTeams = new HashSet<>();
 
 
     public UserAccount(String name, String email, String workplace, String uniLogin, String password)
