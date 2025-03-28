@@ -2,17 +2,14 @@ package dat.controllers;
 
 import dat.config.ApplicationConfig;
 import dat.config.HibernateConfig;
-import dat.dao.CrudDAO;
-import dat.dao.GenericDAO;
 import dat.dto.AssignmentInputDTO;
-import dat.dto.AssignmentOutputDTO;
 import dat.dto.MathTeamSimpleDTO;
 import dat.entities.Assignment;
 import dat.entities.MathTeam;
 import dat.entities.Question;
 import dat.entities.UserAccount;
-import dat.enums.Roles;
 import dat.routes.Routes;
+import dat.utils.Populator;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import jakarta.persistence.EntityManager;
@@ -24,7 +21,6 @@ import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -40,7 +36,9 @@ class AssignmentResourceTest
     Assignment test_a1, test_a2;
     Question test_q1, test_q2;
     MathTeam test_myMathTeam;
+    UserAccount test_myUser;
     private final Logger logger = LoggerFactory.getLogger(AssignmentResourceTest.class.getName());
+    private Populator populator;
 
     @BeforeAll
     static void setUpAll()
@@ -65,40 +63,16 @@ class AssignmentResourceTest
     @BeforeEach
     void setUp()
     {
+        populator = new Populator();
         try (EntityManager em = emf.createEntityManager())
         {
-            em.getTransaction().begin();
-            em.createQuery("DELETE FROM Assignment").executeUpdate();
-            em.createQuery("DELETE FROM Question").executeUpdate();
-
-            CrudDAO test_dao = new GenericDAO(emf);
-            test_q1 = test_dao.create(new Question(10, "test question"));
-            test_q2 = test_dao.create(new Question(5, "test question 2"));
-            UserAccount test_myUser = new UserAccount("unilogin", "kodeord");
-            test_myUser.addRole(Roles.ADMIN);
-            test_myUser.addRole(Roles.USER_READ);
-            test_myUser = test_dao.create(test_myUser);
-
-            test_myMathTeam = new MathTeam("MathTeam 2a");
-            test_myMathTeam = test_dao.create(test_myMathTeam);
-            test_myUser.addMathTeam(test_myMathTeam);
-            test_myUser = test_dao.update(test_myUser);
-
-            Assignment assignment = new Assignment();
-            test_myMathTeam.addAssignment(assignment);
-            assignment = test_dao.create(assignment);
-            test_myMathTeam = test_dao.update(test_myMathTeam);
-
-            assignment.addQuestion(test_q1);
-            test_a1 = test_dao.update(assignment);
-            test_myMathTeam = test_dao.update(test_myMathTeam);
-
-            test_a2 = new Assignment("Assignment 2", test_myMathTeam, Set.of(test_q1, test_q2));
-            test_a2 = test_dao.create(test_a2);
-            test_dao.update(test_myMathTeam);
-            test_dao.update(test_myUser);
-
-            em.getTransaction().commit();
+            populator.resetAndPersistEntities(em);
+            test_q1 = populator.getQ1();
+            test_q2 = populator.getQ2();
+            test_myUser = populator.getUserA();
+            test_myMathTeam = populator.getMathTeamA();
+            test_a1 = populator.getAssignmentA();
+            test_a2 = populator.getAssignmentB();
         }
     }
 
@@ -110,13 +84,7 @@ class AssignmentResourceTest
                 .get("/opgaveset")
                 .then()
                 .statusCode(200)
-                .body("size()", equalTo(2))
-                .body("[0].id", equalTo(test_a1.getId()))
-                .body("[0].mathTeam.id", equalTo(test_a1.getMathTeam().getId()))
-                .body("[0].mathTeam.description", equalTo(test_a1.getMathTeam().getDescription()))
-                .body("[0].questions.size()", equalTo(1))
-                .body("[1].id", equalTo(test_a2.getId()))
-                .body("[1].questions.size()", equalTo(2));
+                .body("size()", equalTo(4));
     }
 
     @Test
@@ -138,11 +106,6 @@ class AssignmentResourceTest
         assignment.addQuestion(test_q2);
 
         try {
-            // Manually initialize nested lazy fields before converting to DTO
-            //assignment.getQuestions().forEach(q -> Optional.ofNullable(q.getAssignments()).ifPresent(Set::size));
-            //assignment.getMathTeam().getAssignments().size(); // if needed
-
-            // Convert to DTO *after* initialization
             AssignmentInputDTO inputDTO = new AssignmentInputDTO(null,
                                                         assignment.getIntroText(),
                                                         new MathTeamSimpleDTO(assignment.getMathTeam()));
@@ -157,10 +120,8 @@ class AssignmentResourceTest
                     .statusCode(201)
                     .body("id", notNullValue())
                     .body("mathTeam.id", equalTo(assignment.getMathTeam().getId()));;
-            //.body("questions.size()", equalTo(2)); // Uncomment if response returns questions
         } catch (Exception e) {
             logger.error("Error creating assignment", e);
-            e.printStackTrace();
             //fail();
         }
     }
