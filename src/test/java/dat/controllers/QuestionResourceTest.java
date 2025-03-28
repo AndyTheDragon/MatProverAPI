@@ -76,11 +76,14 @@ class QuestionResourceTest {
                     "Sample Level",
                     TestFormat.MED);
             em.getTransaction().begin();
+            em.createNativeQuery("DELETE FROM assignment_question").executeUpdate();
             em.createQuery("DELETE FROM Question").executeUpdate();
             em.persist(q1);
             em.persist(q2);
             em.getTransaction().commit();
             logger.info("Test setup complete");
+            logger.info("Question 1: " + q1.getId());
+            logger.info("Question 2: " + q2.getId());
         } catch (Exception e) {
             logger.error("Error setting up test", e);
         }
